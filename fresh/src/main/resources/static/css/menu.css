@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+
+
+.navbar {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #B9DBF8;
+}
+
+.container {
+    justify-content: center;
+}
+
+.navbar-brand {
+    margin: 0 20px;
+    font-size: 35px;
+}
+
+.navbar-brand img {
+    width: 50px;
+    height: 40px;
+}
+
+.nav-item {
+    margin: 0 20px;
+}
+
+.nav-link {
+    font-weight: bold;
+    color: black; 
+     text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 2.5em;
+}
+
+.dropdown-menu {
+    position: absolute;
+    left: 58%;
+    transform: translateX(-55%);
+    border: none;
+    width: 1920px;
+    background-color: #5FB4FB;
+}
+
+.dropdown-item {
+    font-weight: bold;
+}
+
+.dropdown-menu .col-sm-12 {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-item.dropdown{
+    margin-top: 16px; 
+    
+}
+
+#consultingDropdown{
+	color: black;
+    text-decoration: none;
+    font-weight: bold;
+}
