@@ -5,88 +5,7 @@
 		<title>Fresh Main page</title>
 	</head>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-	<style>
-		/* 기본 폰트 설정 */
-		@font-face {
-		    font-family: 'GmarketSansMedium';
-		    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-		    font-weight: normal;
-		    font-style: normal;
-		}
-		@font-face {
-		    font-family: 'Pretendard-Regular';
-		    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-		    font-weight: 400;
-		    font-style: normal;
-		}
-		* {
-			font-family: 'GmarketSansMedium';
-		}
-		/* 상단바 스타일 설정 */
-		.NavBar {
-			height: 100px;
-		}
-		.logo {
-			background-image: url('icon/logo.png'); /* 이미지 경로 입력 */
-			background-position: center; /* 이미지를 div의 중앙에 위치 */
-			background-size: contain;  /* 이미지 크기를 버튼에 맞게 조정 */
-			background-repeat: no-repeat;  /* 이미지 반복되지 않도록 설정 */
-			border: none;              /* 버튼의 기본 테두리 없애기 */
-			padding: auto;             /* 버튼 안의 여백 설정 */
-			cursor: pointer;          /* 마우스를 올렸을 때 포인터로 바뀌도록 설정 */
-			background-color: transparent; /* 버튼 배경을 투명하게 설정 */
-		}
-		.NavBar div {
-			display:flex;
-			font-weight: normal;
-			font-size: 20px;
-			padding: 20px 10px;
-			text-align: center;
-			flex-direction: column;
-    		justify-content: space-evenly;
-		}
-		.NavBar div.searchbar {
-			display: flex;
-			align-items: center;
-			border-radius: 15px;
-			border: 2px solid black;
-			padding: 3px 10px;
-			font-size: 15px;
-			font-weight: lighter;
-			font-family: 'Pretendard-Regular';
-			flex-direction: row;
-			height: 45px;
-		}
-		.NavBar input.searchbar {
-			border: none;
-			font-size: 15px;
-			font-weight: lighter;
-			vertical-align: middle;
-			flex-grow: 1;
-		}
-		.NavBar input.searchbar:focus {
-			outline: none;
-			border: none;
-		}
-		.icon-button {
-			background-image: url('icon/search_icon.png'); /* 이미지 경로 입력 */
-			background-size: contain;  /* 이미지 크기를 버튼에 맞게 조정 */
-			background-repeat: no-repeat;  /* 이미지 반복되지 않도록 설정 */
-			border: none;              /* 버튼의 기본 테두리 없애기 */
-			padding: 10px;             /* 버튼 안의 여백 설정 */
-			cursor: pointer;          /* 마우스를 올렸을 때 포인터로 바뀌도록 설정 */
-			width: 20px;               /* 버튼의 가로 크기 */
-			height: 20px;              /* 버튼의 세로 크기 */
-			background-color: transparent; /* 버튼 배경을 투명하게 설정 */
-		}
-		.board_menu {
-			list-style-type: none;     /* 기본 불릿 점을 제거 */
-			padding: 0;                /* 기본 여백 제거 */
-			margin: 0;                 /* 기본 마진 제거 */
-			display: flex;             /* li들을 가로로 정렬 */
-			justify-content: space-around;
-		}
-	</style>
+	<link rel="stylesheet" href="./css/mainpage.css" />
 	<body>
 		<div class="container">
 			<!-- 상단바 - 로고, 게시판 메뉴, 검색창, 마이페이지, 로그인 -->
@@ -104,7 +23,7 @@
 					<form name="SearchBar" method="get" action="#">
 						<div class="searchbar">
 							<input class="searchbar" type="text">
-							<button class="icon-button"></button>
+							<button class="search_icon"></button>
 						</div>
 					</form>
 				</div>
@@ -112,14 +31,331 @@
 				<div class="col-md-1">LogIn</div>
 			</div>
 			<!-- 본문 -->
-			<div class="row">
+			<div class="row Main_Body">
 				<!-- 본문-왼쪽(통합인기글, 통합최신글, 공지사항, 테마별최신글) -->
-				<div class="col-md-9">
-					통합인기글, 최신글, 공지, 테마최긴
+				<div class="col-md-9 Main_LeftBody">
+					<!-- 통합 인기글 -->
+					<div class="table_wrap">
+						<table class="BestAll_table">
+							<colgroup>
+								<col width="80%"/>
+								<col width="10%"/>
+								<col width="10%"/>
+							</colgroup>
+							<thead class="table_label">
+								<tr>
+									<th scope="col" colspan="2" class="table_title">인기 게시글</th>
+									<th scope="col" class="more_btn"><a href="#">더보기 > </a></th>
+								</tr>
+							</thead>
+							<tbody class="table_body">
+							<!-- 본작업때 넣을 거
+								<tr th:each="board:${hot_boards}">
+									<td th:text="${board.board_title}">게시글1</td>
+									<td>❤️<span th:text="${board.board_like}"></span></td>
+									<td>👁️<span th:text="${board.board_count}"></span></td>
+								</tr>
+							 -->
+							<!-- 프론트 제작만을 위해 임시로 만들 거 -->
+								<tr>
+									<td><a href="#">프론트 임시 게시글 1</a></td>
+									<td>❤️ 1</td>
+									<td>👁️ 1</td>
+								</tr>
+								<tr>
+									<td><a href="#">프론트 임시 게시글 2</a></td>
+									<td>❤️ 2</td>
+									<td>👁️ 2</td>
+								</tr>
+								<tr>
+									<td><a href="#">프론트 임시 게시글 3</a></td>
+									<td>❤️ 3</td>
+									<td>👁️ 3</td>
+								</tr>
+								<tr>
+									<td><a href="#">프론트 임시 게시글 4</a></td>
+									<td>❤️ 4</td>
+									<td>👁️ 4</td>
+								</tr>
+								<tr>
+									<td><a href="#">프론트 임시 게시글 5</a></td>
+									<td>❤️ 5</td>
+									<td>👁️ 5</td>
+								</tr>
+								<tr>
+									<td><a href="#">프론트 임시 게시글 6</a></td>
+									<td>❤️ 6</td>
+									<td>👁️ 6</td>
+								</tr>
+								<tr>
+									<td><a href="#">프론트 임시 게시글 7</a></td>
+									<td>❤️ 7</td>
+									<td>👁️ 7</td>
+								</tr>
+								<tr>
+									<td><a href="#">프론트 임시 게시글 8</a></td>
+									<td>❤️ 8</td>
+									<td>👁️ 8</td>
+								</tr>
+								<tr>
+									<td><a href="#">프론트 임시 게시글 9</a></td>
+									<td>❤️ 9</td>
+									<td>👁️ 9</td>
+								</tr>
+								<tr>
+									<td><a href="#">프론트 임시 게시글 10</a></td>
+									<td>❤️ 10</td>
+									<td>👁️ 10</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- 2단으로 배치될 글들 -->
+					<div class="row 2col_row">
+						<!-- 통합 최신글 -->
+						<div class="col-md-6 leftbody_2col">
+							<table class="NewAll_table">
+								<colgroup>
+									<col width="70%"/>
+									<col width="15%"/>
+									<col width="15%"/>
+								</colgroup>
+								<thead class="table_label">
+									<tr>
+										<th scope="col" colspan="2" class="table_title">최신 게시글</th>
+										<th scope="col" class="more_btn"><a href="#">더보기 > </a></th>
+									</tr>
+								</thead>
+								<tbody class="table_body">
+									<!-- 본작업때 넣을 거
+										<tr th:each="board:${hot_boards}">
+											<td th:text="${board.board_title}">게시글1</td>
+											<td>❤️<span th:text="${board.board_like}"></span></td>
+											<td>👁️<span th:text="${board.board_count}"></span></td>
+										</tr>
+									 -->
+									<!-- 프론트 제작만을 위해 임시로 만들 거 -->
+									<tr>
+										<td><a href="#">프론트 임시 게시글 1</a></td>
+										<td>❤️ 1</td>
+										<td>👁️ 1</td>
+									</tr>
+									<tr>
+										<td><a href="#">프론트 임시 게시글 2</a></td>
+										<td>❤️ 2</td>
+										<td>👁️ 2</td>
+									</tr>
+									<tr>
+										<td><a href="#">프론트 임시 게시글 3</a></td>
+										<td>❤️ 3</td>
+										<td>👁️ 3</td>
+									</tr>
+									<tr>
+										<td><a href="#">프론트 임시 게시글 4</a></td>
+										<td>❤️ 4</td>
+										<td>👁️ 4</td>
+									</tr>
+									<tr>
+										<td><a href="#">프론트 임시 게시글 5</a></td>
+										<td>❤️ 5</td>
+										<td>👁️ 5</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<!-- 공지사항 -->
+						<div class="col-md-6 leftbody_2col">
+							<table class="NewAll_table">
+								<colgroup>
+									<col width="70%"/>
+									<col width="15%"/>
+									<col width="15%"/>
+								</colgroup>
+								<thead class="table_label">
+									<tr>
+										<th scope="col" colspan="2" class="table_title">공지사항</th>
+										<th scope="col" class="more_btn"><a href="#">더보기 > </a></th>
+									</tr>
+								</thead>
+								<tbody class="table_body">
+									<!-- 본작업때 넣을 거
+										<tr th:each="board:${hot_boards}">
+											<td th:text="${board.board_title}">게시글1</td>
+											<td>❤️<span th:text="${board.board_like}"></span></td>
+											<td>👁️<span th:text="${board.board_count}"></span></td>
+										</tr>
+									 -->
+									<!-- 프론트 제작만을 위해 임시로 만들 거 -->
+									<tr>
+										<td><a href="#">프론트 임시 게시글 1</a></td>
+										<td>❤️ 1</td>
+										<td>👁️ 1</td>
+									</tr>
+									<tr>
+										<td><a href="#">프론트 임시 게시글 2</a></td>
+										<td>❤️ 2</td>
+										<td>👁️ 2</td>
+									</tr>
+									<tr>
+										<td><a href="#">프론트 임시 게시글 3</a></td>
+										<td>❤️ 3</td>
+										<td>👁️ 3</td>
+									</tr>
+									<tr>
+										<td><a href="#">프론트 임시 게시글 4</a></td>
+										<td>❤️ 4</td>
+										<td>👁️ 4</td>
+									</tr>
+									<tr>
+										<td><a href="#">프론트 임시 게시글 5</a></td>
+										<td>❤️ 5</td>
+										<td>👁️ 5</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<!-- 테마별 최신글 - 테마1 -->
+						<div class="col-md-6 leftbody_2col">
+							<table class="NewAll_table">
+								<colgroup>
+									<col width="70%"/>
+									<col width="15%"/>
+									<col width="15%"/>
+								</colgroup>
+								<thead class="table_label">
+									<tr>
+										<th scope="col" colspan="2" class="table_title">테마1</th>
+										<th scope="col" class="more_btn"><a href="#">더보기 > </a></th>
+									</tr>
+								</thead>
+								<tbody class="table_body">
+									<!-- 본작업때 넣을 거
+										<tr th:each="board:${hot_boards}">
+											<td th:text="${board.board_title}">게시글1</td>
+											<td>❤️<span th:text="${board.board_like}"></span></td>
+											<td>👁️<span th:text="${board.board_count}"></span></td>
+										</tr>
+									 -->
+									<!-- 프론트 제작만을 위해 임시로 만들 거 -->
+									<tr>
+										<td><a href="#">프론트 임시 게시글 1</a></td>
+										<td>❤️ 1</td>
+										<td>👁️ 1</td>
+									</tr>
+									<tr>
+										<td><a href="#">프론트 임시 게시글 2</a></td>
+										<td>❤️ 2</td>
+										<td>👁️ 2</td>
+									</tr>
+									<tr>
+										<td><a href="#">프론트 임시 게시글 3</a></td>
+										<td>❤️ 3</td>
+										<td>👁️ 3</td>
+									</tr>
+									<tr>
+										<td><a href="#">프론트 임시 게시글 4</a></td>
+										<td>❤️ 4</td>
+										<td>👁️ 4</td>
+									</tr>
+									<tr>
+										<td><a href="#">프론트 임시 게시글 5</a></td>
+										<td>❤️ 5</td>
+										<td>👁️ 5</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<!-- 테마별 최신글 - 테마2 -->
+						<div class="col-md-6 leftbody_2col">
+							<table class="NewAll_table">
+								<colgroup>
+									<col width="70%"/>
+									<col width="15%"/>
+									<col width="15%"/>
+								</colgroup>
+								<thead class="table_label">
+									<tr>
+										<th scope="col" colspan="2" class="table_title">테마2</th>
+										<th scope="col" class="more_btn"><a href="#">더보기 > </a></th>
+									</tr>
+								</thead>
+								<tbody class="table_body">
+									<!-- 본작업때 넣을 거
+										<tr th:each="board:${hot_boards}">
+											<td th:text="${board.board_title}">게시글1</td>
+											<td>❤️<span th:text="${board.board_like}"></span></td>
+											<td>👁️<span th:text="${board.board_count}"></span></td>
+										</tr>
+									 -->
+									<!-- 프론트 제작만을 위해 임시로 만들 거 -->
+									<tr>
+										<td><a href="#">프론트 임시 게시글 1</a></td>
+										<td>❤️ 1</td>
+										<td>👁️ 1</td>
+									</tr>
+									<tr>
+										<td><a href="#">프론트 임시 게시글 2</a></td>
+										<td>❤️ 2</td>
+										<td>👁️ 2</td>
+									</tr>
+									<tr>
+										<td><a href="#">프론트 임시 게시글 3</a></td>
+										<td>❤️ 3</td>
+										<td>👁️ 3</td>
+									</tr>
+									<tr>
+										<td><a href="#">프론트 임시 게시글 4</a></td>
+										<td>❤️ 4</td>
+										<td>👁️ 4</td>
+									</tr>
+									<tr>
+										<td><a href="#">프론트 임시 게시글 5</a></td>
+										<td>❤️ 5</td>
+										<td>👁️ 5</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 				<!-- 본문-오른쪽(로그인창 혹은 회원정보창) -->
-				<div class="col-md-3">
-					로그인창 혹은 회원정보창
+				<div class="col-md-3 Main_RightBody">
+					<!-- 로그인창 - 로그인 안 되어 있을 시 -->
+					<div class="side_login">
+						<form method="post" name="side_login" action="#">
+							<table class="login_table">
+								<colgroup>
+									<col width="50%"/>
+									<col width="30%"/>
+									<col width="20%"/>
+								</colgroup>
+								<thead>
+									<tr>
+										<th colspan="3">
+											로그인
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td colspan="2"><input type="text" placeholder="아이디"></td>
+										<td rowspan="2" class="btn_td"><button type="submit">LogIn</button></td>
+									</tr>
+									<tr>
+										<td colspan="2"><input type="text" placeholder="비밀번호"></td>
+									</tr>
+									<tr>
+										<td>아이디 찾기</td>
+										<td colspan="2">회원가입</td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
+					</div>
+					<!-- 회원 정보창 - 로그인 되어 있을 시 -->
+					<div class="side_meminfo">
+					
+					</div>
 				</div>
 			</div>
 			
