@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판</title>
+    <style>
+        /* 기본 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 네비게이션 바 스타일 */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        /* 게시판 영역 스타일 */
+        .board-container {
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .search-container input[type="text"] {
+            padding: 8px;
+            width: 60%;
+        }
+
+        .search-container button {
+            padding: 8px 15px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: #555;
+        }
+
+        /* 게시판 리스트 스타일 */
+        .board-list {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .board-list th, .board-list td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .board-list th {
+            background-color: #f4f4f4;
+            cursor: pointer;
+        }
+
+        .board-list td a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .board-list td a:hover {
+            color: #007BFF;
+        }
+
+        /* 하단 스타일 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            padding: 5px 10px;
+            margin: 0 5px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .pagination button:hover {
+            background-color: #555;
+        }
+
+        .pagination span {
+            margin: 0 10px;
+        }
+
+        .write-button {
+            padding: 15px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .write-button:hover {
+            background-color: #555;
+        }
+
+        .page-info {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .items-per-page {
+            margin-top: 20px;
+        }
+
+        .items-per-page {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 네비게이션 바 (비워둠) -->
+<header>
+    <!-- 네비게이션 바의 내용은 비워두었습니다. -->
+</header>
+
+<!-- 게시판 영역 -->
+<div class="board-container">
+    <!-- 검색창 -->
+    <div class="search-container">
+        <div>게시판</div>
+        <div>
+            <input type="text" id="searchInput" placeholder="제목 또는 내용으로 검색">
+            <button onclick="searchPosts()">검색</button>
+        </div>
+    </div>
+
+    <!-- 게시글 수 변경 -->
+    <div class="items-per-page">
+        <label for="itemsPerPage">게시글 수: </label>
+        <select id="itemsPerPage" onchange="updateItemsPerPage()">
+            <option value="10">10개</option>
+            <option value="20">20개</option>
+            <option value="30">30개</option>
+        </select>
+    </div>
+
+    <!-- 게시판 리스트 -->
+    <table class="board-list" id="boardList">
+        <thead>
+            <tr>
+                <th>번호</th> <!-- 게시글 번호 추가 -->
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일시</th>
+                <th>조회수</th>
+                <th>추천수</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 게시글 데이터는 JavaScript로 동적으로 삽입 -->
+        </tbody>
+    </table>
+
+    <!-- 페이지 번호 및 네비게이션 -->
+    <div class="pagination">
+        <button onclick="changePage('prev')">이전</button>
+        
+        <span class="page-info">현재 페이지: 1 / 1</span> <!-- 페이지 번호 표시 -->
+
+        <button onclick="changePage('next')">다음</button>
+    </div>
+
+    <!-- 메시지 -->
+    <div class="page-info" id="message">
+        <!-- 여기에 페이지 이동 시 메시지가 출력됩니다 -->
+    </div>
+</div>
+
+<!-- 글쓰기 버튼 -->
+<div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+    <button class="write-button">글쓰기</button>
+</div>
+
+<script>
+    let currentPage = 1;
+    let itemsPerPage = 10; // 기본적으로 10개씩 보여줌
+    let searchQuery = ""; // 검색어 초기화
+    let filteredPosts = []; // 필터링된 게시글 목록
+    let posts = [
+        { board_no: 1, board_title: "게시글 제목 1", board_content: "이것은 첫 번째 게시글 내용입니다.", board_write: "홍길동", board_date: "2024-12-03 10:00", board_count: 120, board_like: 30 },
+        { board_no: 2, board_title: "게시글 제목 2", board_content: "두 번째 게시글 내용.", board_write: "김철수", board_date: "2024-12-02 14:00", board_count: 85, board_like: 15 },
+        { board_no: 3, board_title: "게시글 제목 3", board_content: "세 번째 게시글 내용", board_write: "이영희", board_date: "2024-12-01 09:00", board_count: 95, board_like: 20 },
+        { board_no: 4, board_title: "게시글 제목 4", board_content: "내용이 포함된 자유게시판 글", board_write: "박준형", board_date: "2024-12-01 16:00", board_count: 110, board_like: 25 },
+        { board_no: 5, board_title: "게시글 제목 5", board_content: "공지사항 내용", board_write: "김민지", board_date: "2024-11-30 18:00", board_count: 200, board_like: 40 },
+        { board_no: 6, board_title: "게시글 제목 6", board_content: "자유게시판에 대한 내용입니다.", board_write: "오세훈", board_date: "2024-11-30 10:30", board_count: 80, board_like: 10 },
+        { board_no: 7, board_title: "게시글 제목 7", board_content: "공지사항에 대한 설명", board_write: "정수민", board_date: "2024-11-29 15:20", board_count: 130, board_like: 35 },
+        { board_no: 8, board_title: "게시글 제목 8", board_content: "자유게시판 내용", board_write: "최수빈", board_date: "2024-11-29 12:10", board_count: 75, board_like: 5 },
+        { board_no: 9, board_title: "게시글 제목 9", board_content: "공지사항입니다.", board_write: "박영광", board_date: "2024-11-28 11:00", board_count: 150, board_like: 20 },
+        { board_no: 10, board_title: "게시글 제목 10", board_content: "자유게시판 내용 10", board_write: "임재영", board_date: "2024-11-28 09:30", board_count: 100, board_like: 30 }
+    ];
+
+    // 게시글 표시
+    function renderPosts() {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const postsToDisplay = filteredPosts.slice(startIndex, endIndex);
+
+        const boardList = document.getElementById('boardList').getElementsByTagName('tbody')[0];
+        boardList.innerHTML = '';
+
+        postsToDisplay.forEach(post => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${post.board_no}</td>
+                <td><a href="#">${post.board_title}</a></td>
+                <td>${post.board_write}</td>
+                <td>${post.board_date}</td>
+                <td>${post.board_count}</td>
+                <td>${post.board_like}</td>
+            `;
+            boardList.appendChild(row);
+        });
+
+        document.querySelector('.page-info').innerText = `현재 페이지: ${currentPage} / ${Math.ceil(filteredPosts.length / itemsPerPage)}`;
+    }
+
+    // 페이지 변경
+    function changePage(direction) {
+        if (direction === 'prev' && currentPage > 1) {
+            currentPage--;
+        } else if (direction === 'next' && currentPage < Math.ceil(filteredPosts.length / itemsPerPage)) {
+            currentPage++;
+        }
+        renderPosts();
+    }
+
+    // 검색 기능
+    function searchPosts() {
+        searchQuery = document.getElementById('searchInput').value;
+        filteredPosts = posts.filter(post => 
+            post.board_title.includes(searchQuery) || post.board_content.includes(searchQuery)
+        );
+        currentPage = 1; // 검색 시 첫 페이지로 리셋
+        renderPosts();
+    }
+
+    // 게시글 수 변경
+    function updateItemsPerPage() {
+        itemsPerPage = parseInt(document.getElementById('itemsPerPage').value);
+        renderPosts();
+    }
+
+    // 초기 데이터 로드
+    filteredPosts = posts;
+    renderPosts();
+</script>
+
+</body>
+</html>
