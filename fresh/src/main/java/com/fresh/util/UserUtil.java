@@ -21,7 +21,7 @@ public class UserUtil {
 	public String getUsername() {
 		// 현재 사용자 아이디
 		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
-
+		
 		return user_id;
 
 	}
