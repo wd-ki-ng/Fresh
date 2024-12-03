@@ -4,18 +4,17 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import com.fresh.dto.UserDTO;
 import com.fresh.repository.LoginRepository;
 
 @Component
 public class UserUtil {
+	
 	@Autowired
 	private LoginRepository loginRepository;
 

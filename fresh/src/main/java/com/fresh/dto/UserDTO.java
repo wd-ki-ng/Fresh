@@ -1,6 +1,5 @@
 package com.fresh.dto;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import lombok.Getter;
@@ -17,6 +16,6 @@ public class UserDTO {
 	private String user_email;
 	private String user_username;
 	private Date user_date;
-	private String role; // 권한
+	private String ROLE; // 권한
 }
 
