@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -21,7 +20,7 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
         http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers("/css/**", "/js/**", "/plugins/**","/", "/index","/main", "/login").permitAll()           // 공개 경로 허용
+                .requestMatchers("/css/**", "/js/**", "/plugins/**","/", "/index","/main", "/login", "/join").permitAll()           // 공개 경로 허용
                 //.requestMatchers("/admin/**").hasAnyRole("ADMIN")              // 관리자 전용
                 //.requestMatchers("/mypage/**").hasAnyRole("ADMIN", "USER")     // 사용자 전용
                 .anyRequest().authenticated()                                  // 그 외 인증 필요
