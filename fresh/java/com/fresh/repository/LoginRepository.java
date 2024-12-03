@@ -16,6 +16,9 @@ public class LoginRepository {
 		return sqlSession.selectOne("test.test");
 	}
 	
+	public UserDTO findByUsername(String username) {
+		return sqlSession.selectOne("test.findByUsername", username);
+	}
 
 	public void joinProcess(UserDTO user) {
 		sqlSession.insert("test.join", user);

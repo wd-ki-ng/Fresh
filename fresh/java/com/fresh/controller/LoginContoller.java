@@ -42,6 +42,11 @@ public class LoginContoller {
 		return "redirect:/";
 	}
 	
+	@GetMapping("/test")
+	public String test(Model model) {
+		model.addAttribute("list", loginService.list());
+		return "test";
+	}
 	
 	@GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -56,7 +61,7 @@ public class LoginContoller {
 	@GetMapping("/join")
 	public String join(Model model) {
 		model.addAttribute("user", userUtil.getUserNameAndRole());
-		return "/join";
+		return "join";
 	}
 	
 }
