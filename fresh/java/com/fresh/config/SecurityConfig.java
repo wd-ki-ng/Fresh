@@ -19,9 +19,10 @@ public class SecurityConfig {
 	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-
+		
         http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers("/css/**", "/js/**", "/plugins/**","/", "/index","/main", "/login").permitAll()           // 공개 경로 허용
+                .requestMatchers("/css/**", "/js/**", "/plugins/**").permitAll() // 정적 리소스 허용
+                .requestMatchers("/", "/index", "/login","/main","/join").permitAll()           // 공개 경로 허용
                 //.requestMatchers("/admin/**").hasAnyRole("ADMIN")              // 관리자 전용
                 //.requestMatchers("/mypage/**").hasAnyRole("ADMIN", "USER")     // 사용자 전용
                 .anyRequest().authenticated()                                  // 그 외 인증 필요

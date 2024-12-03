@@ -9,7 +9,6 @@ import com.fresh.repository.LoginRepository;
 
 @Service
 public class LoginService {
-	
 	@Autowired
 	private LoginRepository loginRepository;
 	
@@ -22,7 +21,6 @@ public class LoginService {
 	
 	public void joinProcess(UserDTO user) {
 		user.setUser_pw(bCryptPasswordEncoder.encode(user.getUser_pw()));
-		System.out.println(bCryptPasswordEncoder.encode(user.getUser_pw()));
 		loginRepository.joinProcess(user);
 	}
 }

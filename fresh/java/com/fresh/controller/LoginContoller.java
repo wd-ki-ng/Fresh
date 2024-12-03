@@ -21,7 +21,6 @@ public class LoginContoller {
 	
 	@Autowired
 	private LoginService loginService;
-	
 	@Autowired
 	private UserUtil userUtil;
 
@@ -32,6 +31,10 @@ public class LoginContoller {
 		model.addAttribute("user", user);
 		if (user.getUser_id().equals("anonymousUser")) {
 			return "/login";
+		System.out.println(user.getUser_id()+ "=" +user.getROLE());
+		model.addAttribute("user", user);
+		if (user.getUser_id().equals("anonymousUser")) {
+			return "login";
 		} else {
 			return "redirect:/";
 		}
