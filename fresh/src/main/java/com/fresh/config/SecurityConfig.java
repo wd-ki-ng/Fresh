@@ -20,7 +20,8 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
         http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers("/css/**", "/js/**", "/plugins/**","/", "/index","/main", "/login", "/join").permitAll()           // 공개 경로 허용
+                .requestMatchers("/img/**", "/css/**", "/js/**", "/scss/**", "/plugins/**").permitAll()
+                .requestMatchers("/", "/index","/main", "/login", "/join").permitAll()           // 공개 경로 허용
                 //.requestMatchers("/admin/**").hasAnyRole("ADMIN")              // 관리자 전용
                 //.requestMatchers("/mypage/**").hasAnyRole("ADMIN", "USER")     // 사용자 전용
                 .anyRequest().authenticated()                                  // 그 외 인증 필요

@@ -3,4 +3,11 @@
 <mapper namespace="board">
 
 
+	<select id="detail" parameterType="Integer" resultType="BoardDTO">
+		select board_no, user_no, board_title, board_content, board_write,
+		 	   board_date, board_like, board_count, board_del
+		from board
+				where board_no = #{no} and board_del = '1'
+	</select>
+
 </mapper>
