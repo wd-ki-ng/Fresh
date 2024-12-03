@@ -14,15 +14,14 @@ import com.fresh.repository.LoginRepository;
 
 @Component
 public class UserUtil {
-	
 	@Autowired
 	private LoginRepository loginRepository;
 
 	public String getUsername() {
 		// 현재 사용자 아이디
-		String id = SecurityContextHolder.getContext().getAuthentication().getName();
+		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
 
-		return id;
+		return user_id;
 
 	}
 
@@ -33,39 +32,39 @@ public class UserUtil {
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		Iterator<? extends GrantedAuthority> iter = authorities.iterator();
 		GrantedAuthority auth = iter.next();
-		String role = auth.getAuthority();
+		String ROLE = auth.getAuthority();
 		
-		return role;
+		return ROLE;
 	}
 	
 	public UserDTO getUserNameAndRole() {
-		String id = SecurityContextHolder.getContext().getAuthentication().getName();
+		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		Iterator<? extends GrantedAuthority> iter = authorities.iterator();
 		GrantedAuthority auth = iter.next();
-		String role = auth.getAuthority();
+		String ROLE = auth.getAuthority();
 		
 		UserDTO user = new UserDTO();
-		user.setUsername(id);
-		user.setRole(role);
+		user.setUser_id(user_id);
+		user.setROLE(ROLE);
 		return user;
 	}
 	
 	public UserDTO getUserData() {
-		String id = SecurityContextHolder.getContext().getAuthentication().getName();
+		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		Iterator<? extends GrantedAuthority> iter = authorities.iterator();
 		GrantedAuthority auth = iter.next();
-		String role = auth.getAuthority();
+		String ROLE = auth.getAuthority();
 		
 		UserDTO user = new UserDTO();
-		user.setUsername(id);
-		user.setRole(role);
-		if (user.getRole().equals("ROLE_ANONYMOUS")) {
+		user.setUser_id(user_id);
+		user.setROLE(ROLE);
+		if (user.getROLE().equals("ROLE_ANONYMOUS")) {
 			return null;
 		} else {
 			return loginRepository.getUserData(user);

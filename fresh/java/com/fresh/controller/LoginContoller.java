@@ -21,15 +21,15 @@ public class LoginContoller {
 	
 	@Autowired
 	private LoginService loginService;
-	
 	@Autowired
 	private UserUtil userUtil;
 
 	@GetMapping("/login")
 	public String login(Model model) {
 		UserDTO user = userUtil.getUserNameAndRole();
+		System.out.println(user.getUser_id()+ "=" +user.getROLE());
 		model.addAttribute("user", user);
-		if (user.getUsername().equals("anonymousUser")) {
+		if (user.getUser_id().equals("anonymousUser")) {
 			return "login";
 		} else {
 			return "redirect:/";
