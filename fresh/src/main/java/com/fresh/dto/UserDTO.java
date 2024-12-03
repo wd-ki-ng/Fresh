@@ -17,6 +17,6 @@ public class UserDTO {
 	private String user_email;
 	private String user_username;
 	private Date user_date;
-	private String role; // 권한
+	private String ROLE; // 권한
 }
 

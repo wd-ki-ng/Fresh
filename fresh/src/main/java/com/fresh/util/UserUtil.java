@@ -51,7 +51,7 @@ public class UserUtil {
 		
 		UserDTO user = new UserDTO();
 		user.setUser_id(id);
-		user.setRole(role);
+		user.setROLE(role);
 		return user;
 	}
 	
@@ -66,8 +66,8 @@ public class UserUtil {
 		
 		UserDTO user = new UserDTO();
 		user.setUser_id(id);
-		user.setRole(role);
-		if (user.getRole().equals("ROLE_ANONYMOUS")) {
+		user.setROLE(role);
+		if (user.getROLE().equals("ROLE_ANONYMOUS")) {
 			return null;
 		} else {
 			return loginRepository.getUserData(user);
