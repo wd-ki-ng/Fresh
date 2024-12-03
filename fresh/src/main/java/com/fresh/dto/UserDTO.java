@@ -1,6 +1,6 @@
 package com.fresh.dto;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,13 +8,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserDTO {
-	private Integer user_no;
-	private String name;
-	private String username;
-	private String password;
-	private String fir_yn;
-	private Integer pw_err_cnt;
-	private LocalDateTime rct_acc_dt;
-	private String role; // 권한
+	
+	private Long user_no;
+	private String user_id;
+	private String user_pw;
+	private String user_name;
+	private String user_email;
+	private String user_username;
+	private Date user_date;
+	private String ROLE; // 권한
 }
 

@@ -18,10 +18,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class LoginContoller {
-	
+
 	@Autowired
 	private LoginService loginService;
-	
+
 	@Autowired
 	private UserUtil userUtil;
 
@@ -29,39 +29,32 @@ public class LoginContoller {
 	public String login(Model model) {
 		UserDTO user = userUtil.getUserNameAndRole();
 		model.addAttribute("user", user);
-		if (user.getUsername().equals("anonymousUser")) {
-			return "login";
-		} else {
-			return "redirect:/";
+			if (user.getUser_id().equals("anonymousUser")) {
+				return "login";
+			} else {
+				return "redirect:/";
+			}
 		}
-		
-	}
 	
+
 	@PostMapping("/login")
 	public String login(UserDTO user) {
 		return "redirect:/";
 	}
-	
-	@GetMapping("/test")
-	public String test(Model model) {
-		model.addAttribute("list", loginService.list());
-		return "test";
-	}
-	
+
 	@GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication != null) {
-            new SecurityContextLogoutHandler().logout(request, response, authentication);
-        }
-        return "redirect:/";
-    }
-	
-	
+	public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null) {
+			new SecurityContextLogoutHandler().logout(request, response, authentication);
+		}
+		return "redirect:/";
+	}
+
 	@GetMapping("/join")
 	public String join(Model model) {
 		model.addAttribute("user", userUtil.getUserNameAndRole());
-		return "join";
+		return "/join";
 	}
-	
+
 }
