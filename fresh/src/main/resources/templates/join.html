@@ -6,7 +6,34 @@
 	</head>
 	<body>
 		<form action="join" method="post">
-			<label for="" />
+			<div>
+				<label for="user_id">아이디</label>
+				<input type="text" name="user_id" id="user_id" placeholder="4~12자의 영문 대소문자와 숫자만 가능">
+				<button type="button" class="id-chk" onclick="checkId()">중복확인</button>
+			</div>
+			<div>
+				<label for="user_pw">비밀번호</label>
+				<input type="password" name="user_pw" id="user_pw" placeholder="8자리 이상의 대소문자와 숫자,특수문자를 포함">
+			</div>
+			<div>
+				<label for="pw_chk">비밀번호 확인</label>
+				<input type="password" name="pw_chk" id="pw_chk">
+			</div>
+			<div>
+				<label for="user_name">이름</label>
+				<input type="text" name="user_name" id="user_name">
+			</div>
+			<div>
+				<label for="user_email">이메일</label>
+				<input type="email" name="user_email" id="user_email" placeholder="example@example.com">
+				<button type="button" check="chk-num">인증번호 전송</button>
+			</div>
+			<div>
+				<label for="user_username">닉네임</label>
+				<input type="text" name="user_username" id="user_username" placeholder="닉네임을 입력해주세요">
+				<button type="button" class="username-chk" onclick="checkUserName()">중복확인</button>
+			</div>
+			<button type="submit" onclick="join()" id="join-btn">회원가입</button>
 		</form>
 	</body>
 </html>
