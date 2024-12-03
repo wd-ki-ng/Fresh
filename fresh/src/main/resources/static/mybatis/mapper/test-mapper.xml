@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="test">
+	
 	<select id="test" resultType="UserDTO">
-		select * from USER
+		select * from user
 	</select>
-	
-	<select id="findByUsername" resultType="UserDTO">
-		select * from USER
-		where username = #{username}
-	</select>
-	
-	<insert id="join" parameterType="UserDTO">
-		insert into USER(NAME, PASSWORD, USERNAME)
-		values (#{name}, #{password}, #{username})
+
+		<insert id="join" parameterType="UserDTO">
+		insert into USER(user_id, user_pw, user_username)
+		values (#{user_id}, #{user_pw}, #{user_username})
 	</insert>
 	
 	<select id="getUserData" parameterType="UserDTO" resultType="UserDTO">
-		select USER_NO, NAME, USERNAME, FIR_YN, PW_ERR_CNT, RCT_ACC_DT, ROLE
-		from USER
-		where USERNAME = #{username} and ROLE = #{role}
+		select user_no, user_id, user_pw, user_name, user_email, user_username, user_date, ROLE 
+		from user
+		where user_id = #{user_id} and ROLE = #{role}
 	</select>
 </mapper>
