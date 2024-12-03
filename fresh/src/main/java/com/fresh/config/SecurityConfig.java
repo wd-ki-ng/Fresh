@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -20,37 +21,39 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
         http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers("/css/**", "/js/**", "/plugins/**").permitAll() // 정적 리소스 허용
-                .requestMatchers("/", "/index", "/login").permitAll()           // 공개 경로 허용
+                .requestMatchers("/css/**", "/js/**", "/plugins/**","/", "/index","/main", "/login").permitAll()           // 공개 경로 허용
                 //.requestMatchers("/admin/**").hasAnyRole("ADMIN")              // 관리자 전용
                 //.requestMatchers("/mypage/**").hasAnyRole("ADMIN", "USER")     // 사용자 전용
                 .anyRequest().authenticated()                                  // 그 외 인증 필요
             );
         
-        // 세션 관리 통합
+        // 세션 중복 로그인 허용 여부
+        http .sessionManagement((auth) -> auth
+                .maximumSessions(1) // 다중 로그인 허용 개수
+                .maxSessionsPreventsLogin(true));
+        // true : 초과 시 새로운 로그인 차단
+        // false : 초과 시 기존 세션 삭제
+        
+        // 로그인이 안되어 오류 페이지 발생 시 로그인 페이지로 이동
+        http.formLogin((auth) -> auth.loginPage("/login")
+        		.loginProcessingUrl("/login")  // 로그인 시 해당 URL로 값 전송
+        		.defaultSuccessUrl("/")
+        		// .successHandler(successHandler()) 
+        		.permitAll());
+        
+        // 세션 고정 보호, 10강
         http.sessionManagement((auth) -> auth
-            .maximumSessions(1).maxSessionsPreventsLogin(false)           // 기존 세션 종료 허용
-            .and()
-            .sessionFixation().changeSessionId()                          // 세션 고정 보호
-        );
+                .sessionFixation().changeSessionId());
         
-        // 로그인 설정
-        http.formLogin((auth) -> auth
-            .loginPage("/login")
-            .loginProcessingUrl("/login")
-            .defaultSuccessUrl("/")
-            .permitAll()
-        );
-        
-        
-        // 로그아웃 설정
+        // 로그아웃 하기
         http.logout((auth) -> auth
-            .logoutUrl("/logout")
-            .logoutSuccessUrl("/")
-            .invalidateHttpSession(true)
-        );        
-         //http.csrf((auth) -> auth.disable()); // 개발 중에는 잠시 꺼두기
+        		.logoutUrl("/logout")
+        		.logoutSuccessUrl("/")
+        		.invalidateHttpSession(true));
+        
+        //http.csrf((auth) -> auth.disable()); // 개발 중에는 잠시 꺼두기
         
         return http.build();
     }
 }
+

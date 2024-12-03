@@ -28,9 +28,10 @@ public class LoginContoller {
 	@GetMapping("/login")
 	public String login(Model model) {
 		UserDTO user = userUtil.getUserNameAndRole();
+		
 		model.addAttribute("user", user);
-		if (user.getUsername().equals("anonymousUser")) {
-			return "login";
+		if (user.getUser_id().equals("anonymousUser")) {
+			return "/login";
 		} else {
 			return "redirect:/";
 		}
@@ -42,11 +43,6 @@ public class LoginContoller {
 		return "redirect:/";
 	}
 	
-	@GetMapping("/test")
-	public String test(Model model) {
-		model.addAttribute("list", loginService.list());
-		return "test";
-	}
 	
 	@GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -61,7 +57,7 @@ public class LoginContoller {
 	@GetMapping("/join")
 	public String join(Model model) {
 		model.addAttribute("user", userUtil.getUserNameAndRole());
-		return "join";
+		return "/join";
 	}
 	
 }

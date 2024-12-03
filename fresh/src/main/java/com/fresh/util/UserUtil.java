@@ -4,10 +4,12 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.fresh.dto.UserDTO;
 import com.fresh.repository.LoginRepository;
@@ -48,7 +50,7 @@ public class UserUtil {
 		String role = auth.getAuthority();
 		
 		UserDTO user = new UserDTO();
-		user.setUsername(id);
+		user.setUser_id(id);
 		user.setRole(role);
 		return user;
 	}
@@ -63,7 +65,7 @@ public class UserUtil {
 		String role = auth.getAuthority();
 		
 		UserDTO user = new UserDTO();
-		user.setUsername(id);
+		user.setUser_id(id);
 		user.setRole(role);
 		if (user.getRole().equals("ROLE_ANONYMOUS")) {
 			return null;

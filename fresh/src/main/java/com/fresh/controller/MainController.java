@@ -11,17 +11,12 @@ import com.fresh.util.UserUtil;
 public class MainController {
 	
 	@Autowired
-	UserUtil userUtil;
+	private UserUtil userUtil;
 	
-	@GetMapping({"/","/index"})
-	public String index(Model model) {
-		model.addAttribute("user", userUtil.getUserNameAndRole());
-		return "index";
-	}
 	
-	@GetMapping("/main")
+	@GetMapping({"/","/main"})
 	public String main(Model model) {
 		model.addAttribute("user", userUtil.getUserNameAndRole());
-		return "main";
+		return "/main";
 	}
 }
