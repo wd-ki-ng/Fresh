@@ -27,7 +27,7 @@ public class LoginContoller {
 	@GetMapping("/login")
 	public String login(Model model) {
 		UserDTO user = userUtil.getUserNameAndRole();
-		
+		System.out.println(user.getUser_id()+ "=" +user.getROLE());
 		model.addAttribute("user", user);
 		if (user.getUser_id().equals("anonymousUser")) {
 			return "/login";
