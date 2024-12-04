@@ -2,6 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
 	<head>
 		<meta charset="UTF-8">
+		<th:block th:insert="~{menu.html::scriptImport}"></th:block>
 		<title>Member Join</title>
 	</head>
 	<body>
@@ -33,20 +34,73 @@
 				<input type="text" name="user_username" id="user_username" placeholder="닉네임을 입력해주세요">
 				<button type="button" class="username-chk" onclick="checkUserName()">중복확인</button>
 			</div>
-			<button type="submit" onclick="join()" id="join-btn">회원가입</button>
+			<button type="button" onclick="join()" id="join-btn">회원가입</button>
 		</form>
 		<script type="text/javascript">
 			function join(){
 				
-				const doc_id = document.getElementById("user_id").value;					//아이디
-				const doc_pw = document.getElementById("user_pw").value;					//비밀번호
-				const doc_pwc = document.getElementById("pw_chk").value;					//비밀번호체크
-				const doc_name = document.getElementById("user_name").value;				//이름
-				const doc_email = document.getElementById("user_email").value;				//이메일
-				const doc_username = document.getElementById("user_username").value;		//닉네임
+				const doc_id = $("#user_id").val();					//아이디
+				const doc_pw = $("#user_pw").val();					//비밀번호
+				const doc_pwc = $("#pw_chk").val();					//비밀번호체크
+				const doc_name = $("#user_name").val();				//이름
+				const doc_email = $("#user_email").val();			//이메일
+				const doc_username = $("#user_username").val();		//닉네임
 				
+				let result = validationCheck(doc_id, doc_pw, doc_pwc, doc_name, doc_username);
+				// 밸리데이션 검사
+				if("true" == result) {
+					alert("성공입니다.");
+				} else {
+					alert(result);
 				}
+				
+				
+				
+				
+				
+				return false;
 			}
+			
+			
+			function validationCheck(userid, userpw, userpwc, username, usernic) {
+				let num = /[0-9]/; //숫자
+				let eng = /[a-zA-Z]/; //영어
+				let kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; //한글
+				let special = /^[~!@#\#$%<>^&*]/; //특수문자
+				
+				let regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{4,16}$/;
+				let regPw = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/g;
+				let regSpace = /\s/g;
+				// 4글자 이상 16글자 이하 id검사
+				// id값이 영문과 숫자만 포함 하도록
+				
+				/*
+				if(!regExp.test(userid)){
+					return "영어와 숫자를 제외한 글자는 사용할수 없습니다.";
+					// 영어와 숫자를 제외한 글자는 사용할수 없습니다.
+				}
+				
+				//비밀번호 유효성 검사
+				//8글자 이상 16글자 이하 영어 숫자 특수문자만 포함(최소 1개 이상씩)하도록
+				if(!regPw.test(userpw) ){
+					return "영어,숫자,특수문자를 최소1개 이상씩 포함해주세요";
+				}
+				
+				//비밀번호 공백검사
+				//합칠 능력이 없어 공백검사 따로 실시
+				if(regSpace.test(userpw)){
+					return "공백넣지마라";
+				}
+				*/
+				
+				//영어 및 한글만 사용 가능
+				//이름 유효성 검사
+				//영어 따로 한글 따로 만들어 시발
+				
+				return "true";
+			}
+			
+			
 		</script>
 	</body>
 
