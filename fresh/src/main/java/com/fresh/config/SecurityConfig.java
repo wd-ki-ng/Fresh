@@ -26,20 +26,22 @@ public class SecurityConfig {
                 //.requestMatchers("/mypage/**").hasAnyRole("ADMIN", "USER")     // 사용자 전용
                 .anyRequest().authenticated()                                  // 그 외 인증 필요
             );
+        // 로그인이 안되어 오류 페이지 발생 시 로그인 페이지로 이동
+        http.formLogin((auth) -> auth.loginPage("/login")
+        		.loginProcessingUrl("/login")  // 로그인 시 해당 URL로 값 전송
+        		.defaultSuccessUrl("/main")
+        		.usernameParameter("username")
+        		.passwordParameter("password")
+        		.permitAll());
         
         // 세션 중복 로그인 허용 여부
         http .sessionManagement((auth) -> auth
                 .maximumSessions(1) // 다중 로그인 허용 개수
-                .maxSessionsPreventsLogin(true));
+                .maxSessionsPreventsLogin(false));
         // true : 초과 시 새로운 로그인 차단
         // false : 초과 시 기존 세션 삭제
         
-        // 로그인이 안되어 오류 페이지 발생 시 로그인 페이지로 이동
-        http.formLogin((auth) -> auth.loginPage("/login")
-        		.loginProcessingUrl("/login")  // 로그인 시 해당 URL로 값 전송
-        		.defaultSuccessUrl("/")
-        		// .successHandler(successHandler()) 
-        		.permitAll());
+
         
         // 세션 고정 보호, 10강
         http.sessionManagement((auth) -> auth
@@ -50,7 +52,7 @@ public class SecurityConfig {
         		.logoutUrl("/logout")
         		.logoutSuccessUrl("/")
         		.invalidateHttpSession(true));
-        
+       
         //http.csrf((auth) -> auth.disable()); // 개발 중에는 잠시 꺼두기
         
         return http.build();

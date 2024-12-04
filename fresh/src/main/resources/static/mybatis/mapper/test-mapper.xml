@@ -7,7 +7,7 @@
 	
 	<select id="findByUsername" resultType="UserDTO">
 		select * from USER
-		where username = #{username}
+		where user_id = #{user_id}
 	</select>
 	
 	<insert id="join" parameterType="UserDTO">
