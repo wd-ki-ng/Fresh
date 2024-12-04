@@ -13,12 +13,6 @@ public class MainController {
 	@Autowired
 	UserUtil userUtil;
 	
-	@GetMapping("/index")
-	public String index(Model model) {
-		model.addAttribute("user", userUtil.getUserNameAndRole());
-		return "index";
-	}
-	
 	@GetMapping({"/","/main"})
 	public String main(Model model) {
 		model.addAttribute("user", userUtil.getUserNameAndRole());

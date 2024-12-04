@@ -21,23 +21,22 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers("/img/**", "/css/**", "/js/**", "/scss/**", "/plugins/**").permitAll()
-                .requestMatchers("/", "/index","/main", "/login", "/join").permitAll()           // 공개 경로 허용
+                .requestMatchers("/", "/main", "/login", "/join","/board").permitAll()           // 공개 경로 허용
                 //.requestMatchers("/admin/**").hasAnyRole("ADMIN")              // 관리자 전용
                 //.requestMatchers("/mypage/**").hasAnyRole("ADMIN", "USER")     // 사용자 전용
                 .anyRequest().authenticated()                                  // 그 외 인증 필요
             );
         // 로그인이 안되어 오류 페이지 발생 시 로그인 페이지로 이동
         http.formLogin((auth) -> auth.loginPage("/login")
-        		.loginProcessingUrl("/login")  // 로그인 시 해당 URL로 값 전송
-        		.defaultSuccessUrl("/main")
-        		.usernameParameter("username")
-        		.passwordParameter("password")
+        		.loginProcessingUrl("/login")// 로그인 시 해당 URL로 값 전송
+        		.failureUrl("/login?error=1")
+        		.defaultSuccessUrl("/",true)
         		.permitAll());
         
         // 세션 중복 로그인 허용 여부
         http .sessionManagement((auth) -> auth
                 .maximumSessions(1) // 다중 로그인 허용 개수
-                .maxSessionsPreventsLogin(false));
+                .maxSessionsPreventsLogin(true));
         // true : 초과 시 새로운 로그인 차단
         // false : 초과 시 기존 세션 삭제
         
