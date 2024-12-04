@@ -30,7 +30,7 @@
 							</thead>
 							<tbody class="table_body">
 								<tr th:each="board:${MainHotPosts}">
-									<td th:text="${board.board_title}"></td>
+									<td><a th:href="@{/detail(no=${board.board_no})}" th:text="${board.board_title}"></a></td>
 									<td>❤️<span th:text="${board.board_like}"></span></td>
 									<td>👁️<span th:text="${board.board_count}"></span></td>
 								</tr>

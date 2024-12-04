@@ -18,6 +18,7 @@ public class BoardService {
 		return boardRepository.getDetail(no);
 	}
 	
+	// 게시글 작성
 	public int setBoard(BoardDTO board) {
 		return boardRepository.setBoard(board);
 	}
