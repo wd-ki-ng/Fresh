@@ -10,13 +10,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.fresh.dto.UserDTO;
-import com.fresh.repository.LoginRepository;
+import com.fresh.repository.UserRepository;
 
 @Component
 public class UserUtil {
 	
 	@Autowired
-	private LoginRepository loginRepository;
+	private UserRepository userRepository;
 
 	public String getUsername() {
 		// 현재 사용자 아이디
@@ -68,7 +68,7 @@ public class UserUtil {
 		if (user.getROLE().equals("ROLE_ANONYMOUS")) {
 			return null;
 		} else {
-			return loginRepository.getUserData(user);
+			return userRepository.getUserData(user);
 		}
 	}
 }
