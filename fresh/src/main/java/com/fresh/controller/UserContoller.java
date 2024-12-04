@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.fresh.dto.UserDTO;
-import com.fresh.service.LoginService;
+import com.fresh.service.UserService;
 import com.fresh.util.UserUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
-public class LoginContoller {
+public class UserContoller {
 
 	@Autowired
-	private LoginService loginService;
+	private UserService userService;
 
 	@Autowired
 	private UserUtil userUtil;
@@ -32,7 +32,7 @@ public class LoginContoller {
 			if (user.getUser_id().equals("anonymousUser")) {
 				return "login";
 			} else {
-				return "redirect:/";
+				return "/";
 			}
 		}
 	
@@ -54,7 +54,11 @@ public class LoginContoller {
 	@GetMapping("/join")
 	public String join(Model model) {
 		model.addAttribute("user", userUtil.getUserNameAndRole());
-		return "/join";
+		return "join";
 	}
-
+	@PostMapping("/joinProcess")
+	public String joinProcess(UserDTO userDTO) {
+		userService.joinProcess(userDTO);
+		return "redirect:/join";
+	}
 }
