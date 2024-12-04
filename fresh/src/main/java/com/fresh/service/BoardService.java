@@ -17,6 +17,10 @@ public class BoardService {
 	public BoardDTO getDetail(int no) {
 		return boardRepository.getDetail(no);
 	}
+	
+	public int setBoard(BoardDTO board) {
+		return boardRepository.setBoard(board);
+	}
 
 	public Object getAnswerContent(int board_del) {
 		// TODO Auto-generated method stub

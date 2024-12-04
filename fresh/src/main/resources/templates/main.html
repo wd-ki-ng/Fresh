@@ -9,27 +9,7 @@
 	<body>
 		<div class="container">
 			<!-- 상단바 - 로고, 게시판 메뉴, 검색창, 마이페이지, 로그인 -->
-			<div class="row NavBar" th:fragment="NavBar">
-				<div class="col-md-1 logo"></div>
-				<div class="col-md-5">
-					<ul class="board_menu">
-						<li>메뉴1</li>
-						<li>메뉴2</li>
-						<li>메뉴3</li>
-						<li>메뉴4</li>
-					</ul>
-				</div>
-				<div class="col-md-4">
-					<form name="SearchBar" method="get" action="#">
-						<div class="searchbar">
-							<input class="searchbar" type="text">
-							<button class="search_icon"></button>
-						</div>
-					</form>
-				</div>
-				<div class="col-md-1">MyPage</div>
-				<div class="col-md-1"><a th:href="@{/login}">LogIn</a></div>
-			</div>
+			<th:block th:insert="~{menu.html::navBar}"></th:block>
 			<!-- 본문 -->
 			<div class="row Main_Body">
 				<!-- 본문-왼쪽(통합인기글, 통합최신글, 공지사항, 테마별최신글) -->
@@ -49,7 +29,7 @@
 								</tr>
 							</thead>
 							<tbody class="table_body">
-								<tr th:each="board:${hot_boards}">
+								<tr th:each="board:${MainHotPosts}">
 									<td th:text="${board.board_title}"></td>
 									<td>❤️<span th:text="${board.board_like}"></span></td>
 									<td>👁️<span th:text="${board.board_count}"></span></td>

@@ -46,4 +46,38 @@ public class BoardController {
 			return "redirect:/login";
 		}
 	}
+	
+	// 글쓰기 페이지로 단순 이동
+	@GetMapping("/boardWrite")
+	public String boardWrite(Model model) {
+		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		UserDTO user = userUtil.getUserData();
+		model.addAttribute("user", userUtil.getUserNameAndRole());
+		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
+			return "redirect:/login";
+		}
+		
+		// 로그인한 상태라면　화면 이동
+		return "boardWrite";
+	}
+	
+	// 글쓰고 제출
+	@GetMapping("/submitPost")
+	public String submitPost(Model model, @RequestParam(name = "board") BoardDTO board) {
+		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		UserDTO user = userUtil.getUserData();
+		model.addAttribute("user", userUtil.getUserNameAndRole());
+		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
+			return "redirect:/login";
+		}
+		// board 내용이 없으면 다시 boardWrite로 보냄
+		
+		// 로그인한 상태라면 입력받은 board에 현재 로그인한 회원의 번호와 닉네임을 입력함
+		board.setUser_no(user.getUser_no());
+		board.setBoard_write(user.getUser_username());
+		// 데이터 베이스에 내용 입력
+		boardService.setBoard(board);
+		// 게시글 목록으로 돌아감
+		return "redirect:/board";
+	}
 }

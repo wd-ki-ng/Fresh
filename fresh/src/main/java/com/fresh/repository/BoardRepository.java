@@ -18,6 +18,10 @@ public class BoardRepository {
 		return sqlSession.selectOne("board.detail", no);
 	}
 	
+	public int setBoard(BoardDTO board) {
+		return sqlSession.insert("board.write", board);
+	}
+	
 	public List<BoardDTO> getMainHotPost() {
 		return sqlSession.selectList("board.main_hot");
 	}
