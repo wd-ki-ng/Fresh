@@ -38,7 +38,7 @@ a {
 }
 /* 로고 */
 .NavBar .logo {
-	background-image: url('../icon/logo.png');
+	background-image: url('@{/icon/logo.png}');
 	background-position: center; /* 이미지를 div의 중앙에 위치 */
 	background-size: contain;  /* 이미지 크기를 버튼에 맞게 조정 */
 	background-repeat: no-repeat;  /* 이미지 반복되지 않도록 설정 */

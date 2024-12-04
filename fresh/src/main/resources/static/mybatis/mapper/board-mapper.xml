@@ -9,5 +9,17 @@
 		from board
 				where board_no = #{no} and board_del = '1'
 	</select>
-
+	
+	<select id="main_hot" resultType="BoardDTO">
+		select board_no, board_title, board_like, board_count, (board_like+board_count) as board_react
+		from board
+		order by board_react desc
+	</select>
+	
+	<select id="main_new" resultType="BoardDTO">
+		select board_no, board_title, board_like, board_count, board_date
+		from board
+		order by board_date desc
+	</select>
+	
 </mapper>
