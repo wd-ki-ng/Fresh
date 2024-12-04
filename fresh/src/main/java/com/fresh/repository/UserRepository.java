@@ -7,24 +7,24 @@ import org.springframework.stereotype.Repository;
 import com.fresh.dto.UserDTO;
 
 @Repository
-public class LoginRepository {
+public class UserRepository {
 	
 	@Autowired
 	private SqlSession sqlSession;
 
 	public UserDTO list() {
-		return sqlSession.selectOne("test.test");
+		return sqlSession.selectOne("user.test");
 	}
 	
-	public UserDTO findByUsername(String user_id) {
-		return sqlSession.selectOne("test.findByUsername", user_id);
+	public UserDTO findByUserId(String user_id) {
+		return sqlSession.selectOne("user.findByUserId", user_id);
 	}
 
 	public void joinProcess(UserDTO user) {
-		sqlSession.insert("test.join", user);
+		sqlSession.insert("user.joinProcess", user);
 	}
 
 	public UserDTO getUserData(UserDTO user) {
-		return sqlSession.selectOne("test.getUserData", user);
+		return sqlSession.selectOne("user.getUserData", user);
 	}
 }

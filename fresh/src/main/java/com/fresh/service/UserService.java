@@ -5,23 +5,23 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.fresh.dto.UserDTO;
-import com.fresh.repository.LoginRepository;
+import com.fresh.repository.UserRepository;
 
 @Service
-public class LoginService {
+public class UserService {
 	
 	@Autowired
-	private LoginRepository loginRepository;
+	private UserRepository userRepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	public UserDTO list() {
-		return loginRepository.list();
+		return userRepository.list();
 	}
 	
 	public void joinProcess(UserDTO user) {
 		user.setUser_pw(bCryptPasswordEncoder.encode(user.getUser_pw()));
-		loginRepository.joinProcess(user);
+		userRepository.joinProcess(user);
 	}
 }

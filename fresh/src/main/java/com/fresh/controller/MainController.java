@@ -21,12 +21,6 @@ public class MainController {
 	@Autowired
 	UserUtil userUtil;
 	
-	@GetMapping("/index")
-	public String index(Model model) {
-		model.addAttribute("user", userUtil.getUserNameAndRole());
-		return "index";
-	}
-	
 	@GetMapping({"/","/main"})
 	public String main(Model model) {
 		// 현재 유저 받아옴. 로그인 안 한 경우엔 역할이 "ROLE_ANONYMOUS"거나, user 자체가 null이 됨

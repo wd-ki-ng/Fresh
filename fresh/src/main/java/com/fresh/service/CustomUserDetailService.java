@@ -8,18 +8,18 @@ import org.springframework.stereotype.Service;
 
 import com.fresh.dto.CustomUserDetails;
 import com.fresh.dto.UserDTO;
-import com.fresh.repository.LoginRepository;
+import com.fresh.repository.UserRepository;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {
 	
 	@Autowired
-	private LoginRepository loginRepository;
+	private UserRepository userRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		UserDTO user = loginRepository.findByUsername(username);
+		UserDTO user = userRepository.findByUserId(username);
 		
 		if (user != null) {
 			System.out.println("CustomUserDetailService : " + user.toString());

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+	<select id="test" resultType="UserDTO">
+		select * from user
+	</select>
+	
+	<select id="findByUserId" resultType="UserDTO">
+		select * from user
+		where user_id = #{user_id}
+	</select>
+	
+	<insert id="joinProcess" parameterType="UserDTO">
+		insert into user(user_id, user_pw, user_name, user_email, user_username, user_date)
+		values (#{user_id}, #{user_pw}, #{user_name}, #{user_email}, #{user_username}, NOW())
+	</insert>
+	
+	<select id="getUserData" parameterType="UserDTO" resultType="UserDTO">
+		select user_no, user_id, user_pw, user_name, user_email
+			  ,user_username, user_date, ROLE
+		from user
+		where user_id = #{user_id} and ROLE = #{ROLE}
+	</select>
+</mapper>
