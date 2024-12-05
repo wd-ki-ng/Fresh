@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fresh.dto.BoardDTO;
-import com.fresh.dto.CommentDTO;
+import com.fresh.dto.CustomCommentDTO;
 import com.fresh.repository.BoardRepository;
 
 @Service
@@ -15,22 +15,24 @@ public class BoardService {
 	@Autowired
 	private BoardRepository boardRepository;
 
-	public BoardDTO getDetail(int no) {
+	public BoardDTO getDetail(Long no) {
 		return boardRepository.getDetail(no);
 	}
 	
 	// 게시글 작성
-	public int setBoard(BoardDTO board) {
+	public int setBoard(BoardDTO board, Long no, String name) {
+		board.setUser_no(no);
+		board.setBoard_write(name);
 		return boardRepository.setBoard(board);
 	}
 
 	// 댓글 개수 가져오기
-	public int getCommentCount(int board_del) {
-		return boardRepository.getCommentCount(board_del);
+	public int getCommentCount(Long no) {
+		return boardRepository.getCommentCount(no);
 	}
 	
 	// 댓글 가져오기
-	public List<CommentDTO> getComments(int no) {
+	public List<CustomCommentDTO> getComments(Long no) {
 		return boardRepository.getComments(no);
 	}
 	

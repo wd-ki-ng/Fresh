@@ -2,192 +2,58 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>게시글 상세</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        .container {
-            width: 80%;
-            margin: 0 auto;
-        }
-
-        header {
-            background-color: #333;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-        }
-
-        h1 {
-            margin: 0;
-        }
-
-        .btn {
-            background-color: #007BFF;
-            color: white;
-            padding: 10px 15px;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        .btn:hover {
-            background-color: #0056b3;
-        }
-
-        .post-detail {
-            background-color: white;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .post-detail h2 {
-            margin-bottom: 15px;
-        }
-
-        .meta {
-            font-size: 0.9em;
-            color: #777;
-            margin-bottom: 15px;
-        }
-
-        .comments {
-            background-color: white;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .comments h3 {
-            margin-top: 0;
-        }
-
-        .comment-item {
-            background-color: #f9f9f9;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-        }
-
-        .comment-actions {
-            margin-top: 10px;
-        }
-
-        .comment-actions .btn {
-            background-color: #28a745;
-            margin-right: 5px;
-        }
-
-        .pagination {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .pagination button {
-            background-color: #007BFF;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 5px;
-            margin: 0 5px;
-            cursor: pointer;
-        }
-
-        .pagination button:hover {
-            background-color: #0056b3;
-        }
-
-        .pagination button.active {
-            background-color: #28a745;
-        }
-
-        .comment-form {
-            margin-top: 20px;
-        }
-
-        .comment-form textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-
-        .comment-form button {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            border: none;
-            margin-top: 10px;
-        }
-
-        .login-message {
-            color: red;
-            font-size: 1.2em;
-        }
-
-        /* 버튼들을 동일한 행에 배치 */
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .btn-container .btn {
-            background-color: #007BFF;
-            color: white;
-            padding: 10px 15px;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        .btn-container .btn:hover {
-            background-color: #0056b3;
-        }
-
-    </style>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="description" content="Orbitor,business,company,agency,modern,bootstrap4,tech,software">
+	<meta name="author" content="themefisher.com">
+	<th:block th:insert="~{menu.html::metaImport}"></th:block>
+	<title th:text="${detail.board_title}">타이틀</title>
+	<th:block th:insert="~{menu.html::headImport}"></th:block>
+	<!-- Main Stylesheet -->
+	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
-        <header>
-            <h1>게시글 상세</h1>
-        </header>
+		<!-- 상단바 - 로고, 게시판 메뉴, 검색창, 마이페이지, 로그인 -->
+		<th:block th:insert="~{menu.html::navBar}"></th:block>
 
         <!-- 게시글 상세 내용 -->
         <section class="post-detail">
-            <h2 id="postTitle">게시글 제목</h2>
+            <h1 th:text="${detail.board_title}"></h1>
             <p class="meta">
-                <span id="postAuthor">작성자: 홍길동</span> | 
-                <span id="postDate">작성시간: 2024-12-03 12:00</span> | 
-                <span id="postViews">조회수: 123</span> | 
-                <span id="postLikes">좋아요: 10</span>
+                <span id="postAuthor">작성자: 
+                	<span th:text="${detail.board_title}"></span>
+                </span> | 
+                <span id="postDate">작성시간: 
+                	<span th:text="${#dates.format(detail.board_date, 'yyyy-MM-dd HH:mm')}"></span>
+                </span> | 
+                <span id="postViews">조회수: 
+                	<span th:text="${detail.board_count}"></span>
+                </span> | 
+                <span id="postLikes">좋아요: 
+                	<span th:text="${detail.board_like}"></span>
+                </span>
             </p>
-            <p id="postContent">게시글 내용이 여기에 들어갑니다. 여기에 게시글의 본문 내용이 길게 들어갑니다. 긴 글을 작성할 수 있습니다. 예를 들어 게시글 내용이 이렇게 길어집니다.</p>
+            <p id="postContent" th:text="${detail.board_content}"></p>
 
             <!-- 좋아요 및 게시글 수정/삭제 버튼 -->
             <div class="post-actions">
                 <button id="likeButton" class="btn">좋아요</button>
-                <a href="#" id="editButton" class="btn" style="display: none;">수정</a>
-                <a href="#" id="deleteButton" class="btn" style="display: none;">삭제</a>
+                <!-- 글의 작성자가 현재 로그인 한 사람과 같은 경우에만 -->
+                <th:block th:if="${detail.user_no == user.user_no}">
+                	<a th:href="@{/#}" id="editButton" class="btn" style="display: inline-block;">수정</a>
+                	<a th:href="@{/#}" id="deleteButton" class="btn" style="display: inline-block;">삭제</a>
+                </th:block>
             </div>
+            
         </section>
 
         <!-- 댓글 섹션 -->
         <section class="comments">
-            <h3>댓글 <span id="commentCount">(0)</span></h3>
+            <h3>댓글 (<span id="commentCount" th:text="${com_count}"></span>)</h3>
             <ul id="commentList">
-                <!-- 댓글 목록 -->
+                <li th:each="comment:${comments}" class="comment-item">
+                	<span th:text="${comment.user_username}"></span> : <span th:text="${comment.com_comment}"></span>
+                </li>
             </ul>
 
             <!-- 댓글 페이지네이션 -->
@@ -196,6 +62,7 @@
             <!-- 댓글 작성 폼 -->
             <div id="commentFormContainer">
                 <form id="commentForm" class="comment-form">
+                	<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                     <textarea id="commentContent" placeholder="댓글을 입력하세요"></textarea>
                     <button type="submit" class="btn">댓글 작성</button>
                 </form>
@@ -204,172 +71,17 @@
 
             <!-- 버튼들 배치 -->
             <div class="btn-container">
-                <a href="previous-post.html" class="btn">이전 글</a>
-                <a href="C:\fresh\Fresh\fresh\src\main\resources\templates\board.html" class="btn">목록</a>
-                <a href="next-post.html" class="btn">다음 글</a>
-                <a href="C:\fresh\Fresh\fresh\src\main\resources\templates\boardWrite.html" class="btn">글 작성</a>
+                <a href="#" class="btn">이전 글</a>
+                <a th:href="@{/board}" class="btn">목록</a>
+                <a href="#" class="btn">다음 글</a>
+                <a th:href="@{/boardWrite}" class="btn">글 작성</a>
             </div>
         </section>
     </div>
-
-    <script>
-        // 게시글 데이터
-        const post = {
-            title: "동적으로 처리되는 게시글 제목",
-            author: "홍길동",  // 게시글 작성자
-            date: "2024-12-03 12:00",
-            views: 123,
-            likes: 10,
-            content: "동적으로 처리되는 게시글 내용. 여기에 긴 글이 들어갑니다. 이 게시글의 내용은 동적으로 처리됩니다.",
-            creator: "홍길동" // 게시글 작성자
-        };
-
-        // 로그인한 사용자 정보 (홍길동으로 로그인된 상태로 가정)
-        let loggedInUser = "홍길동"; // 로그인된 사용자 이름 (홍길동으로 가정)
-
-        // 댓글 데이터 (예시)
-        let comments = [
-            { id: 1, author: "홍길동", content: "댓글 내용 1" },
-            { id: 2, author: "김철수", content: "댓글 내용 2" },
-            { id: 3, author: "이영희", content: "댓글 내용 3" }
-        ];
-
-        const commentsPerPage = 10;  // 한 페이지에 표시할 댓글의 수
-        let currentPage = 1; // 현재 보고 있는 댓글 페이지
-
-        // 게시글 정보를 페이지에 적용
-        document.getElementById('postTitle').textContent = post.title;
-        document.getElementById('postAuthor').textContent = `작성자: ${post.author}`;
-        document.getElementById('postDate').textContent = `작성시간: ${post.date}`;
-        document.getElementById('postViews').textContent = `조회수: ${post.views}`;
-        document.getElementById('postLikes').textContent = `좋아요: ${post.likes}`;
-        document.getElementById('postContent').textContent = post.content;
-
-        // 게시글 수정, 삭제 버튼
-        if (loggedInUser === post.creator) {
-            document.getElementById('editButton').style.display = 'inline-block';
-            document.getElementById('deleteButton').style.display = 'inline-block';
-
-            // 수정 버튼 클릭 시 수정 페이지로 이동하거나 폼으로 처리
-            document.getElementById('editButton').addEventListener('click', function() {
-                const newTitle = prompt("수정할 제목:", post.title);
-                const newContent = prompt("수정할 내용:", post.content);
-                if (newTitle && newContent) {
-                    post.title = newTitle;
-                    post.content = newContent;
-                    // 수정된 내용 반영
-                    document.getElementById('postTitle').textContent = newTitle;
-                    document.getElementById('postContent').textContent = newContent;
-                }
-            });
-
-            // 삭제 버튼 클릭 시 삭제 처리
-            document.getElementById('deleteButton').addEventListener('click', function() {
-                if (confirm("정말로 삭제하시겠습니까?")) {
-                    alert("게시글이 삭제되었습니다.");
-                    // 게시글 삭제 처리 로직 추가
-                }
-            });
-        }
-
-        // 좋아요 버튼 클릭 시 좋아요 수 증가
-        document.getElementById('likeButton').addEventListener('click', function() {
-            post.likes++;
-            document.getElementById('postLikes').textContent = `좋아요: ${post.likes}`;
-        });
-
-        // 댓글 렌더링 함수
-        function renderComments(page) {
-            const startIndex = (page - 1) * commentsPerPage;
-            const endIndex = Math.min(startIndex + commentsPerPage, comments.length);
-            const commentList = document.getElementById('commentList');
-            commentList.innerHTML = '';
-
-            comments.slice(startIndex, endIndex).forEach(comment => {
-                const li = document.createElement('li');
-                li.classList.add('comment-item');
-                li.innerHTML = `
-                    <strong>${comment.author}</strong>: ${comment.content}
-                    ${comment.author === loggedInUser ? `
-                        <div class="comment-actions">
-                            <button class="btn" onclick="editComment(${comment.id})">수정</button>
-                            <button class="btn" onclick="deleteComment(${comment.id})">삭제</button>
-                        </div>
-                    ` : ''}
-                `;
-                commentList.appendChild(li);
-            });
-
-            // 댓글 수 갱신
-            document.getElementById('commentCount').textContent = `(${comments.length})`;
-
-            // 페이지네이션 갱신
-            updatePagination(page);
-        }
-
-        // 댓글 수정 함수
-        function editComment(commentId) {
-            const comment = comments.find(c => c.id === commentId);
-            if (comment.author === loggedInUser) {
-                const newContent = prompt("수정할 댓글 내용:", comment.content);
-                if (newContent) {
-                    comment.content = newContent;
-                    renderComments(currentPage);
-                }
-            } else {
-                alert("본인이 작성한 댓글만 수정할 수 있습니다.");
-            }
-        }
-
-        // 댓글 삭제 함수
-        function deleteComment(commentId) {
-            const comment = comments.find(c => c.id === commentId);
-            if (comment.author === loggedInUser) {
-                comments = comments.filter(c => c.id !== commentId);
-                renderComments(currentPage);
-            } else {
-                alert("본인이 작성한 댓글만 삭제할 수 있습니다.");
-            }
-        }
-
-        // 페이지네이션 갱신 함수
-        function updatePagination(currentPage) {
-            const totalPages = Math.ceil(comments.length / commentsPerPage);
-            const pagination = document.getElementById('pagination');
-            pagination.innerHTML = '';
-
-            for (let i = 1; i <= totalPages; i++) {
-                const button = document.createElement('button');
-                button.textContent = i;
-                button.classList.toggle('active', i === currentPage);
-                button.addEventListener('click', () => {
-                    currentPage = i;
-                    renderComments(currentPage);
-                });
-                pagination.appendChild(button);
-            }
-        }
-
-        // 댓글 작성 폼 제출 처리
-        document.getElementById('commentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // 로그인 상태 체크
-            if (!loggedInUser) {
-                document.getElementById('loginMessage').style.display = 'block';
-                return;
-            }
-
-            const commentContent = document.getElementById('commentContent').value.trim();
-            if (commentContent) {
-                comments.push({ id: comments.length + 1, author: loggedInUser, content: commentContent });
-                renderComments(currentPage); // 댓글 작성 후 현재 페이지에서 갱신
-                document.getElementById('commentContent').value = ''; // 입력 필드 초기화
-            }
-        });
-
-        // 초기 댓글 목록 렌더링
-        renderComments(currentPage);
-    </script>
+   
+    <!-- Essential Scripts =====================================-->
+    
+    <!-- Main jQuery -->
+    <script src="plugins/jquery/jquery.js"></script>
 </body>
 </html>

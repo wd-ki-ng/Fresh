@@ -25,12 +25,12 @@
 							<thead class="table_label">
 								<tr>
 									<th scope="col" colspan="2" class="table_title">인기 게시글</th>
-									<th scope="col" class="more_btn"><a href="#">더보기 > </a></th>
+									<th scope="col" class="more_btn"><a th:href="@{/board}">더보기 > </a></th>
 								</tr>
 							</thead>
 							<tbody class="table_body">
 								<tr th:each="board:${MainHotPosts}">
-									<td><a th:href="@{/detail(no=${board.board_no})}" th:text="${board.board_title}"></a></td>
+									<td><a th:href="@{/boardview(no=${board.board_no})}" th:text="${board.board_title}"></a></td>
 									<td>❤️<span th:text="${board.board_like}"></span></td>
 									<td>👁️<span th:text="${board.board_count}"></span></td>
 								</tr>
@@ -50,7 +50,7 @@
 								<thead class="table_label">
 									<tr>
 										<th scope="col" colspan="2" class="table_title">최신 게시글</th>
-										<th scope="col" class="more_btn"><a href="#">더보기 > </a></th>
+										<th scope="col" class="more_btn"><a th:href="@{/board}">더보기 > </a></th>
 									</tr>
 								</thead>
 								<tbody class="table_body">
@@ -73,7 +73,7 @@
 								<thead class="table_label">
 									<tr>
 										<th scope="col" colspan="2" class="table_title">공지사항</th>
-										<th scope="col" class="more_btn"><a href="#">더보기 > </a></th>
+										<th scope="col" class="more_btn"><a th:href="@{/board}">더보기 > </a></th>
 									</tr>
 								</thead>
 								<tbody class="table_body">

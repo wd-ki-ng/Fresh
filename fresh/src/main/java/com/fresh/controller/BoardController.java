@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fresh.dto.BoardDTO;
-import com.fresh.dto.CommentDTO;
-import com.fresh.dto.CommentDTO;
+import com.fresh.dto.CustomCommentDTO;
 import com.fresh.dto.UserDTO;
 import com.fresh.service.BoardService;
 import com.fresh.util.UserUtil;
@@ -25,8 +25,8 @@ public class BoardController {
 	@Autowired
 	private UserUtil userUtil;
 	
-	@GetMapping("/detail")
-	public String detail(Model model, @RequestParam(name = "no") int no) {
+	@GetMapping("/boardview")
+	public String boardview(Model model, @RequestParam(value = "no") Long no) {
 		UserDTO user = userUtil.getUserData();
 		// 로그인 안한 사람은 못보게 막음
 		// 'or' 연산 시 앞이 true면 뒤의 연산은 하지 않기 때문에 순서도 잘 지정해야 함
@@ -39,26 +39,27 @@ public class BoardController {
 		BoardDTO detail = boardService.getDetail(no);
 		
 		// 만약 detail이 null이면, 존재하지 않는 글이거나 삭제된 게시글(board_del은 mapper에서 검사해서 따로 체크하지 않아도 됨)
+		/*
 		if(detail == null) {
 			model.addAttribute("isExist", 0);
 			return "detail";
 		}
-		
-		// 게시글을 성공적으로 가져온 경우
-		model.addAttribute("detail", detail);
-		model.addAttribute("user", user);
-		model.addAttribute("isExist", 1);
+		*/
+		System.out.println(detail.getBoard_content());
+		// model.addAttribute("isExist", 1);
 		
 		// 해당 게시글의 댓글 수
 		int com_count = boardService.getCommentCount(no);
 		
 		// 해당 게시글의 댓글이 1개라도 있다면, 댓글 리스트 가져오기
-		if(com_count > 0) {
-			List<CommentDTO> comments = boardService.getComments(no);
-			model.addAttribute("comments", comments);
-		}		
+		List<CustomCommentDTO> comments = boardService.getComments(no);
+		model.addAttribute("comments", comments);
 		model.addAttribute("com_count", com_count);
-		return "detail";		
+		// 게시글을 성공적으로 가져온 경우
+		model.addAttribute("detail", detail);
+		model.addAttribute("user", user);
+
+		return "boardview";		
 		
 		
 		/*
@@ -92,23 +93,25 @@ public class BoardController {
 	}
 	
 	// 글쓰고 제출
-	@GetMapping("/submitPost")
-	public String submitPost(Model model, @RequestParam(name = "board") BoardDTO board) {
+	@PostMapping("/submitPost")
+	public String submitPost(Model model, BoardDTO board) {
 		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
 			return "redirect:/login";
 		}
-		// board 내용이 없으면 다시 boardWrite로 보냄
-		
-		// 로그인한 상태라면 입력받은 board에 현재 로그인한 회원의 번호와 닉네임을 입력함
-		board.setUser_no(user.getUser_no());
-		board.setBoard_write(user.getUser_username());
+
 		// 데이터 베이스에 내용 입력
-		boardService.setBoard(board);
+		boardService.setBoard(board, user.getUser_no(), user.getUser_username());
+		
 		// 게시글 목록으로 돌아감
 		return "redirect:/board";
+	}
+	
+	@GetMapping("/submitPost")
+	public String submitPost(Model model) {
+		return "boardWrite";
 	}
 	
 	// 게시판 리스트 페이지
@@ -123,7 +126,5 @@ public class BoardController {
 		model.addAttribute("BoardList", BoardList);
 		
 		return "board";
-		
-		
 	}
 }
