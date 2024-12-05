@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fresh.dto.UserDTO;
 import com.fresh.service.UserService;
@@ -53,12 +54,12 @@ public class UserContoller {
 
 	@GetMapping("/join")
 	public String join(Model model) {
-		model.addAttribute("user", userUtil.getUserNameAndRole());
 		return "join";
 	}
-	@PostMapping("/joinProcess")
+	
+	@PostMapping("/join")
 	public String joinProcess(UserDTO userDTO) {
 		userService.joinProcess(userDTO);
-		return "redirect:/join";
+		return "redirect:/login";
 	}
 }

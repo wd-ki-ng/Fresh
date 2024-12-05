@@ -21,7 +21,9 @@ public class UserService {
 	}
 	
 	public void joinProcess(UserDTO user) {
+		
 		user.setUser_pw(bCryptPasswordEncoder.encode(user.getUser_pw()));
 		userRepository.joinProcess(user);
 	}
+
 }

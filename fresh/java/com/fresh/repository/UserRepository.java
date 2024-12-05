@@ -27,4 +27,11 @@ public class UserRepository {
 	public UserDTO getUserData(UserDTO user) {
 		return sqlSession.selectOne("user.getUserData", user);
 	}
+
+	/*
+	public void join(UserDTO userDTO) {
+	 
+		sqlSession.insert("user.join", userDTO);
+	}
+	*/
 }
