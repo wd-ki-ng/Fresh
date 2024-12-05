@@ -22,8 +22,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers("/img/**", "/css/**", "/js/**", "/scss/**", "/plugins/**").permitAll()
                 .requestMatchers("/", "/main", "/login", "/join","/board").permitAll()           // 공개 경로 허용
-                //.requestMatchers("/admin/**").hasAnyRole("ADMIN")              // 관리자 전용
-                //.requestMatchers("/mypage/**").hasAnyRole("ADMIN", "USER")     // 사용자 전용
+                .requestMatchers("/admin/**").hasAnyRole("ADMIN")              // 관리자 전용
+                .requestMatchers("/mypage/**").hasAnyRole("ADMIN", "USER")     // 사용자 전용
                 .anyRequest().authenticated()                                  // 그 외 인증 필요
             );
         // 로그인이 안되어 오류 페이지 발생 시 로그인 페이지로 이동

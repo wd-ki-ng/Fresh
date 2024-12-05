@@ -3,29 +3,29 @@
 <mapper namespace="board">
  
 
-	<select id="detail" parameterType="Integer" resultType="BoardDTO">
+	<select id="detail" parameterType="Long" resultType="BoardDTO">
 		select board_no, user_no, board_title, board_content, board_write,
 		 	   board_date, board_like, board_count, board_del
 		from board
-				where board_no = #{no} and board_del = '1'
+		where board_no = #{no} and board_del = '1'
 	</select>
 	
 	<insert id="write" parameterType="BoardDTO">
-		insert into board(user_no, board_title, board_content, board_write)
-		values (#{user_no}, #{board_title}, #{board_content}, #{board_write})
+		insert into board(user_no, board_title, board_content, board_date, board_write)
+		values (#{user_no},#{board_title}, #{board_content}, now(), #{board_write})
 	</insert>
 	
-	<select id="com_cnt" parameterType="Integer" resultType="Integer">
+	<select id="com_cnt" parameterType="Long" resultType="Integer">
 		select count(*) 
 		from comment 
 		where board_no = #{no} and com_del = '1'
 	</select>
 	
-	<select id="com_list" parameterType="Integer" resultType="CommentDTO">
-		select * 
-		from comment 
-		where board_no = #{no} and com_del = '1' 
-		order by com_cdate desc
+	<select id="com_list" parameterType="Long" resultType="CustomCommentDTO">
+		select comment.*, user.user_username
+		from comment, user 
+		where comment.board_no = #{no} and comment.com_del = '1' and user.user_no=comment.user_no
+		order by comment.com_cdate desc
 	</select>
 	
 	<select id="main_hot" resultType="BoardDTO">

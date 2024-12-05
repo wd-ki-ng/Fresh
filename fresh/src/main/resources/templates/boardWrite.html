@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:insert="~{menu.html::metaImport}"></th:block>
     <title>게시글 작성</title>
     <style>
         body {
@@ -57,6 +58,7 @@
 	<th:block th:insert="~{menu.html::navBar}"></th:block>
     <h1>게시글 작성</h1>
     <form name="board" action="/submitPost" method="POST">
+    	<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
         <div class="form-group">
             <label for="board_title">제목</label>
             <input type="text" id="board_title" name="board_title" required placeholder="게시글 제목을 입력하세요">

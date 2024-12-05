@@ -27,6 +27,7 @@
       <link rel="stylesheet" type="text/css" href="/css/menu.css">
       <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
       <link rel="stylesheet" type="text/css" href="/css/mainpage.css">
+      <link rel="stylesheet" type="text/css" href="/css/board.css">
    </th:block>
    
     <th:block th:fragment="metaImport">
@@ -37,7 +38,7 @@
 	<th:block th:fragment="navBar">
 		<!-- 상단바 - 로고, 게시판 메뉴, 검색창, 마이페이지, 로그인 -->
 		<div class="row NavBar" th:fragment="NavBar">
-			<div class="col-md-1 logo"></div>
+			<a th:href="@{/}"><div class="col-md-1 logo"></div></a>
 			<div class="col-md-5">
 				<ul class="board_menu">
 					<li>메뉴1</li>
