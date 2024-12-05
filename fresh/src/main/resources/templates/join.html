@@ -11,33 +11,45 @@
 				<label for="user_id">아이디</label>
 				<input type="text" name="user_id" id="user_id" placeholder="4~12자의 영문 대소문자와 숫자만 가능">
 				<button type="button" class="id-chk" onclick="checkId()">중복확인</button>
+				<br/>
+				<div id="id_div"></div>
 			</div>
 			<div>
 				<label for="user_pw">비밀번호</label>
 				<input type="password" name="user_pw" id="user_pw" placeholder="8자리 이상의 대소문자와 숫자,특수문자를 포함">
+				<br/>
+				<div id="pw_div"></div>
 			</div>
 			<div>
 				<label for="pw_chk">비밀번호 확인</label>
 				<input type="password" name="pw_chk" id="pw_chk">
+				<br/>
+				<div id="pwc_div"></div>
 			</div>
 			<div>
 				<label for="user_name">이름</label>
 				<input type="text" name="user_name" id="user_name">
+				<br/>
+				<div id="uname_div"></div>
 			</div>
 			<div>
 				<label for="user_email">이메일</label>
 				<input type="email" name="user_email" id="user_email" placeholder="example@example.com">
 				<button type="button" check="chk-num">인증번호 전송</button>
+				<br>
+				<div id="email_div"></div>
 			</div>
 			<div>
 				<label for="user_username">닉네임</label>
 				<input type="text" name="user_username" id="user_username" placeholder="닉네임을 입력해주세요">
+				<br/>
+				<div id="user_div"></div>
 				<button type="button" class="username-chk" onclick="checkUserName()">중복확인</button>
 			</div>
 
-			<button type="submit" id="join-btn" >회원가입</button>
+			<!--  <button type="submit" id="join-btn" >회원가입</button> -->
 
-			<button type="submit" onclick="join()" id="join-btn">회원가입</button>
+			<button type="button" onclick="join()" id="join-btn">회원가입</button>
 
 		</form>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -51,30 +63,114 @@
 				}
 			})
 			
+			
 			//유효성 검사입니다 응애시발
-			$(function (){
-				const checkID = RegExp(/^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{4,16}$/);
-				const checkPW = RegExp(/^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/g);
+			$(function (){//유효성 검사 시작
+				const checkID = RegExp(/^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{4,}$/);
+				const checkPW = RegExp(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[~!@#$%^&*()_+])[A-Za-z\d~!@#$%^&*()_+]{10,}$/);
 				const checkName = RegExp(/^[가-힣]|[A-Z]|[a-z]$/);
-				const checkUserNmae = RegExp(/^[ㄱ-ㅎ가-힣a-zA-Z0-9]$/);
+				//const checkUserNmae = RegExp(/^[a-zA-Z0-9]|[가-힇]|[ぁ-ゔァ-ヴー々〆〤]|[一-龥]$/);
+				const checkUserNmae = RegExp(/^[0-9A-Za-z가-힣ㄱ-ㅎㅏ-ㅣぁ-んァ-ヶ\u4E00-\u9FFF]+$/);
+				const checkEmail = RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
+				const checkSpc = RegExp(/^[~!@#\#$%<>^&*]/);
 				
 				function checkForm(){
-					//아이디 유효성
+					
+					
+					//아이디 유효성 시작
 					$("#user_id").blur(function(){
 						if($("#user_id").val()== ""){
-							alert("아이디를 입력해주세요");
-							$("#user_id").focus();
+							//alert("아이디를 입력해주세요");
+							$("#id_div").text("아이디를 입력해주세요");
+					         
 							return false;
 						}else if(!checkID.test($("#user_id").val())){
-							alert("영문,숫자를 조합하여 4자리이상 16이하로 입력해주세요")
-							$("#user_id").focus();
+							//alert("영문,숫자를 조합하여 4자리이상 16이하로 입력해주세요");
+							$("#id_div").text("영문,숫자를 조합하여 4자리이상 16이하로 입력해주세요");
+					        
 							return false;
-						}else if(checkID.test($("user_id").val())) {
+						}else if(checkID.test($("#user_id").val())) {
+							$("#id_div").text("");
 							return true;
 						}
-					})//아이디 체크
+					});//아이디 유효성 끝
 				}//체크폼
-			})//스크립트 전체 시작
+				
+				//비밀번호 유효성 시작
+				$("#user_pw").blur(function(){
+					if($("#user_pw").val() == ""){
+						$("#pw_div").text("비밀번호를 입력해 주세요");
+						//alert("비밀번호를 입력해 주세요");
+						return false;
+					}else if(!checkPW.test($("#user_pw").val())){
+						//alert("영문(대소문자),숫자,특수문자,를 각1개이상씩 포함해서 비밀번호를 작성해주세요");
+						$("#pw_div").text("영문(대소문자),숫자,특수문자,를 각1개이상씩 포함해서 비밀번호를 작성해주세요");
+						return false;
+					}else if(checkPW.test($("#user_pw").val())){
+						$("#pw_div").text("");
+						return true;
+					}
+				});//비밀번호 유효성 끝
+				
+				//비밀번호 이중확인 시작
+				$("#pw_chk").blur(function(){
+					if($("#user_pw").val() != $("#pw_chk").val()){
+						//alert("비밀번호와 비밀번호 확인의 입력값이 다릅니다");
+						$("#pwc_div").text("비밀번호가 다릅니다.");
+						return false;
+					}else if($("#user_pw").val() == $("#pw_chk").val()){
+						$("#pwc_div").text("");
+						return true;
+					}
+				}); //비밀번호 이중확인 끝
+				
+				//유저 이름 유효성 시작
+				$("#user_name").blur(function(){
+					if($("#user_name").val()==""){
+						$("#uname_div").text("이름을 입력해주세요");
+						return false;
+					} else if(!checkName.test($("#user_name").val())){
+						$("#uname_div").text("이름을 확인해주세요");
+						return false;
+					} else if(checkName.test($("#user_name").val())){
+						$("#uname_div").text("");
+						return true;
+					}
+				}); //유저 이름 유효성 끝
+				
+				//이메일 유효성 검사
+				$("#user_email").blur(function(){
+					if($("#user_email").val() == ""){
+						$("#email_div").text("이메일을 입력해주세요");
+						return false;
+					} else if(!checkEmail.test($("#user_email").val())){
+						$("#email_div").text("이메일 형식이 잘못되었습니다");
+						return false;
+					} else if(checkEmail.test($("#user_email").val())){
+						$("#email_div").text("");
+						return true;
+					}
+				}); //이메일 유효성 검사 끝
+				
+				//닉네임 유효성 검사 시작
+				$("#user_username").blur(function(){
+					if($("#user_username").val() == ""){
+						$("#user_div").text("닉네임을 입력해주세요");
+						return false;
+					} else if(!checkUserNmae.test($("#user_username").val())){
+						$("#user_div").text("유효하지 않은 방식입니다");
+						return false;
+					} else if(checkUserNmae.test($("#user_username").val())){
+						$("#user_div").text("");
+						return true;
+					}
+				}); //닉네임 유효성 검사 끝
+				
+				
+				
+				checkForm();
+				
+			});//유효성 검사 끝
 			
 		/*
 			function join(){
