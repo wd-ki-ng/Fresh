@@ -21,7 +21,7 @@
             <h1 th:text="${detail.board_title}"></h1>
             <p class="meta">
                 <span id="postAuthor">작성자: 
-                	<span th:text="${detail.board_title}"></span>
+                	<span th:text="${detail.board_write}"></span>
                 </span> | 
                 <span id="postDate">작성시간: 
                 	<span th:text="${#dates.format(detail.board_date, 'yyyy-MM-dd HH:mm')}"></span>
@@ -44,7 +44,6 @@
                 	<a th:href="@{/#}" id="deleteButton" class="btn" style="display: inline-block;">삭제</a>
                 </th:block>
             </div>
-            
         </section>
 
         <!-- 댓글 섹션 -->

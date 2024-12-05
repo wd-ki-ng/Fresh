@@ -45,7 +45,6 @@ public class BoardController {
 			return "detail";
 		}
 		*/
-		System.out.println(detail.getBoard_content());
 		// model.addAttribute("isExist", 1);
 		
 		// 해당 게시글의 댓글 수
