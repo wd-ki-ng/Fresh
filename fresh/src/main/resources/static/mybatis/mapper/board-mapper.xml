@@ -15,6 +15,19 @@
 		values (#{user_no}, #{board_title}, #{board_content}, #{board_write})
 	</insert>
 	
+	<select id="com_cnt" parameterType="Integer" resultType="Integer">
+		select count(*) 
+		from comment 
+		where board_no = #{no} and com_del = '1'
+	</select>
+	
+	<select id="com_list" parameterType="Integer" resultType="CommentDTO">
+		select * 
+		from comment 
+		where board_no = #{no} and com_del = '1' 
+		order by com_cdate desc
+	</select>
+	
 	<select id="main_hot" resultType="BoardDTO">
 		select board_no, board_title, board_like, board_count, (board_like+board_count) as board_react
 		from board

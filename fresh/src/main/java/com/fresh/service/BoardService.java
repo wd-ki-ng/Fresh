@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fresh.dto.BoardDTO;
+import com.fresh.dto.CommentDTO;
 import com.fresh.repository.BoardRepository;
 
 @Service
@@ -23,9 +24,14 @@ public class BoardService {
 		return boardRepository.setBoard(board);
 	}
 
-	public Object getAnswerContent(int board_del) {
-		// TODO Auto-generated method stub
-		return null;
+	// 댓글 개수 가져오기
+	public int getCommentCount(int board_del) {
+		return boardRepository.getCommentCount(board_del);
+	}
+	
+	// 댓글 가져오기
+	public List<CommentDTO> getComments(int no) {
+		return boardRepository.getComments(no);
 	}
 	
 	// 통합 인기글 : 추천수 + 조회수를 더한 '반응수' 열을 만들고, 반응수가 높은 순으로 정렬
