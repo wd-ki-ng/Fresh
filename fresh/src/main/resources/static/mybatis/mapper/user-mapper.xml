@@ -12,7 +12,7 @@
 	
 	<insert id="joinProcess" parameterType="UserDTO">
 		insert into user(user_id, user_pw, user_name, user_email, user_username, user_date)
-		values (#{user_id}, #{user_pw}, #{user_name}, #{user_email}, #{user_username}, NOW())
+		values(#{user_id}, #{user_pw}, #{user_name}, #{user_email}, #{user_username}, now())
 	</insert>
 	
 	<select id="getUserData" parameterType="UserDTO" resultType="UserDTO">
