@@ -54,7 +54,7 @@
 									</tr>
 								</thead>
 								<tbody class="table_body">
-									<tr th:each="board:${new_boards}">
+									<tr th:each="board:${MainNewPosts}">
 										<td th:text="${board.board_title}"></td>
 										<td>❤️<span th:text="${board.board_like}"></span></td>
 										<td>👁️<span th:text="${board.board_count}"></span></td>
