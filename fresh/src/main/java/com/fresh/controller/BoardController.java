@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fresh.dto.BoardDTO;
+import com.fresh.dto.CommentDTO;
+import com.fresh.dto.CommentDTO;
 import com.fresh.dto.UserDTO;
 import com.fresh.service.BoardService;
 import com.fresh.util.UserUtil;
@@ -35,6 +37,31 @@ public class BoardController {
 		
 		// 해당 글 정보를 가져옴
 		BoardDTO detail = boardService.getDetail(no);
+		
+		// 만약 detail이 null이면, 존재하지 않는 글이거나 삭제된 게시글(board_del은 mapper에서 검사해서 따로 체크하지 않아도 됨)
+		if(detail == null) {
+			model.addAttribute("isExist", 0);
+			return "detail";
+		}
+		
+		// 게시글을 성공적으로 가져온 경우
+		model.addAttribute("detail", detail);
+		model.addAttribute("user", user);
+		model.addAttribute("isExist", 1);
+		
+		// 해당 게시글의 댓글 수
+		int com_count = boardService.getCommentCount(no);
+		
+		// 해당 게시글의 댓글이 1개라도 있다면, 댓글 리스트 가져오기
+		if(com_count > 0) {
+			List<CommentDTO> comments = boardService.getComments(no);
+			model.addAttribute("comments", comments);
+		}		
+		model.addAttribute("com_count", com_count);
+		return "detail";		
+		
+		
+		/*
 		// 로그인 한 사람이 학생이 아니면 => 관리자, 교직원임
 		// or 로그인 한 사람과 작성자가 같으면 통과
 		if (!user.getROLE().equals("ROLE_USER")) {
@@ -47,6 +74,7 @@ public class BoardController {
 		} else {
 			return "redirect:/login";
 		}
+		*/
 	}
 	
 	// 글쓰기 페이지로 단순 이동

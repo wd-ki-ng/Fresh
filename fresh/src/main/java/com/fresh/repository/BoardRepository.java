@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.fresh.dto.BoardDTO;
+import com.fresh.dto.CommentDTO;
 
 @Repository
 public class BoardRepository {
@@ -20,6 +21,14 @@ public class BoardRepository {
 	
 	public int setBoard(BoardDTO board) {
 		return sqlSession.insert("board.write", board);
+	}
+	
+	public int getCommentCount(int no) {
+		return sqlSession.selectOne("board.com_cnt", no);
+	}
+	
+	public List<CommentDTO> getComments(int no) {
+		return sqlSession.selectList("board.com_list");
 	}
 	
 	public List<BoardDTO> getMainHotPost() {
