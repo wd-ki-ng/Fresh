@@ -235,8 +235,8 @@
 	<td><a th:href="@{/detail(no=${board.board_no})}"
 		th:text="${board.board_count}"></a></td>
 	<td><a th:href="@{/detail(no=${board.board_no})}"
-		th:text="${board.board_like}"></a></td>	
-	
+		th:text="${board.board_like}"></a></td>	 
+	 
 </tr>
     ];
    
@@ -258,7 +258,7 @@
                 <td>${post.board_write}</td>
                 <td>${post.board_date}</td>
                 <td>${post.board_count}</td>
-                <td>${post.board_like}</td>
+                <td>${post.board_like}</td> 
             `;
             boardList.appendChild(row);
         });
