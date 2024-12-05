@@ -176,10 +176,24 @@
                 <th>추천수</th>
             </tr>
         </thead>
-        <tbody>
-            <!-- 게시글 데이터는 JavaScript로 동적으로 삽입 -->
-        </tbody>
-    </table>
+			<tbody>
+				<tr th:each="board:${BoardList}">
+					<td><a th:href="@{/detail(no=${board.board_no})}"
+						th:text="${board.board_no}"></a></td>
+					<td><a th:href="@{/detail(no=${board.board_no})}"
+						th:text="${board.board_title}"></a></td>
+					<td><a th:href="@{/detail(no=${board.board_no})}"
+						th:text="${board.board_title}"></a></td>
+					<td><a th:href="@{/detail(no=${board.board_no})}"
+						th:text="${board.board_date}"></a></td>
+					<td><a th:href="@{/detail(no=${board.board_no})}"
+						th:text="${board.board_count}"></a></td>
+					<td><a th:href="@{/detail(no=${board.board_no})}"
+						th:text="${board.board_like}"></a></td>	
+					
+				</tr>
+			</tbody>
+		</table>
 
     <!-- 페이지 번호 및 네비게이션 -->
     <div class="pagination">
@@ -208,18 +222,7 @@
     let itemsPerPage = 10; // 기본적으로 10개씩 보여줌
     let searchQuery = ""; // 검색어 초기화
     let filteredPosts = []; // 필터링된 게시글 목록
-    let posts = [
-        { board_no: 1, board_title: "게시글 제목 1", board_content: "이것은 첫 번째 게시글 내용입니다.", board_write: "홍길동", board_date: "2024-12-03 10:00", board_count: 120, board_like: 30 },
-        { board_no: 2, board_title: "게시글 제목 2", board_content: "두 번째 게시글 내용.", board_write: "김철수", board_date: "2024-12-02 14:00", board_count: 85, board_like: 15 },
-        { board_no: 3, board_title: "게시글 제목 3", board_content: "세 번째 게시글 내용", board_write: "이영희", board_date: "2024-12-01 09:00", board_count: 95, board_like: 20 },
-        { board_no: 4, board_title: "게시글 제목 4", board_content: "내용이 포함된 자유게시판 글", board_write: "박준형", board_date: "2024-12-01 16:00", board_count: 110, board_like: 25 },
-        { board_no: 5, board_title: "게시글 제목 5", board_content: "공지사항 내용", board_write: "김민지", board_date: "2024-11-30 18:00", board_count: 200, board_like: 40 },
-        { board_no: 6, board_title: "게시글 제목 6", board_content: "자유게시판에 대한 내용입니다.", board_write: "오세훈", board_date: "2024-11-30 10:30", board_count: 80, board_like: 10 },
-        { board_no: 7, board_title: "게시글 제목 7", board_content: "공지사항에 대한 설명", board_write: "정수민", board_date: "2024-11-29 15:20", board_count: 130, board_like: 35 },
-        { board_no: 8, board_title: "게시글 제목 8", board_content: "자유게시판 내용", board_write: "최수빈", board_date: "2024-11-29 12:10", board_count: 75, board_like: 5 },
-        { board_no: 9, board_title: "게시글 제목 9", board_content: "공지사항입니다.", board_write: "박영광", board_date: "2024-11-28 11:00", board_count: 150, board_like: 20 },
-        { board_no: 10, board_title: "게시글 제목 10", board_content: "자유게시판 내용 10", board_write: "임재영", board_date: "2024-11-28 09:30", board_count: 100, board_like: 30 }
-    ];
+   
 
     // 게시글 표시
     function renderPosts() {

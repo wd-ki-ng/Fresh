@@ -29,4 +29,8 @@ public class BoardRepository {
 	public List<BoardDTO> getMainNewPost() {
 		return sqlSession.selectList("board.main_new");
 	}
+	
+	public List<BoardDTO> getBoardList() {
+		return sqlSession.selectList("board.boardList");
+	}
 }

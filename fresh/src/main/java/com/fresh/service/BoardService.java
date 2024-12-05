@@ -37,5 +37,10 @@ public class BoardService {
 	public List<BoardDTO> getMainNewPost() {
 		return boardRepository.getMainNewPost();
 	}
+	
+	// 게시판 리스트 
+	public List<BoardDTO> getBoardList() {
+		return boardRepository.getBoardList();
+	}
 
 }

@@ -1,5 +1,7 @@
 package com.fresh.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -79,5 +81,21 @@ public class BoardController {
 		boardService.setBoard(board);
 		// 게시글 목록으로 돌아감
 		return "redirect:/board";
+	}
+	
+	// 게시판 리스트 페이지
+	@GetMapping({"/board"})
+	public String boardList(Model model) {
+		// 현재 유저 받아옴. 로그인 안 한 경우엔 역할이 "ROLE_ANONYMOUS"거나, user 자체가 null이 됨
+		UserDTO user = userUtil.getUserData();
+		model.addAttribute("user", userUtil.getUserNameAndRole());
+		
+		// 게시글 가져와서 model에 추가
+		List<BoardDTO> BoardList = boardService.getBoardList();
+		model.addAttribute("BoardList", BoardList);
+		
+		return "board";
+		
+		
 	}
 }
