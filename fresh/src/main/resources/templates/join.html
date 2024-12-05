@@ -2,7 +2,6 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
 	<head>
 		<meta charset="UTF-8">
-		<th:block th:insert="~{menu.html::scriptImport}"></th:block>
 		<title>Member Join</title>
 	</head>
 	<body>
@@ -35,7 +34,11 @@
 				<input type="text" name="user_username" id="user_username" placeholder="닉네임을 입력해주세요">
 				<button type="button" class="username-chk" onclick="checkUserName()">중복확인</button>
 			</div>
+
 			<button type="submit" id="join-btn" >회원가입</button>
+
+			<button type="submit" onclick="join()" id="join-btn">회원가입</button>
+
 		</form>
 		<script type="text/javascript">
 
@@ -44,14 +47,13 @@
 		/*
 			function join(){
 				
-				const doc_id = $("#user_id").val();					//아이디
-				const doc_pw = $("#user_pw").val();					//비밀번호
-				const doc_pwc = $("#pw_chk").val();					//비밀번호체크
-				const doc_name = $("#user_name").val();				//이름
-				const doc_email = $("#user_email").val();			//이메일
-				const doc_username = $("#user_username").val();		//닉네임
-				
-				
+				const doc_id = document.getElementById("user_id").value;					//아이디
+				const doc_pw = document.getElementById("user_pw").value;					//비밀번호
+				const doc_pwc = document.getElementById("pw_chk").value;					//비밀번호체크
+				const doc_name = document.getElementById("user_name").value;				//이름
+				const doc_email = document.getElementById("user_email").value;				//이메일
+				const doc_username = document.getElementById("user_username").value;		//닉네임
+
 				let result = validationCheck(doc_id, doc_pw, doc_pwc, doc_name, doc_username);
 				// 밸리데이션 검사
 				if("true" == result) {
@@ -60,14 +62,8 @@
 					alert(result);
 				}
 				
-				
-				
-				
-				
-				
 				return false;
 			}
-			
 			
 			function validationCheck(userid, userpw, userpwc, username, usernic) {
 				let num = /[0-9]/; //숫자
@@ -108,7 +104,6 @@
 				
 			}
 			*/
-			
 		</script>
 	</body>
 
