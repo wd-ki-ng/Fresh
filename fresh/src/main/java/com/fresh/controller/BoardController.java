@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fresh.dto.BoardDTO;
+import com.fresh.dto.CommentDTO;
 import com.fresh.dto.CustomCommentDTO;
 import com.fresh.dto.UserDTO;
 import com.fresh.service.BoardService;
@@ -35,17 +36,11 @@ public class BoardController {
 			return "redirect:/login";
 		}
 		
+		// 해당 글의 조회수를 늘림
+		boardService.setView(no);
+		
 		// 해당 글 정보를 가져옴
 		BoardDTO detail = boardService.getDetail(no);
-		
-		// 만약 detail이 null이면, 존재하지 않는 글이거나 삭제된 게시글(board_del은 mapper에서 검사해서 따로 체크하지 않아도 됨)
-		/*
-		if(detail == null) {
-			model.addAttribute("isExist", 0);
-			return "detail";
-		}
-		*/
-		// model.addAttribute("isExist", 1);
 		
 		// 해당 게시글의 댓글 수
 		int com_count = boardService.getCommentCount(no);
@@ -111,6 +106,23 @@ public class BoardController {
 	@GetMapping("/submitPost")
 	public String submitPost(Model model) {
 		return "boardWrite";
+	}
+	
+	// 댓글 작성 버튼
+	@PostMapping("/comWrite")
+	public String comWrite(Model model, CommentDTO comment) {
+		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		UserDTO user = userUtil.getUserData();
+		model.addAttribute("user", userUtil.getUserNameAndRole());
+		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
+			return "redirect:/login";
+		}
+
+		// 데이터 베이스에 내용 입력
+		boardService.setComment(comment, user.getUser_no());
+		
+		// 게시글 상세 페이지로 돌아감
+		return "redirect:/boardview?no="+comment.getBoard_no();
 	}
 	
 	// 게시판 리스트 페이지
