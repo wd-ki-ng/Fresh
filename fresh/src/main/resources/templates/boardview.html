@@ -49,20 +49,35 @@
         <!-- 댓글 섹션 -->
         <section class="comments">
             <h3>댓글 (<span id="commentCount" th:text="${com_count}"></span>)</h3>
-            <ul id="commentList">
-                <li th:each="comment:${comments}" class="comment-item">
-                	<span th:text="${comment.user_username}"></span> : <span th:text="${comment.com_comment}"></span>
+            <ul id="commentList" th:each="comment:${comments}" class="comment-item">
+                <li>
+                	<div th:id="'com_content'+${comment.com_no}">
+                		<span th:text="${comment.user_username}"></span> : <span th:text="${comment.com_comment}"></span>
+                	</div>
+                	<form th:id="'comment'+${comment.com_no}" name="comment" action="/comUpdate" method="post" style="display:none;">
+                		<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                		<input type="hidden" name="board_no" th:value="${detail.board_no}">
+                		<textarea id="commentContent" name="com_comment" th:placeholder="${comment.com_comment}"></textarea>
+                    	<button type="submit" class="btn" style="display: inline-block; padding: 5px 10px;">수정</button>
+                	</form>
+                	<div class="com_btn">
+	                	<th:block th:if="${comment.user_no == user.user_no}">
+		                	<a href="javascript:void(0);" th:onclick="modifyCom([[${comment.com_no}]])" class="btn" style="display: inline-block; padding: 5px 10px;">수정</a>
+			                <a th:href="@{/#}" class="btn" style="display: inline-block; padding: 5px 10px;">삭제</a>
+	                	</th:block> 
+	                	<a th:href="@{/#}" class="btn" style="display: inline-block; padding: 5px 10px;">대댓글</a>
+                	</div>
                 </li>
             </ul>
-
             <!-- 댓글 페이지네이션 -->
             <div class="pagination" id="pagination"></div>
 
             <!-- 댓글 작성 폼 -->
             <div id="commentFormContainer">
-                <form id="commentForm" class="comment-form">
+                <form id="commentForm" class="comment-form" name="comment" action="/comWrite" method="post">
                 	<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                    <textarea id="commentContent" placeholder="댓글을 입력하세요"></textarea>
+                	<input type="hidden" name="board_no" th:value="${detail.board_no}">
+                    <textarea id="commentContent" name="com_comment" placeholder="댓글을 입력하세요"></textarea>
                     <button type="submit" class="btn">댓글 작성</button>
                 </form>
                 <p id="loginMessage" class="login-message" style="display: none;">로그인 후 댓글을 작성할 수 있습니다.</p>
@@ -79,8 +94,18 @@
     </div>
    
     <!-- Essential Scripts =====================================-->
-    
     <!-- Main jQuery -->
     <script src="plugins/jquery/jquery.js"></script>
+    <script>
+    function modifyCom(no){
+    	const com_content = document.getElementById('com_content'+no.toString());
+    	const comment = document.getElementById('comment'+no.toString());
+    	
+    	com_content.style.display = 'none';
+    	comment.style.display = 'block';
+    }
+    
+    
+    </script>
 </body>
 </html>
