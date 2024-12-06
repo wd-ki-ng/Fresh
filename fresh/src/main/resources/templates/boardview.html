@@ -49,12 +49,15 @@
         <!-- 댓글 섹션 -->
         <section class="comments">
             <h3>댓글 (<span id="commentCount" th:text="${com_count}"></span>)</h3>
-            <ul id="commentList">
-                <li th:each="comment:${comments}" class="comment-item">
-                	<span th:text="${comment.user_username}"></span> : <span th:text="${comment.com_comment}"></span>
+            <ul id="commentList" th:each="comment:${comments}" class="comment-item">
+                <li>
+                	<span th:text="${comment.user_username}"></span> : <span th:text="${comment.com_comment}"></span> 
+                	<th:block th:if="${comment.user_no == user.user_no}">
+	                	<a th:href="@{/#}" id="editButton" class="btn" style="display: inline-block; padding: 10px;">수정</a>
+	                	<a th:href="@{/#}" id="deleteButton" class="btn" style="display: inline-block; padding: 10px;">삭제</a>
+                	</th:block>
                 </li>
             </ul>
-
             <!-- 댓글 페이지네이션 -->
             <div class="pagination" id="pagination"></div>
 

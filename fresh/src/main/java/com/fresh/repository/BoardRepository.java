@@ -28,8 +28,15 @@ public class BoardRepository {
 	}
 	
 	public List<CustomCommentDTO> getComments(Long no) {
-		return sqlSession.selectList("board.com_list");
+		return sqlSession.selectList("board.com_list", no);
 	}
+	
+	/*
+	public List<CommentDTO> getComments(Long no) {
+		List<CommentDTO> comments = sqlSession.selectList("board.com_list");
+		System.out.println("repository" + comments.size());
+		return comments;
+	}*/
 	
 	public List<BoardDTO> getMainHotPost() {
 		return sqlSession.selectList("board.main_hot");
