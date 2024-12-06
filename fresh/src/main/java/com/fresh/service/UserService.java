@@ -26,4 +26,12 @@ public class UserService {
 		userRepository.joinProcess(user);
 	}
 
+	public UserDTO findByUserId(String user_id) {
+		return userRepository.findByUserId(user_id);
+	}
+	
+	public UserDTO findByUserUserName(String user_username) {
+		return userRepository.findByUserUserName(user_username);
+	}
+	
 }

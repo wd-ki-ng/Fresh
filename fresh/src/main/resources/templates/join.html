@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
+		<meta name="_csrf" th:content="${_csrf.token}">
+        <meta name="_csrf_header" th:content="${_csrf.headerName}">
 		<title>Member Join</title>
 	</head>
 	<body>
@@ -10,7 +12,7 @@
 			<div>
 				<label for="user_id">아이디</label>
 				<input type="text" name="user_id" id="user_id" placeholder="4~12자의 영문 대소문자와 숫자만 가능">
-				<button type="button" class="id-chk" onclick="checkId()">중복확인</button>
+				<button type="button" class="checkId" onclick="checkId()">중복확인</button>
 				<br/>
 				<div id="id_div"></div>
 			</div>
@@ -42,19 +44,20 @@
 			<div>
 				<label for="user_username">닉네임</label>
 				<input type="text" name="user_username" id="user_username" placeholder="닉네임을 입력해주세요">
+				<button type="button" class="checkUserName" onclick="checkUserName()">중복확인</button>
 				<br/>
 				<div id="user_div"></div>
-				<button type="button" class="username-chk" onclick="checkUserName()">중복확인</button>
 			</div>
 
 			<!--  <button type="submit" id="join-btn" >회원가입</button> -->
-
-			<button type="button" onclick="join()" id="join-btn">회원가입</button>
-
+			
+			<button type="submit"  id="join-btn">회원가입</button>
+			
 		</form>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script type="text/javascript">
-			
+			const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+        	const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 		
 		//회원가입 페이지 스페이스바 금지 시발
 			$(document).keydown(function(event){
@@ -166,12 +169,102 @@
 					}
 				}); //닉네임 유효성 검사 끝
 				
-				
-				
 				checkForm();
 				
 			});//유효성 검사 끝
 			
+			//아이디 중복확인
+			function checkId(){
+				
+				const status = $("#user_id").attr("status");
+				const userId = $("#user_id").val();
+				
+				
+				
+				if(userId == ""){
+					$("#user_id").after("아이디를 입력해주세요");
+					return false;
+				}
+				
+				$.ajax({
+					url: "/checkid",
+					type: "post",
+					data:{ userId : userId },
+					 beforeSend: function(xhr) {
+		                    xhr.setRequestHeader(header, token); // CSRF 헤더와 토큰 추가
+		                },
+					success: function(data){
+						//아이디 존재
+						console.log(data);
+						if(data == true){
+		                     $("#user_id").attr("status","no");
+		                     $("#user_id").after("이미 존재하는 아이디입니다");
+		                  } else{         //아이디가 존재하지 않으면
+		                     $("#user_id").attr("status","yes");
+		                     $("#user_id").after("사용 가능한 아이디입니다");
+		                  }
+					},
+					error: function(xhr, status, error) {
+	                    console.log("Error Status Code:", xhr.status);
+	                    alert("요청 처리 중 문제가 발생했습니다.");
+					}
+				});//ajax끝
+				
+			}//중복확인 끝
+			
+			
+			
+			//닉네임 중복검사
+			//username_chk
+			function checkUserName(){
+				const status = $("#user_username").attr("status");
+				const userName = $("#user_username").val();
+				
+				
+				//닉네임을 입력하지 않았다면
+				if(userName == ""){
+					$("#user_username").text("닉네임을 입력해주세요");
+					return $("user_username").text("");
+				}
+				$.ajax({
+					url: "/checkUserName",
+					type:"post",
+					data:{ userName : userName },
+					beforeSend: function(xhr) {
+	                    xhr.setRequestHeader(header, token); // CSRF 헤더와 토큰 추가
+	                },
+				success: function(data){
+					if(data == true){
+						$("#user_username").attr("status", "no");
+						$("#user_username").after("이미 존재하는 닉네임입니다");
+					} else{		//존재하지 않는다면
+						$("#user_username").attr("status", "yes");
+						$("#user_username").after("사용 가능한 닉네임 입니다");
+					}
+				},
+				error: function(xhr, status, error) {
+                    console.log("Error Status Code:", xhr.status);
+                    alert("요청 처리 중 문제가 발생했습니다.");
+				}
+				}); //ajax끝
+			} //닉네임 중복검사 끝
+			/*
+			function join(){
+				const status = $("#user_id").attr("status");
+				const userNameStatus = $("#user_usernameS").attr("status"); 
+				if(status == ""){
+					alert("아이디 중복체크를 해주세요");
+				} else if(status == "no"){
+					alert("다른 아이디를 입력해주세요");
+				}
+				if(userNameStatus == ""){
+					alert("닉네임 중복체크를 해주세요");
+				} else if(userNameStatus == "no"){
+					alert("다른 닉네임을 입력해주세요");
+				}
+				$("#join-btn").submit();
+			}
+			*/
 		/*
 			function join(){
 				
