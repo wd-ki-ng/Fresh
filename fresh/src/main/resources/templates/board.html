@@ -34,6 +34,7 @@
         }
 
         .search-container {
+        	
             display: flex;
             justify-content: space-between;
             margin-bottom: 20px;
@@ -41,7 +42,7 @@
 
         .search-container input[type="text"] {
             padding: 8px;
-            width: 60%;
+            width: 80%;
         }
 
         .search-container button {
@@ -55,6 +56,16 @@
         .search-container button:hover {
             background-color: #555;
         }
+        
+        .search-container form {
+		    display: flex;
+		    align-items: center; /* 검색창과 버튼을 같은 라인에 배치 */
+		}
+		
+		.search-container select,
+		.search-container input {
+		    margin-right: 5px; /* 검색어 입력창과 버튼 사이 간격 */
+		}
 
         /* 게시판 리스트 스타일 */
         .board-list {
@@ -144,15 +155,24 @@
 </header>
 
 <!-- 게시판 영역 -->
+
 <div class="board-container">
-    <!-- 검색창 -->
-    <div class="search-container">
-        <div>게시판</div>
-        <div>
-            <input type="text" id="searchInput" placeholder="제목 또는 내용으로 검색">
-            <button onclick="searchPosts()">검색</button>
-        </div>
-    </div>
+		<!-- 검색창 -->
+		<div class="search-container">
+			<div>게시판</div>
+			<div>
+				<form action="${contextPath}/board/review" method="get"
+					id="searchFoam" name="search-form">
+					<select name="type" class="type-box">
+						<option value="">검색 유형 선택</option>
+						<option value="title">제목</option>
+						<option value="writer">작성자</option>
+					</select>
+					<span><input type="text" name="keyword" placeholder="검색어 입력"></span> 
+					<button type="button" onclick="searchPosts();">검색하기</button>
+				</form>
+			</div>
+		</div>
 
     <!-- 게시글 수 변경 -->
     <div class="items-per-page">
@@ -165,7 +185,7 @@
     </div>
 
     <!-- 게시판 리스트 -->
-    <table class="board-list" id="boardList">
+     <table class="board-list" id="boardList">
         <thead>
             <tr>
                 <th>번호</th> <!-- 게시글 번호 추가 -->
@@ -178,19 +198,12 @@
         </thead>
 			<tbody>
 				<tr th:each="board:${BoardList}">
-					<td><a th:href="@{/detail(no=${board.board_no})}"
-						th:text="${board.board_no}"></a></td>
-					<td><a th:href="@{/detail(no=${board.board_no})}"
-						th:text="${board.board_title}"></a></td>
-					<td><a th:href="@{/detail(no=${board.board_no})}"
-						th:text="${board.board_title}"></a></td>
-					<td><a th:href="@{/detail(no=${board.board_no})}"
-						th:text="${board.board_date}"></a></td>
-					<td><a th:href="@{/detail(no=${board.board_no})}"
-						th:text="${board.board_count}"></a></td>
-					<td><a th:href="@{/detail(no=${board.board_no})}"
-						th:text="${board.board_like}"></a></td>	
-					
+					<td><span th:text="${board.board_no}"></span></td>
+					<td><span th:text="${board.board_title}"></span></td>
+					<td><span th:text="${board.board_write}"></span></td>
+					<td><span th:text="${board.board_date}"></span></td>
+					<td><span th:text="${board.board_count}"></span></td>
+					<td><span th:text="${board.board_like}"></span></td>	
 				</tr>
 			</tbody>
 		</table>
@@ -214,34 +227,25 @@
 <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
     <a th:href="@{/boardWrite}" class="write-button">
         <button>글쓰기</button>
-    </a>>
+    </a>
 </div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    let posts = /*[[${BoardList}]]*/ [];  // Thymeleaf에서 전달된 BoardList 데이터를 JSON으로 변환
+    /*]]>*/
+</script>
 
 <script>
     let currentPage = 1;
     let itemsPerPage = 10; // 기본적으로 10개씩 보여줌
     let searchQuery = ""; // 검색어 초기화
     let filteredPosts = []; // 필터링된 게시글 목록
-    let posts = [ 
-    	<tr th:each="board:${BoardList}">
-	<td><a th:href="@{/detail(no=${board.board_no})}"
-		th:text="${board.board_no}"></a></td>
-	<td><a th:href="@{/detail(no=${board.board_no})}"
-		th:text="${board.board_title}"></a></td>
-	<td><a th:href="@{/detail(no=${board.board_no})}"
-		th:text="${board.board_title}"></a></td>
-	<td><a th:href="@{/detail(no=${board.board_no})}"
-		th:text="${board.board_date}"></a></td>
-	<td><a th:href="@{/detail(no=${board.board_no})}"
-		th:text="${board.board_count}"></a></td>
-	<td><a th:href="@{/detail(no=${board.board_no})}"
-		th:text="${board.board_like}"></a></td>	 
-	 
-</tr>
-    ];
+    
+    // let posts = /*[[${BoardList}]]*/ [];
    
 
-    // 게시글 표시
+ 	// 게시글 표시
     function renderPosts() {
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
@@ -253,12 +257,12 @@
         postsToDisplay.forEach(post => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${post.board_no}</td>
-                <td><a href="#">${post.board_title}</a></td>
-                <td>${post.board_write}</td>
-                <td>${post.board_date}</td>
-                <td>${post.board_count}</td>
-                <td>${post.board_like}</td> 
+                <td><a href="/boardview?no=${post.board_no}">${post.board_no}</a></td>
+                <td><a href="/boardview?no=${post.board_no}">${post.board_title}</a></td>
+                <td><a href="/boardview?no=${post.board_no}">${post.board_write}</a></td>
+                <td><a href="/boardview?no=${post.board_no}">${post.board_date}</a></td>
+                <td><a href="/boardview?no=${post.board_no}">${post.board_count}</a></td>
+                <td><a href="/boardview?no=${post.board_no}">${post.board_like}</a></td>
             `;
             boardList.appendChild(row);
         });
@@ -266,7 +270,7 @@
         document.querySelector('.page-info').innerText = `현재 페이지: ${currentPage} / ${Math.ceil(filteredPosts.length / itemsPerPage)}`;
     }
 
-    // 페이지 변경
+ 	// 페이지 변경
     function changePage(direction) {
         if (direction === 'prev' && currentPage > 1) {
             currentPage--;
@@ -276,23 +280,32 @@
         renderPosts();
     }
 
-    // 검색 기능
+ 	// 검색 기능
     function searchPosts() {
-        searchQuery = document.getElementById('searchInput').value;
-        filteredPosts = posts.filter(post => 
-            post.board_title.includes(searchQuery) || post.board_content.includes(searchQuery)
-        );
+        searchQuery = document.querySelector('[name="keyword"]').value;
+        const searchType = document.querySelector('[name="type"]').value;
+
+        filteredPosts = posts.filter(post => {
+            if (searchType === "title") {
+                return post.board_title.includes(searchQuery);
+            } else if (searchType === "writer") {
+                return post.board_writer.includes(searchQuery);
+            } else {
+                return post.board_title.includes(searchQuery) || post.board_writer.includes(searchQuery);
+            }
+        });
+
         currentPage = 1; // 검색 시 첫 페이지로 리셋
         renderPosts();
     }
 
-    // 게시글 수 변경
+ 	// 게시글 수 변경
     function updateItemsPerPage() {
         itemsPerPage = parseInt(document.getElementById('itemsPerPage').value);
         renderPosts();
     }
 
-    // 초기 데이터 로드
+ 	// 초기 데이터 로드
     filteredPosts = posts;
     renderPosts();
 </script>
