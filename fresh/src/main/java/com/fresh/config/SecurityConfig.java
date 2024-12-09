@@ -21,7 +21,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers("/img/**", "/css/**", "/js/**", "/scss/**", "/plugins/**").permitAll()
-                .requestMatchers("/", "/main", "/login", "/join","/board", "/checkid", "/checkUserName", "/verify-email", "/send-email").permitAll()           // 공개 경로 허용
+                .requestMatchers("/", "/main", "/login", "/join","/board", "/checkid", "/checkUserName", "/verify-email", "/send-email", "/findid", "/findpassword").permitAll()           // 공개 경로 허용
                 .requestMatchers("/admin/**").hasAnyRole("ADMIN")              // 관리자 전용
                 .requestMatchers("/mypage/**").hasAnyRole("ADMIN", "USER")     // 사용자 전용
                 .anyRequest().authenticated()                                  // 그 외 인증 필요

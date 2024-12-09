@@ -42,4 +42,8 @@ public class UserRepository {
 		return sqlSession.selectOne("user.checkUserUserName", user_username);
 	}
 	
+	 //아이디 찾기
+	public String findIdByNameAndEmail(UserDTO user) {
+		return sqlSession.selectOne("user.findIdByNameAndEmail", user);
+	}
 }
