@@ -24,6 +24,7 @@
 		  from user
 	</select>
 	
+
 	<select id="findByUserUserName" resultType="UserDTO">
 		select * from user
 		 where user_username = #{user_username}

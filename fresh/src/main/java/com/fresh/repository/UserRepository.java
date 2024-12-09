@@ -41,4 +41,5 @@ public class UserRepository {
 	public String checkUserUserName(String user_username) {
 		return sqlSession.selectOne("user.checkUserUserName", user_username);
 	}
+	
 }

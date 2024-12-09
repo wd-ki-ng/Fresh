@@ -37,17 +37,19 @@
 			<div>
 				<label for="user_email">이메일</label>
 				<input type="email" name="user_email" id="user_email" placeholder="example@example.com">
-				<button type="button" check="chk-num" onclick="sendEmail()">인증번호 전송</button>
+				<!--  <button type="button" check="chk-num" onclick="sendEmail()">인증번호 전송</button> -->
 				<br>
 				<div id="email_div"></div>
 			</div>
+			<!--  
 			<div>
 			    <label for="email_auth">인증번호</label>
 			    <input type="text" name="email_auth" id="email_auth" placeholder="인증번호 입력">
-			    <button type="button" id="verifyEmail" onclick="verifyEmail()">인증번호 확인</button>
+			    <button type="button"  chcek="verifyEmail" onclick="verifyEmail()">인증번호 확인</button>
 			    <br>
 			    <div id="auth_div"></div>	
 		    </div>
+		    -->
 			<div>
 				<label for="user_username">닉네임</label>
 				<input type="text" name="user_username" id="user_username" placeholder="닉네임을 입력해주세요">
@@ -72,7 +74,7 @@
 	    const checkName = RegExp(/^[가-힣]|[A-Z]|[a-z]$/);
 	    const checkEmail = RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
 	    const checkUserNmae = RegExp(/^[0-9A-Za-z가-힣ㄱ-ㅎㅏ-ㅣぁ-んァ-ヶ\u4E00-\u9FFF]+$/);
-	
+
 	    // 모든 입력 필드의 유효성 상태를 추적
 	    let isIdValid = false;					//아이디 상태
 	    let isPwValid = false;					//비밀번호 상태
@@ -254,49 +256,51 @@
 	      }
 	 	}
 	 
-	 	
+	 /*
 	 	// 이메일 인증번호 전송 함수
 	    function sendEmail() {
 	        const email = $("#user_email").val();
+	        
+	        console.log("입력한 이메일 " + email);
+	        
 	        if (!checkEmail.test(email)) {
 	            alert("유효한 이메일 주소를 입력해주세요.");
 	            return false;
 	        }
 
 	        $.ajax({
-	            url: "/auth/send-email-verification",
+	            url: "/send-email",
 	            type: "POST",
 	            data: { email: email },
 	            beforeSend: function (xhr) {
 	                xhr.setRequestHeader(header, token);
 	            },
-	            success: function (response) {
-	                alert(response);
+	            success: function (data) {
+	                alert("인증번호가 전송되었습니다.");
 	                // 이메일 전송 후 인증번호 입력란 활성화
 	                $("#email_auth").prop("disabled", false);
 	                $("#verifyEmail").prop("disabled", false);
 	            },
 	            error: function () {
-	                alert("이메일 전송 중 오류가 발생했습니다.");
+	                alert("인증번호 전송에 실패했습니다.");
 	            }
 	        });
 	    }
 
 	    // 이메일 인증번호 확인 함수
 	    function verifyEmail() {
-	        const email = $("#user_email").val();
 	        const verificationCode = $("#email_auth").val();
 
 	        $.ajax({
-	            url: "/auth/verify-email",
+	            url: "/verify-email",
 	            type: "POST",
-	            data: { email: email, verificationCode: verificationCode },
+	            data: { verificationCode: verificationCode },
 	            beforeSend: function (xhr) {
 	                xhr.setRequestHeader(header, token);
 	            },
-	            success: function (response) {
-	                alert(response);
-	                if (response === "이메일 인증이 완료되었습니다.") {
+	            success: function (data) {
+	                alert(data);
+	                if (data == true) {
 	                    // 인증 성공 후 추가 작업 (예: 회원가입 버튼 활성화 등)
 	                    isAuthValid = true;
 	                    updateButtonState();
@@ -307,11 +311,12 @@
 	            }
 	        });
 	    }
-
+*/
 	 	
 	    // 회원가입 실행
 	    function submitJoin() {
-	        if(isIdValid && isPwValid && isPwChkValid && isNameValid && isEmailValid && isUsernameValid && isAuthValid) {
+																				
+	        if(isIdValid && isPwValid && isPwChkValid && isNameValid && isEmailValid && isUsernameValid /*&& isAuthValid*/ ) {
 	            alert("회원가입이 완료되었습니다.");
 	            $("#join").submit();
 	        }else {
