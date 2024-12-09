@@ -26,7 +26,7 @@ public class AdminContoller {
 	@Autowired
 	private UserUtil userUtil;
 
-	@GetMapping({"/admin","/adminMem"})
+	@GetMapping("/admin/admin")
 	public String adminMem(Model model) {
 		UserDTO user = userUtil.getUserNameAndRole();
 		model.addAttribute("user", user);
@@ -62,6 +62,6 @@ public class AdminContoller {
 		List<BoardDTO> del_notis = adminService.getDelNotis();
 		model.addAttribute("del_notis", del_notis);
 		
-		return "admin";
+		return "/admin/admin";
 	}
 }
