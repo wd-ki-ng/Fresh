@@ -7,17 +7,20 @@
     <style>
         /* 기본 스타일 */
         body {
-            font-family: Arial, sans-serif;
+           font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
             margin: 0;
             padding: 0;
         }
 
         /* 네비게이션 바 스타일 */ 
         header {
-            background-color: #333;
+             background-color: #343a40;
             color: white;
-            padding: 10px 0;
+            padding: 15px 0;
             text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
         }
 
         header a {
@@ -27,10 +30,16 @@
         }
 
         /* 게시판 영역 스타일 */
-        .board-container {
+         .board-container {
             display: flex;
             flex-direction: column;
-            margin: 20px;
+            margin: 20px auto;
+            width: 95%;
+            max-width: 1200px;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
         }
 
         .search-container {
@@ -38,11 +47,14 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 20px;
+            align-items: center;
         }
 
         .search-container input[type="text"] {
             padding: 8px;
-            width: 80%;
+            width: 85%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
 
         .search-container button {
@@ -50,11 +62,12 @@
             background-color: #333;
             color: white;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
         }
 
         .search-container button:hover {
-            background-color: #555;
+             background-color: #0056b3;
         }
         
         .search-container form {
@@ -70,32 +83,35 @@
         /* 게시판 리스트 스타일 */
         .board-list {
             width: 100%;
-            table-layout: fixed; 
+            table-layout: fixed;
             border-collapse: collapse;
             margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         .board-list th, .board-list td {
-            padding: 10px;
+             padding: 12px;
             text-align: center;
             border: 1px solid #ddd;
             overflow: hidden;
-    		text-overflow: ellipsis;
+            text-overflow: ellipsis;
   			white-space: nowrap; /* 텍스트가 길어질 경우 줄바꿈을 방지 */
         }
 
         .board-list th {
-            background-color: #f4f4f4;
+            background-color: #f8f9fa;
+            color: #495057;
             cursor: pointer;
         }
 
-        .board-list td a {
+         .board-list td a {
             text-decoration: none;
-            color: #333;
+            color: #495057;
         }
 
-        .board-list td a:hover {
-            color: #007BFF;
+         .board-list td a:hover {
+            color: #007bff;
         }
 
         /* 하단 스타일 */
@@ -112,11 +128,12 @@
             background-color: #333;
             color: white;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
         }
 
         .pagination button:hover {
-            background-color: #555;
+             background-color: #0056b3;
         }
 
         .pagination span {
@@ -130,6 +147,10 @@
             border: none;
             cursor: pointer;
             font-size: 18px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: flex-end;
+            
         }
 
         .write-button:hover {
@@ -143,12 +164,36 @@
 
         .items-per-page {
             margin-top: 20px;
+            
         }
 
-        .items-per-page {
-            margin-top: 10px;
-            margin-bottom: 20px;
+        .items-per-page label{
+            font-size: 1rem;
         }
+         .items-per-page select {
+            padding: 5px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        
+         /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .search-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .search-container input[type="text"], .search-container button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .write-button {
+                justify-content: center;
+            }
+        }
+        
     </style>
 </head>
 <body>
@@ -172,7 +217,7 @@
 						<option value="write">작성자</option>
 					</select>
 					<span><input type="text" name="keyword" placeholder="검색어 입력"></span> 
-					<button type="button" onclick="searchPosts();">검색하기</button>
+					<button type="button" onclick="searchPosts();">검색</button>
 				</form>
 			</div>
 		</div>
