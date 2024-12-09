@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+	<head>
+		<meta charset="UTF-8">
+		<title>Fresh Main page</title>
+		<th:block th:insert="~{menu.html::headImport}"></th:block>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+		<style>
+		a {
+			text-decoration:none;
+			color: black;
+		}
+		.Main_LeftBody div {
+			width: 100%;
+		}
+		/* 메뉴 css */
+		.adm_menu {
+			width: 100%;
+		}
+		.adm_menu tr{
+			border-bottom: 1px solid lightgray;
+		}
+		.adm_menu th, .adm_menu td{
+			padding: 10px 5px;
+		}
+		
+		/* 본문 css */
+		.adm_body {
+			width: 100%;
+		}
+		.adm_body tr{
+			border-bottom: 1px solid lightgray;
+		}
+		.adm_body tfoot tr{
+			border-bottom: none;
+		}
+		.adm_body tbody tr:hover{
+			background-color: #F9F9F9;
+			cursor: pointer;
+		}
+		.adm_body th, .adm_body td{
+			padding: 10px 5px;
+			text-align: center;
+			border-right: 1px solid lightgray;
+		}
+		.adm_body th:last-child, .adm_body td:last-child{
+			border-right: none;
+		}
+		.adm_body td a{
+			display: inline-block;
+			width: 100%;
+		}
+		.adm_body tfoot button{
+			border: 1px solid lightgray;
+			border-radius: 5px;
+			padding: 10px 10px 5px 10px;
+			background-color: #F9F9F9;
+		}
+		.btn-group {
+			justify-content: space-evenly;
+		}
+		.btn-group button {
+			border: none;
+			border-radius: 10px 10px 0 0;
+			background-color: transparent;
+			padding: 10px 10px 5px 10px;
+			font-size: 20px;
+			width: 100%;
+		}
+		.btn-group button:hover {
+			background-color: #EEEEEE;
+		}
+		button.active {
+			background-color: #EEEEEE;
+		}
+		</style>
+	</head>
+	
+	<body>
+		<div class="container">
+			<!-- 상단바 - 로고, 게시판 메뉴, 검색창, 마이페이지, 로그인 -->
+			<th:block th:insert="~{menu.html::navBar}"></th:block>
+			<!-- 본문 -->
+			<div class="row Main_Body">
+				<!-- 본문- -->
+				<div class="col-md-10 Main_LeftBody">
+					<!-- 회원관리 테이블 -->
+					<!-- 회원 정보 클릭시 회원 정보 수정(좌) 회원이 작성한 글 목록(우) 페이지로 이동 -->
+					<!-- 회원번호, 아이디, 이름, 이메일 정도만 간단히 -->
+					<div id="adm_mem">
+						<table class="adm_mem adm_body">
+							<colgroup>
+								<col width="15%"/>
+								<col width="25%"/>
+								<col width="20%"/>
+								<col width="40%"/>
+							</colgroup>
+							<thead>
+								<tr>
+									<th>회원번호</th>
+									<th>아이디</th>
+									<th>이름</th>
+									<th>이메일</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="mem:${members}">
+									<td><a th:href="@{#}" th:text="${mem.user_no}"></a></td>
+									<td><a th:href="@{#}" th:text="${mem.user_id}"></a></td>
+									<td><a th:href="@{#}" th:text="${mem.user_name}"></a></td>
+									<td><a th:href="@{#}" th:text="${mem.user_email}"></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<!-- 게시글관리 테이블 -->
+					<!-- 최근에 작성된 게시글들, 클릭시 상세보기 페이지(수정, 삭제 가능) -->
+					<div id="adm_post" style="display:none">
+						<table class="adm_post adm_body">
+							<colgroup>
+								<col width="10%"/><!-- 게시글번호 -->
+								<col width="10%"/><!-- 작성자이름 -->
+								<col width="10%"/><!-- 카테고리 -->
+								<col width="30%"/><!-- 제목 -->
+								<col width="15%"/><!-- 작성일 -->
+								<col width="15%"/><!-- 추천/조회수 -->
+								<col width="10%"/><!-- 삭제여부 -->
+							</colgroup>
+							<thead>
+								<tr>
+									<th>게시글번호</th>
+									<th>작성자이름</th>
+									<th>카테고리</th>
+									<th>제목</th>
+									<th>작성일</th>
+									<th>추천/조회수</th>
+									<th>삭제여부</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="post:${posts}">
+									<td><a th:href="@{#}" th:text="${post.board_no}"></a></td>
+									<td><a th:href="@{#}" th:text="${post.board_write}"></a></td>
+									<td><a th:href="@{#}" th:text="${post.category}"></a></td>
+									<td><a th:href="@{#}" th:text="${post.board_title}"></a></td>
+									<td><a th:href="@{#}" th:text="${#dates.format(post.board_date, 'yyyy-MM-dd')}"></a></td>
+									<td><a th:href="@{#}" th:text="'❤️ '+${post.board_like}+'/👁️ '+${post.board_count}"></a></td>
+									<td><a th:href="@{#}" th:text="${post.board_del}"></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<!-- 댓글관리 테이블 -->
+					<!-- 최근에 작성된 댓글 정보들, 클릭시 상세보기 페이지로 이동 -->
+					<div id="adm_com" style="display:none">
+						<table class="adm_com adm_body">
+							<colgroup>
+								<col width="10%"/>
+								<col width="10%"/>
+								<col width="10%"/>
+								<col width="30%"/>
+								<col width="15%"/>
+								<col width="15%"/>
+								<col width="10%"/>
+							</colgroup>
+							<thead>
+								<tr>
+									<th>댓글번호</th>
+									<th>게시글번호</th>
+									<th>작성자이름</th>
+									<th>내용</th>
+									<th>작성일</th>
+									<th>수정일</th>
+									<th>삭제여부</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="com:${comments}">
+									<td><a th:href="@{#}" th:text="${com.com_no}"></a></td>
+									<td><a th:href="@{#}" th:text="${com.board_no}"></a></td>
+									<td><a th:href="@{#}" th:text="${com.user_username}"></a></td>
+									<td><a th:href="@{#}" th:text="${com.com_comment}"></a></td>
+									<td><a th:href="@{#}" th:text="${#dates.format(com.com_cdate, 'yyyy-MM-dd')}"></a></td>
+									<td><a th:href="@{#}" th:text="${#dates.format(com.com_mdate, 'yyyy-MM-dd')}"></a></td>
+									<td><a th:href="@{#}" th:text="${com.com_del}"></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					
+					<!-- 공지사항 테이블 -->
+					<!-- 위에 공지사항 작성으로 이동 -->
+					<div id="adm_noti" style="display:none">
+						<table class="adm_noti adm_body">
+							<colgroup>
+								<col width="10%"/>
+								<col width="45%"/>
+								<col width="15%"/>
+								<col width="10%"/>
+								<col width="10%"/>
+								<col width="10%"/>
+							</colgroup>
+							<thead>
+								<tr>
+									<th>게시글번호</th>
+									<th>제목</th>
+									<th>작성일</th>
+									<th>추천수</th>
+									<th>조회수</th>
+									<th>삭제여부</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="noti:${notices}">
+									<td><a th:href="@{#}" th:text="${noti.board_no}"></a></td>
+									<td><a th:href="@{#}" th:text="${noti.board_title}"></a></td>
+									<td><a th:href="@{#}" th:text="${#dates.format(noti.board_date, 'yyyy-MM-dd')}"></a></td>
+									<td><a th:href="@{#}" th:text="${noti.board_like}"></a></td>
+									<td><a th:href="@{#}" th:text="${noti.board_count}"></a></td>
+									<td><a th:href="@{#}" th:text="${noti.board_del}"></a></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="6" style="text-align: right">
+										<button>공지 작성</button>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+
+					<!-- 휴지통 -->
+					<div id="adm_trash" style="display:none">
+						<div class="btn-group">
+							<button class="active" id="del_posts" onclick="clickTrashBtn(0)">삭제된 게시글</button>
+							<button id="del_com" onclick="clickTrashBtn(1)">삭제된 댓글</button>
+							<button id="del_noti" onclick="clickTrashBtn(2)">삭제된 공지</button>
+						</div>
+						<!-- 삭제된 게시글 -->
+						<table class="adm_trash adm_body" id="del_posts">
+							<colgroup>
+								<col width="10%"/><!-- 게시글번호 -->
+								<col width="10%"/><!-- 작성자이름 -->
+								<col width="10%"/><!-- 카테고리 -->
+								<col width="40%"/><!-- 제목 -->
+								<col width="15%"/><!-- 작성일 -->
+								<col width="15%"/><!-- 추천/조회수 -->
+							</colgroup>
+							<thead>
+								<tr>
+									<th>게시글번호</th>
+									<th>작성자이름</th>
+									<th>카테고리</th>
+									<th>제목</th>
+									<th>작성일</th>
+									<th>추천/조회수</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="post:${posts}">
+									<td><a th:href="@{#}" th:text="${post.board_no}"></a></td>
+									<td><a th:href="@{#}" th:text="${post.board_write}"></a></td>
+									<td><a th:href="@{#}" th:text="${post.category}"></a></td>
+									<td><a th:href="@{#}" th:text="${post.board_title}"></a></td>
+									<td><a th:href="@{#}" th:text="${#dates.format(post.board_date, 'yyyy-MM-dd')}"></a></td>
+									<td><a th:href="@{#}" th:text="'❤️ '+${post.board_like}+'/👁️ '+${post.board_count}"></a></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="6" style="text-align: right">
+										<button>공지 작성</button>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+						
+						<!-- 삭제된 댓글 -->
+						<table class="adm_com adm_body" id="del_com" style="display:none;">
+							<colgroup>
+								<col width="10%"/>
+								<col width="10%"/>
+								<col width="10%"/>
+								<col width="40%"/>
+								<col width="15%"/>
+								<col width="15%"/>
+							</colgroup>
+							<thead>
+								<tr>
+									<th>댓글번호</th>
+									<th>게시글번호</th>
+									<th>작성자이름</th>
+									<th>내용</th>
+									<th>작성일</th>
+									<th>수정일</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="com:${comments}">
+									<td><a th:href="@{#}" th:text="${com.com_no}"></a></td>
+									<td><a th:href="@{#}" th:text="${com.board_no}"></a></td>
+									<td><a th:href="@{#}" th:text="${com.user_username}"></a></td>
+									<td><a th:href="@{#}" th:text="${com.com_comment}"></a></td>
+									<td><a th:href="@{#}" th:text="${#dates.format(com.com_cdate, 'yyyy-MM-dd')}"></a></td>
+									<td><a th:href="@{#}" th:text="${#dates.format(com.com_mdate, 'yyyy-MM-dd')}"></a></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<!-- 삭제된 공지 -->
+						<table class="adm_noti adm_body" id="del_noti" style="display:none;">
+							<colgroup>
+								<col width="10%"/>
+								<col width="50%"/>
+								<col width="20%"/>
+								<col width="10%"/>
+								<col width="10%"/>
+							</colgroup>
+							<thead>
+								<tr>
+									<th>게시글번호</th>
+									<th>제목</th>
+									<th>작성일</th>
+									<th>추천수</th>
+									<th>조회수</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="noti:${notices}">
+									<td><a th:href="@{#}" th:text="${noti.board_no}"></a></td>
+									<td><a th:href="@{#}" th:text="${noti.board_title}"></a></td>
+									<td><a th:href="@{#}" th:text="${#dates.format(noti.board_date, 'yyyy-MM-dd')}"></a></td>
+									<td><a th:href="@{#}" th:text="${noti.board_like}"></a></td>
+									<td><a th:href="@{#}" th:text="${noti.board_count}"></a></td>
+								</tr>
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+				<!-- 본문-오른쪽(메뉴-회원관리, 게시글관리, 댓글관리) -->
+				<div class="col-md-2 Main_RightBody">
+					<table class="adm_menu">
+						<thead>
+							<tr>
+								<th>관리자 메뉴</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><a onclick="clickMenu(0)">회원관리</a></td>
+							</tr>
+							<tr>
+								<td><a onclick="clickMenu(1)">게시글관리</a></td>
+							</tr>
+							<tr>
+								<td><a onclick="clickMenu(2)">댓글관리</a></td>
+							</tr>
+							<tr>
+								<td><a onclick="clickMenu(3)">공지사항</a></td>
+							</tr>
+							<tr>
+								<td><a onclick="clickMenu(4)">휴지통</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<th:block th:insert="~{menu.html::scriptImport}"></th:block>
+		
+		<script>
+			function clickMenu(menu){
+				const adm_mem = document.getElementById('adm_mem');
+				const adm_post = document.getElementById('adm_post');
+				const adm_com = document.getElementById('adm_com');
+				const adm_noti = document.getElementById('adm_noti');
+				const adm_trash = document.getElementById('adm_trash');
+				
+				const menus = [adm_mem, adm_post, adm_com, adm_noti, adm_trash];
+				
+				for(let i = 0; i < menus.length; i++){
+					if (i == menu){
+						menus[i].style.display = 'table';
+					}
+					else{
+						menus[i].style.display = 'none';
+					}
+				}
+			}
+			
+			function clickTrashBtn(btn){
+				const btn_del_posts = document.querySelector('button#del_posts');
+				const btn_del_com = document.querySelector('button#del_com');
+				const btn_del_noti = document.querySelector('button#del_noti');
+				
+				const tbl_del_posts = document.querySelector('table#del_posts');
+				const tbl_del_com = document.querySelector('table#del_com');
+				const tbl_del_noti = document.querySelector('table#del_noti');
+				
+				const btns = [btn_del_posts, btn_del_com, btn_del_noti];
+				const tables = [tbl_del_posts, tbl_del_com, tbl_del_noti];
+				
+				for(let i = 0; i < btns.length; i++){
+					if (i == btn){
+						btns[i].classList.add('active');
+						tables[i].style.display = 'table';
+					}
+					else{
+						btns[i].classList.remove('active');
+						tables[i].style.display = 'none';
+					}
+				}
+			}
+		</script>
+	</body>
+</html>
