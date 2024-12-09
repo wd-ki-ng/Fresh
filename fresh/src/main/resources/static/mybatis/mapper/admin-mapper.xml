@@ -27,4 +27,25 @@
 		where category=0
 		order by board_no desc
 	</select>
+	
+	<select id="del_post" resultType="BoardDTO">
+		select *
+		from board
+		where board_del='0'
+		order by board_no desc
+	</select>
+	
+	<select id="del_com" resultType="CustomCommentDTO">
+		select comment.*, user.user_username
+		from comment, user 
+		where user.user_no=comment.user_no and comment.com_del='0'
+		order by comment.com_no desc
+	</select>
+	
+	<select id="del_noti" resultType="BoardDTO">
+		select *
+		from board
+		where category=0 and board_del='0'
+		order by board_no desc
+	</select>
 </mapper>

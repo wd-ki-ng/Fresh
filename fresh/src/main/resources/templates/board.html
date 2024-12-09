@@ -1,162 +1,161 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/basic">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>게시판</title>
-    <style>
-        /* 기본 스타일 */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>게시판</title>
+<style>
+/* 기본 스타일 */
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
 
-        /* 네비게이션 바 스타일 */ 
-        header {
-            background-color: #333;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-        }
+/* 네비게이션 바 스타일 */
+header {
+	background-color: #333;
+	color: white;
+	padding: 10px 0;
+	text-align: center;
+}
 
-        header a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-        }
+header a {
+	color: white;
+	text-decoration: none;
+	margin: 0 15px;
+}
 
-        /* 게시판 영역 스타일 */
-        .board-container {
-            display: flex;
-            flex-direction: column;
-            margin: 20px;
-        }
+/* 게시판 영역 스타일 */
+.board-container {
+	display: flex;
+	flex-direction: column;
+	margin: 20px;
+}
 
-        .search-container {
-        	
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
+.search-container {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 20px;
+}
 
-        .search-container input[type="text"] {
-            padding: 8px;
-            width: 80%;
-        }
+.search-container input[type="text"] {
+	padding: 8px;
+	width: 80%;
+}
 
-        .search-container button {
-            padding: 8px 15px;
-            background-color: #333;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+.search-container button {
+	padding: 8px 15px;
+	background-color: #333;
+	color: white;
+	border: none;
+	cursor: pointer;
+}
 
-        .search-container button:hover {
-            background-color: #555;
-        }
-        
-        .search-container form {
-		    display: flex;
-		    align-items: center; /* 검색창과 버튼을 같은 라인에 배치 */
-		}
-		
-		.search-container select,
-		.search-container input {
-		    margin-right: 5px; /* 검색어 입력창과 버튼 사이 간격 */
-		}
+.search-container button:hover {
+	background-color: #555;
+}
 
-        /* 게시판 리스트 스타일 */
-        .board-list {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+.search-container form {
+	display: flex;
+	align-items: center; /* 검색창과 버튼을 같은 라인에 배치 */
+}
 
-        .board-list th, .board-list td {
-            padding: 10px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
+.search-container select, .search-container input {
+	margin-right: 5px; /* 검색어 입력창과 버튼 사이 간격 */
+}
 
-        .board-list th {
-            background-color: #f4f4f4;
-            cursor: pointer;
-        }
+/* 게시판 리스트 스타일 */
+.board-list {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
 
-        .board-list td a {
-            text-decoration: none;
-            color: #333;
-        }
+.board-list th, .board-list td {
+	padding: 10px;
+	text-align: center;
+	border: 1px solid #ddd;
+}
 
-        .board-list td a:hover {
-            color: #007BFF;
-        }
+.board-list th {
+	background-color: #f4f4f4;
+	cursor: pointer;
+}
 
-        /* 하단 스타일 */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-        }
+.board-list td a {
+	text-decoration: none;
+	color: #333;
+}
 
-        .pagination button {
-            padding: 5px 10px;
-            margin: 0 5px;
-            background-color: #333;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+.board-list td a:hover {
+	color: #007BFF;
+}
 
-        .pagination button:hover {
-            background-color: #555;
-        }
+/* 하단 스타일 */
+.pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+}
 
-        .pagination span {
-            margin: 0 10px;
-        }
+.pagination button {
+	padding: 5px 10px;
+	margin: 0 5px;
+	background-color: #333;
+	color: white;
+	border: none;
+	cursor: pointer;
+}
 
-        .write-button {
-            padding: 15px 20px;
-            background-color: #333;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-        }
+.pagination button:hover {
+	background-color: #555;
+}
 
-        .write-button:hover {
-            background-color: #555;
-        }
+.pagination span {
+	margin: 0 10px;
+}
 
-        .page-info {
-            font-size: 16px;
-            color: #333;
-        }
+.write-button {
+	padding: 15px 20px;
+	background-color: #333;
+	color: white;
+	border: none;
+	cursor: pointer;
+	font-size: 18px;
+}
 
-        .items-per-page {
-            margin-top: 20px;
-        }
+.write-button:hover {
+	background-color: #555;
+}
 
-        .items-per-page {
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
-    </style>
+.page-info {
+	font-size: 16px;
+	color: #333;
+}
+
+.items-per-page {
+	margin-top: 20px;
+}
+
+.items-per-page {
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+</style>
 </head>
 <body>
 
-<!-- 네비게이션 바 (비워둠) -->
-<header>
-    <!-- 네비게이션 바의 내용은 비워두었습니다. -->
-</header>
+	<!-- 네비게이션 바 (비워둠) -->
+	<header>
+		<!-- 네비게이션 바의 내용은 비워두었습니다. -->
+	</header>
 
-<!-- 게시판 영역 -->
-
-<div class="board-container">
+	<!-- 게시판 영역 -->
+	<div class="board-container">
 		<!-- 검색창 -->
 		<div class="search-container">
 			<div>게시판</div>
@@ -167,35 +166,36 @@
 						<option value="">검색 유형 선택</option>
 						<option value="title">제목</option>
 						<option value="writer">작성자</option>
-					</select>
-					<span><input type="text" name="keyword" placeholder="검색어 입력"></span> 
+					</select> <span><input type="text" name="keyword"
+						placeholder="검색어 입력"></span>
 					<button type="button" onclick="searchPosts();">검색하기</button>
 				</form>
 			</div>
 		</div>
 
-    <!-- 게시글 수 변경 -->
-    <div class="items-per-page">
-        <label for="itemsPerPage">게시글 수: </label>
-        <select id="itemsPerPage" onchange="updateItemsPerPage()">
-            <option value="10">10개</option>
-            <option value="20">20개</option>
-            <option value="30">30개</option>
-        </select>
-    </div>
+		<!-- 게시글 수 변경 -->
+		<div class="items-per-page">
+			<label for="itemsPerPage">게시글 수: </label> <select id="itemsPerPage"
+				onchange="updateItemsPerPage()">
+				<option value="10">10개</option>
+				<option value="20">20개</option>
+				<option value="30">30개</option>
+			</select>
+		</div>
 
-    <!-- 게시판 리스트 -->
-     <table class="board-list" id="boardList">
-        <thead>
-            <tr>
-                <th>번호</th> <!-- 게시글 번호 추가 -->
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일시</th>
-                <th>조회수</th>
-                <th>추천수</th>
-            </tr>
-        </thead>
+		<!-- 게시판 리스트 -->
+		<table class="board-list" id="boardList">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<!-- 게시글 번호 추가 -->
+					<th>제목</th>
+					<th>작성자</th>
+					<th>작성일시</th>
+					<th>조회수</th>
+					<th>추천수</th>
+				</tr>
+			</thead>
 			<tbody>
 				<tr th:each="board:${BoardList}">
 					<td><span th:text="${board.board_no}"></span></td>
@@ -203,40 +203,42 @@
 					<td><span th:text="${board.board_write}"></span></td>
 					<td><span th:text="${board.board_date}"></span></td>
 					<td><span th:text="${board.board_count}"></span></td>
-					<td><span th:text="${board.board_like}"></span></td>	
+					<td><span th:text="${board.board_like}"></span></td>
 				</tr>
 			</tbody>
 		</table>
 
-    <!-- 페이지 번호 및 네비게이션 -->
-    <div class="pagination">
-        <button onclick="changePage('prev')">이전</button>
-        
-        <span class="page-info">현재 페이지: 1 / 1</span> <!-- 페이지 번호 표시 -->
+		<!-- 페이지 번호 및 네비게이션 -->
+		<div class="pagination">
+			<button onclick="changePage('prev')">이전</button>
 
-        <button onclick="changePage('next')">다음</button>
-    </div>
+			<span class="page-info">현재 페이지: 1 / 1</span>
+			<!-- 페이지 번호 표시 -->
 
-    <!-- 메시지 -->
-    <div class="page-info" id="message">
-        <!-- 여기에 페이지 이동 시 메시지가 출력됩니다 -->
-    </div>
-</div>
+			<button onclick="changePage('next')">다음</button>
+		</div>
 
-<!-- 글쓰기 버튼 -->
-<div style="display: flex; justify-content: flex-end; margin-top: 10px;">
-    <a th:href="@{/boardWrite}" class="write-button">
-        <button>글쓰기</button>
-    </a>
-</div>
+		<!-- 메시지 -->
+		<div class="page-info" id="message">
+			<!-- 여기에 페이지 이동 시 메시지가 출력됩니다 -->
+		</div>
+	</div>
 
-<script th:inline="javascript">
+	<!-- 글쓰기 버튼 -->
+	<div
+		style="display: flex; justify-content: flex-end; margin-top: 10px;">
+		<a th:href="@{/boardWrite}" class="write-button">
+			<button>글쓰기</button>
+		</a>
+	</div>
+
+	<script th:inline="javascript">
     /*<![CDATA[*/
     let posts = /*[[${BoardList}]]*/ [];  // Thymeleaf에서 전달된 BoardList 데이터를 JSON으로 변환
     /*]]>*/
 </script>
 
-<script>
+	<script>
     let currentPage = 1;
     let itemsPerPage = 10; // 기본적으로 10개씩 보여줌
     let searchQuery = ""; // 검색어 초기화

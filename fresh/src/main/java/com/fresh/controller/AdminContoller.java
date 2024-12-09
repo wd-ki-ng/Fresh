@@ -50,6 +50,18 @@ public class AdminContoller {
 		List<BoardDTO> notices = adminService.getAllNotices();
 		model.addAttribute("notices", notices);
 		
+		// 삭제한 게시글 가져오기
+		List<BoardDTO> del_posts = adminService.getDelPosts();
+		model.addAttribute("del_posts", del_posts);
+		
+		// 삭제한 댓글 가져오기
+		List<CustomCommentDTO> del_coms = adminService.getDelComs();
+		model.addAttribute("del_coms", del_coms);
+		
+		// 삭제한 공지 가져오기
+		List<BoardDTO> del_notis = adminService.getDelNotis();
+		model.addAttribute("del_notis", del_notis);
+		
 		return "admin";
 	}
 }

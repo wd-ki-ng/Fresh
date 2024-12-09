@@ -31,4 +31,16 @@ public class AdminRepository {
 	public List<BoardDTO> getAllNotices() {
 		return sqlSession.selectList("admin.noti_list");
 	}
+
+	public List<BoardDTO> getDelPosts() {
+		return sqlSession.selectList("admin.del_post");
+	}
+
+	public List<CustomCommentDTO> getDelComs() {
+		return sqlSession.selectList("admin.del_com");
+	}
+
+	public List<BoardDTO> getDelNotis() {
+		return sqlSession.selectList("admin.del_noti");
+	}
 }

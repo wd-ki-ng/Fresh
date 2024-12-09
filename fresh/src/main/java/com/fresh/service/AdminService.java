@@ -40,4 +40,16 @@ public class AdminService {
 		return adminRepository.getAllNotices();
 	}
 
+	public List<BoardDTO> getDelPosts() {
+		return adminRepository.getDelPosts();
+	}
+
+	public List<CustomCommentDTO> getDelComs() {
+		return adminRepository.getDelComs();
+	}
+
+	public List<BoardDTO> getDelNotis() {
+		return adminRepository.getDelNotis();
+	}
+
 }
