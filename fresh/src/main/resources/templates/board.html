@@ -70,6 +70,7 @@
         /* 게시판 리스트 스타일 */
         .board-list {
             width: 100%;
+            table-layout: fixed; 
             border-collapse: collapse;
             margin-top: 20px;
         }
@@ -78,6 +79,9 @@
             padding: 10px;
             text-align: center;
             border: 1px solid #ddd;
+            overflow: hidden;
+    		text-overflow: ellipsis;
+  			white-space: nowrap; /* 텍스트가 길어질 경우 줄바꿈을 방지 */
         }
 
         .board-list th {
@@ -161,12 +165,11 @@
 		<div class="search-container">
 			<div>게시판</div>
 			<div>
-				<form action="${contextPath}/board/review" method="get"
-					id="searchFoam" name="search-form">
+				<form>
 					<select name="type" class="type-box">
 						<option value="">검색 유형 선택</option>
 						<option value="title">제목</option>
-						<option value="writer">작성자</option>
+						<option value="write">작성자</option>
 					</select>
 					<span><input type="text" name="keyword" placeholder="검색어 입력"></span> 
 					<button type="button" onclick="searchPosts();">검색하기</button>
@@ -256,11 +259,19 @@
 
         postsToDisplay.forEach(post => {
             const row = document.createElement('tr');
+            
+            
+            // 날짜 포맷을 'yyyy-MM-dd'로 변경
+            const formattedDate = new Date(post.board_date);
+            const formattedDateString = formattedDate.getFullYear() + '-' +
+                String(formattedDate.getMonth() + 1).padStart(2, '0') + '-' +
+                String(formattedDate.getDate()).padStart(2, '0');
+            
             row.innerHTML = `
                 <td><a href="/boardview?no=${post.board_no}">${post.board_no}</a></td>
                 <td><a href="/boardview?no=${post.board_no}">${post.board_title}</a></td>
                 <td><a href="/boardview?no=${post.board_no}">${post.board_write}</a></td>
-                <td><a href="/boardview?no=${post.board_no}">${post.board_date}</a></td>
+                <td><a href="/boardview?no=${post.board_no}">${formattedDateString}</a></td>
                 <td><a href="/boardview?no=${post.board_no}">${post.board_count}</a></td>
                 <td><a href="/boardview?no=${post.board_no}">${post.board_like}</a></td>
             `;
@@ -273,8 +284,8 @@
  	// 페이지 변경
     function changePage(direction) {
         if (direction === 'prev' && currentPage > 1) {
-            currentPage--;
-        } else if (direction === 'next' && currentPage < Math.ceil(filteredPosts.length / itemsPerPage)) {
+            currentPage--; 
+        } else if (direction === 'next'&& currentPage < Math.ceil(filteredPosts.length / itemsPerPage)) {
             currentPage++;
         }
         renderPosts();
@@ -282,16 +293,16 @@
 
  	// 검색 기능
     function searchPosts() {
-        searchQuery = document.querySelector('[name="keyword"]').value;
-        const searchType = document.querySelector('[name="type"]').value;
+        searchQuery = document.querySelector('[name="keyword"]').value; //검색어
+        const searchType = document.querySelector('[name="type"]').value; // 검색타입
 
         filteredPosts = posts.filter(post => {
             if (searchType === "title") {
                 return post.board_title.includes(searchQuery);
-            } else if (searchType === "writer") {
-                return post.board_writer.includes(searchQuery);
+            } else if (searchType === "write") {
+                return post.board_write.includes(searchQuery);
             } else {
-                return post.board_title.includes(searchQuery) || post.board_writer.includes(searchQuery);
+                return post.board_title.includes(searchQuery) || post.board_write.includes(searchQuery);
             }
         });
 
