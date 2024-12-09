@@ -72,6 +72,10 @@ h1 {
     border-radius: 5px;
 }
 
+.comment-item li {
+    list-style-type: none;
+}
+
 .comment-actions {
     margin-top: 10px;
 }

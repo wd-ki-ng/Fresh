@@ -10,6 +10,25 @@
 		where user_id = #{user_id}
 	</select>
 	
+	<select id="checkUserId" parameterType="String" resultType="String">
+		select max(case when user_id = #{user_id} then 'true'
+			  else 'false'
+			   end) as userId
+		  from user
+	</select>
+	
+	<select id="checkUserUserName" resultType="String" parameterType="String">
+		select max(case when user_username = #{user_username} then 'true'
+			  else 'false'
+			   end) as userUserName
+		  from user
+	</select>
+	
+	<select id="findByUserUserName" resultType="UserDTO">
+		select * from user
+		 where user_username = #{user_username}
+	</select>
+	
 	<insert id="joinProcess" parameterType="UserDTO">
 		insert into user(user_id, user_pw, user_name, user_email, user_username, user_date)
 		values(#{user_id}, #{user_pw}, #{user_name}, #{user_email}, #{user_username}, now())
@@ -21,4 +40,5 @@
 		from user
 		where user_id = #{user_id} and ROLE = #{ROLE}
 	</select>
+	
 </mapper>

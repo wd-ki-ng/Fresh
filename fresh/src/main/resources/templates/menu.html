@@ -38,7 +38,7 @@
 	<th:block th:fragment="navBar">
 		<!-- 상단바 - 로고, 게시판 메뉴, 검색창, 마이페이지, 로그인 -->
 		<div class="row NavBar" th:fragment="NavBar">
-			<a th:href="@{/}"><div class="col-md-1 logo"></div></a>
+			<div class="col-md-1 logo" th:onclick="|location.href='@{/}'|"></div>
 			<div class="col-md-5">
 				<ul class="board_menu">
 					<li>메뉴1</li>
@@ -55,10 +55,19 @@
 					</div>
 				</form>
 			</div>
-			<div class="col-md-1">MyPage</div>
-			<div class="col-md-1"><a th:href="@{/login}">LogIn</a></div>
+			<th:block th:if="${user.ROLE == 'ROLE_ADMIN'}">
+                <div class="col-md-1"><a th:href="@{#}">Admin</a></div>
+                <div class="col-md-1"><a th:href="@{/logout}">LogOut</a></div>
+            </th:block>
+            <th:block th:if="${user.ROLE == 'ROLE_USER'}">
+                <div class="col-md-1"><a th:href="@{#}">MyPage</a></div>
+                <div class="col-md-1"><a th:href="@{/logout}">LogOut</a></div>
+            </th:block>
+            <th:block th:unless="${user.ROLE == 'ROLE_ADMIN' or user.ROLE == 'ROLE_USER'}">
+                <div class="col-md-1"><a th:href="@{#}">MyPage</a></div>
+                <div class="col-md-1"><a th:href="@{/login}">LogIn</a></div>
+            </th:block>
 		</div>
 	</th:block>
-
 </body>
 </html>

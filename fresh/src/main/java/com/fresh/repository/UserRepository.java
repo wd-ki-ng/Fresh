@@ -27,11 +27,18 @@ public class UserRepository {
 	public UserDTO getUserData(UserDTO user) {
 		return sqlSession.selectOne("user.getUserData", user);
 	}
-
-	/*
-	public void join(UserDTO userDTO) {
-	 
-		sqlSession.insert("user.join", userDTO);
+	
+	public UserDTO findByUserUserName(String user_username) {
+		return sqlSession.selectOne("user.findByUserUserName", user_username);
 	}
-	*/
+	
+	//아이디 중복체크
+	public String checkUserId(String user_id) {
+		return sqlSession.selectOne("user.checkUserId", user_id);
+	}
+	
+	//닉네임 중복체크
+	public String checkUserUserName(String user_username) {
+		return sqlSession.selectOne("user.checkUserUserName", user_username);
+	}
 }

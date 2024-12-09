@@ -35,11 +35,16 @@ public class CustomUserDetails implements UserDetails {
     public String getUsername() {
         return userDTO.getUser_id();
     }
+    
+    public String getUserUserName() {
+        return userDTO.getUser_username();
+    }
 
     // 사용자의 이름 반환
     public String getName() {
         return userDTO.getUser_name();
     }
+    
 
     @Override
     public boolean isAccountNonExpired() {
