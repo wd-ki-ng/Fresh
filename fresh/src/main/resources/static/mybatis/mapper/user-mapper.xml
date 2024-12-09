@@ -10,6 +10,20 @@
 		where user_id = #{user_id}
 	</select>
 	
+	<select id="checkUserId" parameterType="String" resultType="String">
+		select max(case when user_id = #{user_id} then 'true'
+			  else 'false'
+			   end) as userId
+		  from user
+	</select>
+	
+	<select id="checkUserUserName" resultType="String" parameterType="String">
+		select max(case when user_username = #{user_username} then 'true'
+			  else 'false'
+			   end) as userUserName
+		  from user
+	</select>
+	
 	<select id="findByUserUserName" resultType="UserDTO">
 		select * from user
 		 where user_username = #{user_username}

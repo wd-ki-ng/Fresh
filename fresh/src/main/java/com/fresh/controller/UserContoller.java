@@ -26,6 +26,7 @@ public class UserContoller {
 
 	@Autowired
 	private UserUtil userUtil;
+	
 
 	@GetMapping("/login")
 	public String login(Model model) {
@@ -68,25 +69,42 @@ public class UserContoller {
 	   @PostMapping("/checkid")
 	   public ResponseEntity<Boolean> checkId(@RequestParam("userId") String userId) {
 	      System.out.println(userId);
-	      UserDTO user = userService.findByUserId(userId);
+	      String user = userService.checkUserId(userId);
 	      
+	      
+	      /*
 	      if(userId.equals(user.getUser_id())) {
 	         return ResponseEntity.ok(true);
-	      } else {
+	      }else {
 	         return ResponseEntity.ok(false);
+	      }
+	      */
+	      if(user.equals("false")) {
+	    	  return ResponseEntity.ok(false);
+	      } else{
+	    	  return ResponseEntity.ok(true);
 	      }
 	   }
 	   
+
+
 	//회원가입 - 닉네임 중복체크
 	   @PostMapping("/checkUserName")
 	   public ResponseEntity<Boolean> userName(@RequestParam("userName") String userName){
 		   System.out.println(userName);
-		   UserDTO user = userService.findByUserUserName(userName);
-		   
+		   String user = userService.checkUserUserName(userName);
+		   /*
 		   if(userName.equals(user.getUser_username())) {
 			   return ResponseEntity.ok(true);
 		   } else {
 			   return ResponseEntity.ok(false);
 		   }
+		   */
+		   if(user.equals("false")) {
+		    	  return ResponseEntity.ok(false);
+		      } else{
+		    	  return ResponseEntity.ok(true);
+		      }
 	   }
+	   
 }
