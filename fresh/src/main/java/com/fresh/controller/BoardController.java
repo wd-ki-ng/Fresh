@@ -54,22 +54,6 @@ public class BoardController {
 		model.addAttribute("user", user);
 
 		return "boardview";		
-		
-		
-		/*
-		// 로그인 한 사람이 학생이 아니면 => 관리자, 교직원임
-		// or 로그인 한 사람과 작성자가 같으면 통과
-		if (!user.getROLE().equals("ROLE_USER")) {
-			if ("1".equals(detail.getBoard_del())) {
-				model.addAttribute("answer", boardService.getAnswerContent(detail.getBoard_del()));
-			}
-			model.addAttribute("detail", detail);
-			model.addAttribute("user", user);
-			return "detail";
-		} else {
-			return "redirect:/login";
-		}
-		*/
 	}
 	
 	// 글쓰기 페이지로 단순 이동

@@ -21,11 +21,27 @@ public class AdminRepository {
 	}
 	
 	public UserDTO getOneMem(Long user_no) {
-		return sqlSession.selectOne("admin.getMem");
+		return sqlSession.selectOne("admin.getMem", user_no);
+	}
+	
+	public List<BoardDTO> getMemPosts(Long user_no) {
+		return sqlSession.selectList("admin.memPosts", user_no);
+	}
+	
+	public void setOneMem(UserDTO member) {
+		sqlSession.update("admin.memUpdate", member);
+	}
+	
+	public void delOneMem(Long user_no) {
+		sqlSession.delete("admin.memDelete", user_no);
 	}
 	
 	public List<BoardDTO> getAllPosts() {
 		return sqlSession.selectList("admin.post_list");
+	}
+	
+	public void setOneBoard_del(Long board_no) {
+		sqlSession.update("admin.postDel", board_no);
 	}
 	
 	public List<CustomCommentDTO> getAllComments() {

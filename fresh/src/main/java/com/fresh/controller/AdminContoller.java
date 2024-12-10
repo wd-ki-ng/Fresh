@@ -74,11 +74,56 @@ public class AdminContoller {
 		if (!user.getROLE().equals("ROLE_ADMIN")) {
 			return "main";
 		}
-		
 		// 조회하려는 유저의 모든 정보 가져오기
 		UserDTO member = adminService.getOneMem(user_no);
 		model.addAttribute("member", member);
 		
+		// 유저가 작성한 게시글 가져오기
+		List<BoardDTO> memPosts = adminService.getMemPosts(user_no);
+		model.addAttribute("memPosts", memPosts);
+		
 		return "admin/adminMem";
+	}
+	
+	@PostMapping("/admin/memUpdate")
+	public String memUpdate(Model model, UserDTO member) {
+		UserDTO user = userUtil.getUserNameAndRole();
+		model.addAttribute("user", user);
+		if (!user.getROLE().equals("ROLE_ADMIN")) {
+			return "main";
+		}
+		
+		// 수정사항 반영 - update
+		adminService.setOneMem(member);
+		
+		return "redirect:/admin/adminMem?user_no="+member.getUser_no();
+	}
+	
+	@GetMapping("/admin/memDel")
+	public String memDel(Model model, @RequestParam(value = "user_no") Long user_no) {
+		UserDTO user = userUtil.getUserNameAndRole();
+		model.addAttribute("user", user);
+		if (!user.getROLE().equals("ROLE_ADMIN")) {
+			return "main";
+		}
+		
+		// 유저 탈퇴처리
+		adminService.delOneMem(user_no);
+		
+		return "redirect:/admin/admin";
+	}
+	
+	@GetMapping("/admin/postDel")
+	public String postDel(Model model, @RequestParam(value = "board_no") Long board_no) {
+		UserDTO user = userUtil.getUserNameAndRole();
+		model.addAttribute("user", user);
+		if (!user.getROLE().equals("ROLE_ADMIN")) {
+			return "main";
+		}
+		
+		// 게시글 삭제 처리
+		adminService.setOneBoard_del(board_no);
+		
+		return "redirect:/admin/admin";
 	}
 }

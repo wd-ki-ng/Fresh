@@ -65,7 +65,7 @@
 	                <div class="col-md-1"><a th:href="@{/logout}">LogOut</a></div>
 	            </th:block>
 				<th:block th:if="${user.ROLE ne 'ROLE_ANONYMOUS' && user.ROLE ne 'ROLE_USER'}">
-	                <div class="col-md-1"><a th:href="@{#}">Admin</a></div>
+	                <div class="col-md-1"><a th:href="@{/admin/admin}">Admin</a></div>
 	                <div class="col-md-1"><a th:href="@{/logout}">LogOut</a></div>
 	            </th:block>
 		</div>

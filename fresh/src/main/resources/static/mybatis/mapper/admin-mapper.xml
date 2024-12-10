@@ -14,11 +14,42 @@
 		where user_no=#{user_no}
 	</select>
 	
+	<select id="memPosts" parameterType="Long" resultType="BoardDTO">
+		select *
+		from board
+		where user_no=#{user_no}
+		order by board_no desc
+	</select>
+	
+	<update id="memUpdate" parameterType="UserDTO">
+		update user
+		set
+			user_id=#{user_id},
+			user_name=#{user_name},
+			user_email=#{user_email},
+			user_username=#{user_username},
+			ROLE=#{ROLE}
+		where user_no=#{user_no}
+	</update>
+	
+	<delete id="memDelete" parameterType="Long">
+		delete from user
+		where user_no=#{user_no}
+	</delete>
+	
 	<select id="post_list" resultType="BoardDTO">
 		select *
 		from board
+		where board_del='1'
 		order by board_no desc
 	</select>
+	
+	<update id="postDel" parameterType="Long">
+		update board
+		set
+			board_del='0'
+		where board_no=#{board_no}
+	</update>
 	
 	<select id="com_list" resultType="CustomCommentDTO">
 		select comment.*, user.user_username
