@@ -136,10 +136,9 @@
 						<table class="adm_mem adm_body">
 							<colgroup>
 								<col width="15%"/>
+								<col width="25%"/>
 								<col width="20%"/>
-								<col width="20%"/>
-								<col width="30%"/>
-								<col width="15%"/>
+								<col width="40%"/>
 							</colgroup>
 							<thead>
 								<tr>
@@ -147,16 +146,14 @@
 									<th>아이디</th>
 									<th>이름</th>
 									<th>이메일</th>
-									<th>수정/탈퇴</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:each="mem:${members}">
-									<td><a th:onclick="'toMemPage(' + ${mem.user_no} + ')'" th:text="${mem.user_no}"></a></td>
-									<td><a th:onclick="'toMemPage(' + ${mem.user_no} + ')'" th:text="${mem.user_id}"></a></td>
-									<td><a th:onclick="'toMemPage(' + ${mem.user_no} + ')'" th:text="${mem.user_name}"></a></td>
-									<td><a th:onclick="'toMemPage(' + ${mem.user_no} + ')'" th:text="${mem.user_email}"></a></td>
-									<td class="btn_td"><a th:onclick="'toMemPage(' + ${mem.user_no} + ')'" class="btn">수정</a><a th:onclick="'toMemPage(' + ${mem.user_no} + ')'" class="btn">탈퇴</a></td>
+									<td><a th:onclick="toMemPage([[${mem.user_no}]])" th:text="${mem.user_no}"></a></td>
+									<td><a th:onclick="toMemPage([[${mem.user_no}]])" th:text="${mem.user_id}"></a></td>
+									<td><a th:onclick="toMemPage([[${mem.user_no}]])" th:text="${mem.user_name}"></a></td>
+									<td><a th:onclick="toMemPage([[${mem.user_no}]])" th:text="${mem.user_email}"></a></td>
 								</tr>
 							</tbody>
 						</table>
@@ -194,7 +191,7 @@
 									<td><a th:href="@{/boardview(no=${post.board_no})}" th:text="${post.board_title}"></a></td>
 									<td><a th:href="@{/boardview(no=${post.board_no})}" th:text="${#dates.format(post.board_date, 'yyyy-MM-dd')}"></a></td>
 									<td><a th:href="@{/boardview(no=${post.board_no})}" th:text="'❤️ '+${post.board_like}+'/👁️ '+${post.board_count}"></a></td>
-									<td class="btn_td"><a th:href="@{#}" class="btn">수정</a><a th:href="@{#}" class="btn">삭제</a></td>
+									<td class="btn_td"><a th:href="@{#}" class="btn">수정</a><a th:onclick="postDelete([[${post.board_no}]])" class="btn">삭제</a></td>
 								</tr>
 							</tbody>
 						</table>
@@ -411,6 +408,7 @@
 							<tfoot>
 								<tr>
 									<td colspan="7" style="text-align: right">
+										<button>선택 게시글 복구</button>
 										<button>선택 게시글 영구삭제</button>
 									</td>
 								</tr>
@@ -501,31 +499,59 @@
 					}
 				}
 			}
+			
 		</script>
 		<script th:inline="javascript">
 	        /*<![CDATA[*/
 	        // 타임리프 URL을 동적으로 생성하여 사용할 수 있도록 설정
-	        var urlTemplate = /*[[${'/admin/adminMem'}]]*/ '/admin/adminMem';  // 타임리프 문법으로 URL 처리
+	        var memUrl = /*[[${'/admin/adminMem'}]]*/ '/admin/adminMem';  // 타임리프 문법으로 URL 처리
 	
 	        // toMemPage 함수 정의
 	        function toMemPage(userNo) {
 	        	userNo = parseInt(userNo, 10);
 	            // 동적으로 form 생성
-	            var form = document.createElement('form');
-	            form.method = 'get';
-	            form.action = urlTemplate;  // 타임리프 URL 사용
+	            var memForm = document.createElement('form');
+	            memForm.method = 'get';
+	            memForm.action = memUrl;  // 타임리프 URL 사용
 	
 	            // user_no 값을 hidden 필드로 전달
 	            var userNoInput = document.createElement('input');
 	            userNoInput.type = 'hidden';
 	            userNoInput.name = 'user_no';  // 서버에서 사용할 파라미터 이름
 	            userNoInput.value = userNo;  // 버튼 클릭 시 받은 user_no 값
-	            form.appendChild(userNoInput);
+	            memForm.appendChild(userNoInput);
 	
 	            // form을 body에 추가하고 제출
-	            document.body.appendChild(form);
-	            form.submit();
+	            document.body.appendChild(memForm);
+	            memForm.submit();
 	        }
+	        /*]]>*/
+    	</script>
+    	<script th:inline="javascript">
+	        /*<![CDATA[*/
+	       	// 타임리프 URL을 동적으로 생성하여 사용할 수 있도록 설정
+	        var postDelUrl = /*[[${'/admin/postDel'}]]*/ '/admin/postDel';  // 타임리프 문법으로 URL 처리
+	        
+	        function postDelete(board_no){
+				if(confirm('정말로 ' + board_no + '번 게시글을 삭제하시겠습니까?')){
+					board_no = parseInt(board_no, 10);
+		            // 동적으로 form 생성
+		            var postDelForm = document.createElement('form');
+		            postDelForm.method = 'get';
+		            postDelForm.action = memUrl;  // 타임리프 URL 사용
+		
+		            // user_no 값을 hidden 필드로 전달
+		            var boardNoInput = document.createElement('input');
+		            boardNoInput.type = 'hidden';
+		            boardNoInput.name = 'board_no';  // 서버에서 사용할 파라미터 이름
+		            boardNoInput.value = board_no;  // 버튼 클릭 시 받은 user_no 값
+		            postDelForm.appendChild(boardNoInput);
+		
+		            // form을 body에 추가하고 제출
+		            document.body.appendChild(postDelForm);
+		            postDelForm.submit();
+				}
+			}
 	        /*]]>*/
     	</script>
 	</body>

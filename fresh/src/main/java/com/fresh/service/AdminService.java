@@ -16,14 +16,8 @@ import com.fresh.repository.UserRepository;
 public class AdminService {
 	
 	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
 	private AdminRepository adminRepository;
 	
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
-
 	public List<UserDTO> getMemList() {
 		return adminRepository.getMemList();
 	}
@@ -32,8 +26,24 @@ public class AdminService {
 		return adminRepository.getOneMem(user_no);
 	}
 	
+	public List<BoardDTO> getMemPosts(Long user_no) {
+		return adminRepository.getMemPosts(user_no);
+	}
+	
+	public void setOneMem(UserDTO member) {
+		adminRepository.setOneMem(member);
+	}
+	
+	public void delOneMem(Long user_no) {
+		adminRepository.delOneMem(user_no);
+	}
+	
 	public List<BoardDTO> getAllPosts() {
 		return adminRepository.getAllPosts();
+	}
+	
+	public void setOneBoard_del(Long board_no) {
+		adminRepository.setOneBoard_del(board_no);
 	}
 	
 	public List<CustomCommentDTO> getAllComments() {
