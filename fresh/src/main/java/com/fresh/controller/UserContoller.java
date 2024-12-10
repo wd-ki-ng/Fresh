@@ -1,5 +1,6 @@
 package com.fresh.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,15 +40,15 @@ public class UserContoller {
 			if (user.getUser_id().equals("anonymousUser")) {
 				return "login";
 			} else {
-				return "/";
+				return "redirect:/";
 			}
 		}
 	
-
 	@PostMapping("/login")
-	public String login(UserDTO user) {
-		return "redirect:/";
-	}
+	public String login(UserDTO user){
+			return  "redirect:/";
+		}
+	
 
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
