@@ -53,7 +53,7 @@ public class UserRepository {
 	}
 	
 	//아이디와 이메일로 회원이 존재하는지 확인
-	public String findByIdAndEmail(UserDTO user) {
+	public UserDTO findByIdAndEmail(UserDTO user) {
 		return sqlSession.selectOne("user.findByIdAndEmail", user);
 	}
 }

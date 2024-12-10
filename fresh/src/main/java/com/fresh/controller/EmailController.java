@@ -51,24 +51,21 @@ public class EmailController {
 	//임시 비밀번호 발급용
 	@PostMapping("/findPw")
 	@ResponseBody
-	public Map<String, Object> sendTempPw(@RequestParam("userId") String userId, @RequestParam("email") String email ){
+	public Map<String, Object> sendTempPw(UserDTO user/*@RequestParam("userId") String userId, @RequestParam("email") String email*/ ){
 		Map<String, Object> response = new HashMap<>();
 		
-		UserDTO user = new UserDTO();
-		user.setUser_id(userId);
-		user.setUser_email(email);
 		
-		String userNo = userService.findByIdAndEmail(user);		//사용자 확인
+		UserDTO userDTO = userService.findByIdAndEmail(user);		//사용자 확인
 		
-
 		
-		if(userNo != null) {
+		if(userDTO.getUser_no() != null) {
 			String tempPw = generateTempPw();
 			
-			user.setUser_pw(tempPw);	
-			userService.updatePw(user);							//암호화된 비밀번호 저장
+			//response.put("tempPw", userDTO.setTemp_pw(tempPw));
 			
-			emailService.sendTempPw(tempPw, email); 			//임시 비밀번호 전송(이메일)
+			userDTO.setTemp_pw(tempPw);
+			userService.updatePw(userDTO);							//암호화된 비밀번호 저장
+			emailService.sendTempPw(user.getUser_email(), tempPw); 			//임시 비밀번호 전송(이메일)
 			
 			response.put("success", true);
 		} else {

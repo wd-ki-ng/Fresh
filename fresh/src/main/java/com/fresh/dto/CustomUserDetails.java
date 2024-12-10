@@ -11,7 +11,7 @@ public class CustomUserDetails implements UserDetails {
     private UserDTO userDTO;
 
     public CustomUserDetails(UserDTO user) {
-        this.userDTO = user;
+        this.userDTO = user; 
     }
 
     @Override
