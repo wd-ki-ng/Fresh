@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fresh.dto.BoardDTO;
 import com.fresh.dto.CustomCommentDTO;
@@ -27,7 +29,7 @@ public class AdminContoller {
 	private UserUtil userUtil;
 
 	@GetMapping("/admin/admin")
-	public String adminMem(Model model) {
+	public String admin(Model model) {
 		UserDTO user = userUtil.getUserNameAndRole();
 		model.addAttribute("user", user);
 		if (!user.getROLE().equals("ROLE_ADMIN")) {
@@ -62,6 +64,21 @@ public class AdminContoller {
 		List<BoardDTO> del_notis = adminService.getDelNotis();
 		model.addAttribute("del_notis", del_notis);
 		
-		return "/admin/admin";
+		return "admin/admin";
+	}
+	
+	@GetMapping("/admin/adminMem")
+	public String adminMem(Model model, @RequestParam(value = "user_no") Long user_no) {
+		UserDTO user = userUtil.getUserNameAndRole();
+		model.addAttribute("user", user);
+		if (!user.getROLE().equals("ROLE_ADMIN")) {
+			return "main";
+		}
+		
+		// 조회하려는 유저의 모든 정보 가져오기
+		UserDTO member = adminService.getOneMem(user_no);
+		model.addAttribute("member", member);
+		
+		return "admin/adminMem";
 	}
 }

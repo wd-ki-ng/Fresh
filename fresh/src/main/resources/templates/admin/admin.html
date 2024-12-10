@@ -67,7 +67,8 @@
 			display: inline-block;
 			width: 100%;
 		}
-		.adm_body thead button{
+		.adm_body thead button, .adm_body tfoot button{
+			font-family: 'GmarketSansMedium';
 			border: 1px solid lightgray;
 			border-radius: 5px;
 			padding: 10px 10px 5px 10px;
@@ -103,6 +104,20 @@
 		.adm_trash input[type="checkbox"], .adm_trash label {
 			cursor: pointer;
 		}
+		.adm_body td.btn_td {
+			display: flex;
+			justify-content: space-around;
+		}
+		.adm_body td a.btn {
+			display: inline;
+			border: 1px solid lightgray;
+			width: auto;
+			padding: 5px 12px 0px 12px; 
+		}
+		.adm_body td a.btn:hover {
+			background-color: gray;
+			color: white;
+		}
 		</style>
 	</head>
 	
@@ -121,9 +136,10 @@
 						<table class="adm_mem adm_body">
 							<colgroup>
 								<col width="15%"/>
-								<col width="25%"/>
 								<col width="20%"/>
-								<col width="40%"/>
+								<col width="20%"/>
+								<col width="30%"/>
+								<col width="15%"/>
 							</colgroup>
 							<thead>
 								<tr>
@@ -131,14 +147,16 @@
 									<th>아이디</th>
 									<th>이름</th>
 									<th>이메일</th>
+									<th>수정/탈퇴</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:each="mem:${members}">
-									<td><a th:href="@{#}" th:text="${mem.user_no}"></a></td>
-									<td><a th:href="@{#}" th:text="${mem.user_id}"></a></td>
-									<td><a th:href="@{#}" th:text="${mem.user_name}"></a></td>
-									<td><a th:href="@{#}" th:text="${mem.user_email}"></a></td>
+									<td><a th:onclick="'toMemPage(' + ${mem.user_no} + ')'" th:text="${mem.user_no}"></a></td>
+									<td><a th:onclick="'toMemPage(' + ${mem.user_no} + ')'" th:text="${mem.user_id}"></a></td>
+									<td><a th:onclick="'toMemPage(' + ${mem.user_no} + ')'" th:text="${mem.user_name}"></a></td>
+									<td><a th:onclick="'toMemPage(' + ${mem.user_no} + ')'" th:text="${mem.user_email}"></a></td>
+									<td class="btn_td"><a th:onclick="'toMemPage(' + ${mem.user_no} + ')'" class="btn">수정</a><a th:onclick="'toMemPage(' + ${mem.user_no} + ')'" class="btn">탈퇴</a></td>
 								</tr>
 							</tbody>
 						</table>
@@ -152,10 +170,10 @@
 								<col width="10%"/><!-- 게시글번호 -->
 								<col width="10%"/><!-- 작성자이름 -->
 								<col width="10%"/><!-- 카테고리 -->
-								<col width="30%"/><!-- 제목 -->
-								<col width="15%"/><!-- 작성일 -->
+								<col width="27%"/><!-- 제목 -->
+								<col width="13%"/><!-- 작성일 -->
 								<col width="15%"/><!-- 추천/조회수 -->
-								<col width="10%"/><!-- 삭제여부 -->
+								<col width="15%"/><!-- 삭제여부 -->
 							</colgroup>
 							<thead>
 								<tr>
@@ -165,7 +183,7 @@
 									<th>제목</th>
 									<th>작성일</th>
 									<th>추천/조회수</th>
-									<th>삭제여부</th>
+									<th>수정/삭제</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -176,7 +194,7 @@
 									<td><a th:href="@{/boardview(no=${post.board_no})}" th:text="${post.board_title}"></a></td>
 									<td><a th:href="@{/boardview(no=${post.board_no})}" th:text="${#dates.format(post.board_date, 'yyyy-MM-dd')}"></a></td>
 									<td><a th:href="@{/boardview(no=${post.board_no})}" th:text="'❤️ '+${post.board_like}+'/👁️ '+${post.board_count}"></a></td>
-									<td><a th:href="@{/boardview(no=${post.board_no})}" th:text="${post.board_del}"></a></td>
+									<td class="btn_td"><a th:href="@{#}" class="btn">수정</a><a th:href="@{#}" class="btn">삭제</a></td>
 								</tr>
 							</tbody>
 						</table>
@@ -190,10 +208,10 @@
 								<col width="10%"/>
 								<col width="10%"/>
 								<col width="10%"/>
-								<col width="30%"/>
+								<col width="29%"/>
+								<col width="13%"/>
+								<col width="13%"/>
 								<col width="15%"/>
-								<col width="15%"/>
-								<col width="10%"/>
 							</colgroup>
 							<thead>
 								<tr>
@@ -203,7 +221,7 @@
 									<th>내용</th>
 									<th>작성일</th>
 									<th>수정일</th>
-									<th>삭제여부</th>
+									<th>수정/삭제</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -214,7 +232,7 @@
 									<td><a th:href="@{/boardview(no=${com.board_no})}" th:text="${com.com_comment}"></a></td>
 									<td><a th:href="@{/boardview(no=${com.board_no})}" th:text="${#dates.format(com.com_cdate, 'yyyy-MM-dd')}"></a></td>
 									<td><a th:href="@{/boardview(no=${com.board_no})}" th:text="${#dates.format(com.com_mdate, 'yyyy-MM-dd')}"></a></td>
-									<td><a th:href="@{/boardview(no=${com.board_no})}" th:text="${com.com_del}"></a></td>
+									<td class="btn_td"><a th:href="@{#}" class="btn">수정</a><a th:href="@{#}" class="btn">삭제</a></td>
 								</tr>
 							</tbody>
 						</table>
@@ -226,11 +244,11 @@
 						<table class="adm_noti adm_body">
 							<colgroup>
 								<col width="10%"/>
-								<col width="45%"/>
+								<col width="40%"/>
 								<col width="15%"/>
 								<col width="10%"/>
 								<col width="10%"/>
-								<col width="10%"/>
+								<col width="15%"/>
 							</colgroup>
 							<thead>
 								<tr>
@@ -244,7 +262,7 @@
 									<th>작성일</th>
 									<th>추천수</th>
 									<th>조회수</th>
-									<th>삭제여부</th>
+									<th>수정/삭제</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -254,7 +272,7 @@
 									<td><a th:href="@{/boardview(no=${noti.board_no})}" th:text="${#dates.format(noti.board_date, 'yyyy-MM-dd')}"></a></td>
 									<td><a th:href="@{/boardview(no=${noti.board_no})}" th:text="${noti.board_like}"></a></td>
 									<td><a th:href="@{/boardview(no=${noti.board_no})}" th:text="${noti.board_count}"></a></td>
-									<td><a th:href="@{/boardview(no=${noti.board_no})}" th:text="${noti.board_del}"></a></td>
+									<td class="btn_td"><a th:href="@{#}" class="btn">수정</a><a th:href="@{#}" class="btn">삭제</a></td>
 								</tr>
 							</tbody>
 						</table>
@@ -303,6 +321,13 @@
 									<td><a th:href="@{#}" th:text="'❤️ '+${post.board_like}+'/👁️ '+${post.board_count}"></a></td>
 								</tr>
 							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="7" style="text-align: right">
+										<button>선택 게시글 영구삭제</button>
+									</td>
+								</tr>
+							</tfoot>
 						</table>
 						
 						<!-- 삭제된 댓글 -->
@@ -341,6 +366,13 @@
 									<td><a th:href="@{#}" th:text="${#dates.format(com.com_mdate, 'yyyy-MM-dd')}"></a></td>
 								</tr>
 							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="7" style="text-align: right">
+										<button>선택 게시글 영구삭제</button>
+									</td>
+								</tr>
+							</tfoot>
 						</table>
 
 						<!-- 삭제된 공지 -->
@@ -376,6 +408,13 @@
 									<td><a th:href="@{#}" th:text="${noti.board_count}"></a></td>
 								</tr>
 							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="7" style="text-align: right">
+										<button>선택 게시글 영구삭제</button>
+									</td>
+								</tr>
+							</tfoot>
 						</table>
 					</div>
 				</div>
@@ -463,5 +502,31 @@
 				}
 			}
 		</script>
+		<script th:inline="javascript">
+	        /*<![CDATA[*/
+	        // 타임리프 URL을 동적으로 생성하여 사용할 수 있도록 설정
+	        var urlTemplate = /*[[${'/admin/adminMem'}]]*/ '/admin/adminMem';  // 타임리프 문법으로 URL 처리
+	
+	        // toMemPage 함수 정의
+	        function toMemPage(userNo) {
+	        	userNo = parseInt(userNo, 10);
+	            // 동적으로 form 생성
+	            var form = document.createElement('form');
+	            form.method = 'get';
+	            form.action = urlTemplate;  // 타임리프 URL 사용
+	
+	            // user_no 값을 hidden 필드로 전달
+	            var userNoInput = document.createElement('input');
+	            userNoInput.type = 'hidden';
+	            userNoInput.name = 'user_no';  // 서버에서 사용할 파라미터 이름
+	            userNoInput.value = userNo;  // 버튼 클릭 시 받은 user_no 값
+	            form.appendChild(userNoInput);
+	
+	            // form을 body에 추가하고 제출
+	            document.body.appendChild(form);
+	            form.submit();
+	        }
+	        /*]]>*/
+    	</script>
 	</body>
 </html>

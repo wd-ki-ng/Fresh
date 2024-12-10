@@ -8,6 +8,12 @@
 		order by user_no desc
 	</select>
 	
+	<select id="getMem" parameterType="Long" resultType="UserDTO">
+		select *
+		from user
+		where user_no=#{user_no}
+	</select>
+	
 	<select id="post_list" resultType="BoardDTO">
 		select *
 		from board
@@ -48,4 +54,6 @@
 		where category=0 and board_del='0'
 		order by board_no desc
 	</select>
+	
+	
 </mapper>

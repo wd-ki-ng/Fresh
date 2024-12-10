@@ -20,6 +20,10 @@ public class AdminRepository {
 		return sqlSession.selectList("admin.mem_list");
 	}
 	
+	public UserDTO getOneMem(Long user_no) {
+		return sqlSession.selectOne("admin.getMem");
+	}
+	
 	public List<BoardDTO> getAllPosts() {
 		return sqlSession.selectList("admin.post_list");
 	}

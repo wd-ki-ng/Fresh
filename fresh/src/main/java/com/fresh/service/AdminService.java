@@ -28,6 +28,10 @@ public class AdminService {
 		return adminRepository.getMemList();
 	}
 	
+	public UserDTO getOneMem(Long user_no) {
+		return adminRepository.getOneMem(user_no);
+	}
+	
 	public List<BoardDTO> getAllPosts() {
 		return adminRepository.getAllPosts();
 	}
