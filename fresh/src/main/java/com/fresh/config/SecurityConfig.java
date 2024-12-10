@@ -6,6 +6,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.RequestMatchers;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Configuration
 @EnableWebSecurity
@@ -21,17 +25,22 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers("/img/**", "/css/**", "/js/**", "/scss/**", "/plugins/**").permitAll()
-                .requestMatchers("/", "/main", "/login", "/join","/board", "/checkid", "/checkUserName","/send-email-verification","/verify-email").permitAll()           // 공개 경로 허용
+                .requestMatchers("/", "/main","/login", "/join","/board", "/checkid", "/checkUserName","/send-email-verification","/verify-email").permitAll()           // 공개 경로 허용
                 .requestMatchers("/admin/**").hasAnyRole("ADMIN")              // 관리자 전용
-                .requestMatchers("/mypage/**").hasAnyRole("ADMIN", "USER")     // 사용자 전용
+                .requestMatchers("/mypage/**").hasAnyRole("USER")		       // 사용자 전용
                 .anyRequest().authenticated()                                  // 그 외 인증 필요
             );
+
         // 로그인이 안되어 오류 페이지 발생 시 로그인 페이지로 이동
-        http.formLogin((auth) -> auth.loginPage("/login")
-        		.loginProcessingUrl("/login")// 로그인 시 해당 URL로 값 전송
+        http.formLogin((auth) -> auth
+        		.loginPage("/login")
+        		.loginProcessingUrl("/login")// 로그인 시 해당 URL로 값 전송     
         		.failureUrl("/login?error=1")
-        		.defaultSuccessUrl("/",true)
-        		.permitAll());
+        		.defaultSuccessUrl("/",true)   		
+        		.permitAll()
+        		
+        		);
+        
         
         // 세션 중복 로그인 허용 여부
         http .sessionManagement((auth) -> auth
@@ -56,5 +65,5 @@ public class SecurityConfig {
         
         return http.build();
     }
+	
 }
-

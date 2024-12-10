@@ -1,5 +1,7 @@
 package com.fresh.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -35,15 +37,15 @@ public class UserContoller {
 			if (user.getUser_id().equals("anonymousUser")) {
 				return "login";
 			} else {
-				return "/";
+				return "redirect:/";
 			}
 		}
 	
-
 	@PostMapping("/login")
-	public String login(UserDTO user) {
-		return "redirect:/";
-	}
+	public String login(UserDTO user){
+			return  "redirect:/";
+		}
+	
 
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
