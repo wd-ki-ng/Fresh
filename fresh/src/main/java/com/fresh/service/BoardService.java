@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.fresh.dto.BoardDTO;
 import com.fresh.dto.CommentDTO;
 import com.fresh.dto.CustomCommentDTO;
+import com.fresh.dto.UserDTO;
 import com.fresh.repository.BoardRepository;
 
 @Service
@@ -63,5 +64,6 @@ public class BoardService {
 	public List<BoardDTO> getBoardList() {
 		return boardRepository.getBoardList();
 	}
+
 
 }

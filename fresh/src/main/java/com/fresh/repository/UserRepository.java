@@ -32,6 +32,11 @@ public class UserRepository {
 		return sqlSession.selectOne("user.findByUserUserName", user_username);
 	}
 	
+	//비밀번호 업데이트
+	public void updatePw(UserDTO user) {
+		sqlSession.update("user.updatePw", user);
+	}
+	
 	//아이디 중복체크
 	public String checkUserId(String user_id) {
 		return sqlSession.selectOne("user.checkUserId", user_id);
@@ -40,5 +45,15 @@ public class UserRepository {
 	//닉네임 중복체크
 	public String checkUserUserName(String user_username) {
 		return sqlSession.selectOne("user.checkUserUserName", user_username);
+	}
+	
+	 //아이디 찾기
+	public String findIdByNameAndEmail(UserDTO user) {
+		return sqlSession.selectOne("user.findIdByNameAndEmail", user);
+	}
+	
+	//아이디와 이메일로 회원이 존재하는지 확인
+	public String findByIdAndEmail(UserDTO user) {
+		return sqlSession.selectOne("user.findByIdAndEmail", user);
 	}
 }

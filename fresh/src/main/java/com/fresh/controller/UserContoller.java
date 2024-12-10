@@ -1,5 +1,9 @@
 package com.fresh.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -10,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fresh.dto.UserDTO;
 import com.fresh.service.UserService;
@@ -35,15 +40,15 @@ public class UserContoller {
 			if (user.getUser_id().equals("anonymousUser")) {
 				return "login";
 			} else {
-				return "/";
+				return "redirect:/";
 			}
 		}
 	
-
 	@PostMapping("/login")
-	public String login(UserDTO user) {
-		return "redirect:/";
-	}
+	public String login(UserDTO user){
+			return  "redirect:/";
+		}
+	
 
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -64,6 +69,18 @@ public class UserContoller {
 		userService.joinProcess(userDTO);
 		return "redirect:/login";
 	}
+	
+	@GetMapping("/findid")
+	public String findId(Model model) {
+		return "findid";
+	}
+	
+	@GetMapping("/findpassword")
+	public String findPw(Model model) {
+		return "findpassword";
+	}
+	
+
 	
 	//회원가입 - 아이디 중복체크
 	   @PostMapping("/checkid")
@@ -105,6 +122,29 @@ public class UserContoller {
 		      } else{
 		    	  return ResponseEntity.ok(true);
 		      }
+	   }
+	   // 아이디 찾기 요청 처리
+	   @PostMapping("/findid")
+	   @ResponseBody
+	   public Map<String, Object> findId(@RequestParam("name") String name, @RequestParam("email") String email){
+		   Map<String, Object> response = new HashMap<>();
+		   
+		   UserDTO user = new UserDTO();
+		   user.setUser_name(name);
+		   user.setUser_email(email);
+		   
+		   //서비스에서 아이디 찾기
+		   String userId = userService.findIdByNameAndEmail(user);
+		   
+		   //아이디가 존재하면 성공, 응답 없으면 실패 반환
+		   if(userId != null) {
+			   response.put("success", true);
+			   response.put("id", userId);
+		   } else {
+			   response.put("success", false);
+		   }
+		   
+		   return response;
 	   }
 	   
 }

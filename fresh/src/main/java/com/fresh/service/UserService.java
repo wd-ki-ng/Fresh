@@ -47,4 +47,20 @@ public class UserService {
 		return userRepository.checkUserUserName(user_username);
 	}
 	
+	// 아이디 찾기 서비스
+    public String findIdByNameAndEmail(UserDTO user) {
+    	return userRepository.findIdByNameAndEmail(user);
+    }
+    
+    //아이디와 이메일로 회원이 존재하는지 확인
+    public String findByIdAndEmail(UserDTO user) {
+    	return userRepository.findByIdAndEmail(user);
+    }
+    
+    //비밀번호 수정
+    public void updatePw(UserDTO user) {
+    	user.setUser_pw(bCryptPasswordEncoder.encode(user.getUser_pw()));
+    	userRepository.updatePw(user);
+    }
+	
 }
