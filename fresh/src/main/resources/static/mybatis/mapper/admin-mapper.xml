@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+
+	<select id="mem_list" resultType="UserDTO">
+		select user_no, user_id, user_name, user_email, user_username
+		from user
+		order by user_no desc
+	</select>
+	
+	<select id="post_list" resultType="BoardDTO">
+		select *
+		from board
+		order by board_no desc
+	</select>
+	
+	<select id="com_list" resultType="CustomCommentDTO">
+		select comment.*, user.user_username
+		from comment, user 
+		where user.user_no=comment.user_no
+		order by comment.com_no desc
+	</select>
+	
+	<select id="noti_list" resultType="BoardDTO">
+		select *
+		from board
+		where category=0
+		order by board_no desc
+	</select>
+	
+	<select id="del_post" resultType="BoardDTO">
+		select *
+		from board
+		where board_del='0'
+		order by board_no desc
+	</select>
+	
+	<select id="del_com" resultType="CustomCommentDTO">
+		select comment.*, user.user_username
+		from comment, user 
+		where user.user_no=comment.user_no and comment.com_del='0'
+		order by comment.com_no desc
+	</select>
+	
+	<select id="del_noti" resultType="BoardDTO">
+		select *
+		from board
+		where category=0 and board_del='0'
+		order by board_no desc
+	</select>
+</mapper>

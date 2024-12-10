@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
 		<title>Fresh Main page</title>
 		<th:block th:insert="~{menu.html::headImport}"></th:block>
+		<th:block th:insert="~{menu.html::metaImport}"></th:block>
 	</head>
 	
 	<body>
@@ -151,13 +152,52 @@
 							</table>
 						</form>
 					</div>
+						<!-- 로그인창 - 로그인 안 되어 있을 시 -->
+					<th:block th:if="${user.ROLE eq 'ROLE_ANONYMOUS'}">
+						<div class="side_login">
+							<form method="post" name="side_login" action="/login">
+								<table class="login_table">
+									<colgroup>
+										<col width="55%"/>
+										<col width="25%"/>
+										<col width="20%"/>
+									</colgroup>
+									<thead>
+										<tr>
+											<th colspan="3">로그인</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td colspan="2"><input type="text" name="username" placeholder="아이디"></td>
+											<td rowspan="2" class="btn_td"><button type="submit">LogIn</button></td>
+											<td><input type="hidden" name="_csrf" th:value="${_csrf.token}"/></td>
+										</tr>
+										<tr>
+											<td colspan="2"><input type="password" name="password" placeholder="비밀번호"></td>
+										</tr>
+										<tr>
+											<td>아이디/비밀번호 찾기</td>
+											<td colspan="2"><a th:href="@{/join}">회원가입</a></td>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</div>
+					</th:block>
 					<!-- 회원 정보창 - 로그인 되어 있을 시 -->
+					<th:block th:unless="${user.ROLE eq 'ROLE_ANONYMOUS'}">
 					<div class="side_meminfo">
-					
+						<div style= "text-align:center;">
+							<span id="user_id">[[${idandname.user_id}]] 님 환영합니다</span><br>
+							<span id="user_username">[[${idandname.user_username}]]</span><br>
+							<span id="user_mypage"><a th:href="@{/mypage/mypage}">MyPage&nbsp;</a></span>
+	               			<span id="user_logout"><a th:href="@{/logout}">&nbsp;Logout</a></span>
+						</div>
 					</div>
+					</th:block>
 				</div>
 			</div>
-			
 			
 		</div>
 		<th:block th:insert="~{menu.html::scriptImport}"></th:block>
