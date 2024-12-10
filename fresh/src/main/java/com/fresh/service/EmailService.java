@@ -45,4 +45,14 @@ public class EmailService {
 		}
 		return sb.toString();
 	}
+	
+	//임시비밀번호 전송
+	public void sendTempPw(String userEmail, String tempPw) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		
+		message.setTo(userEmail);
+		message.setSubject("임시비밀번호입니다");
+		message.setText("안녕하세요,\n\n Fresh로그인 임시비밀번호는 " + tempPw + " 입니다.\n로그인 후 비밀번호를 변경해 주세요.");
+		javaMailSender.send(message);
+	}
 }

@@ -7,6 +7,7 @@
 	</head>
 	
 	<body>
+		<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
 		<div class="container">
 			<!-- 상단바 - 로고, 게시판 메뉴, 검색창, 마이페이지, 로그인 -->
 			<th:block th:insert="~{menu.html::navBar}"></th:block>
@@ -135,6 +136,7 @@
 								</thead>
 								<tbody>
 									<tr>
+										<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
 										<td colspan="2"><input type="text" placeholder="아이디"></td>
 										<td rowspan="2" class="btn_td"><button type="submit">LogIn</button></td>
 									</tr>
