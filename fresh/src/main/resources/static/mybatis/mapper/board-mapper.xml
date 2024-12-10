@@ -57,7 +57,7 @@
 		select board_no, user_no, board_title, board_content, board_write,
 		 	   board_date, board_like, board_count, board_del
 		from board
-		order by board_date desc
+		order by board_no desc
 	</select>
 	
 	</mapper>
