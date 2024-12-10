@@ -101,6 +101,23 @@ body {
 .board-list td a:hover {
 	color: #007bff;
 }
+/* 제목 외의 열 폭을 좁힘 */
+
+.board-list th:nth-child(3),
+.board-list td:nth-child(3),
+.board-list th:nth-child(4),
+.board-list td:nth-child(4) {
+	width: 12%;
+}
+.board-list th:nth-child(1),
+.board-list td:nth-child(1),
+.board-list th:nth-child(5),
+.board-list td:nth-child(5),
+.board-list th:nth-child(6),
+.board-list td:nth-child(6) {
+    width: 6%; /* 번호, 작성자, 작성일시, 조회수, 추천수 열의 폭을 좁게 설정 */
+}
+
 
 /* 하단 스타일 */
 .pagination {
