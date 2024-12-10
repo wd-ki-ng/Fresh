@@ -10,6 +10,7 @@ public class UserDTO {
 	private Long user_no;				//유저 번호PK
 	private String user_id;			    //유저 아이디
 	private String user_pw;				//유저 비밀번호
+	private String temp_pw;				//임시 발급 비밀번호
 	private String pw_chk;				
 	private String user_name;			//유저 이름
 	private String user_email;			//유저 이메일

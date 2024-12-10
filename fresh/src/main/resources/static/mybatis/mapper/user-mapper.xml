@@ -17,15 +17,15 @@
     </select>
 	
 	<!-- ID와 email로 해당하는 사용자 있는지 찾기 -->
-	<select id="findByIdAndEmail" resultType="String">
-		select user_no from user
+	<select id="findByIdAndEmail" parameterType="UserDTO" resultType="UserDTO">
+		select user_name,user_no from user
 		 where user_id = #{user_id} and user_email = #{user_email}
 	</select>
 	
 	<!-- 비밀번호 업데이트 -->
-	<update id="updatePw">
-		select user
-		   set user_pw = #{user_pw}
+	<update id="updatePw" parameterType="UserDTO">
+		update user
+		   set user_pw = #{temp_pw}
 		 where user_no = #{user_no}
 	</update>
 	

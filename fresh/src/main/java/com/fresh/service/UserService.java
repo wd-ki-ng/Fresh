@@ -53,14 +53,16 @@ public class UserService {
     }
     
     //아이디와 이메일로 회원이 존재하는지 확인
-    public String findByIdAndEmail(UserDTO user) {
+    public UserDTO findByIdAndEmail(UserDTO user) {
     	return userRepository.findByIdAndEmail(user);
     }
     
     //비밀번호 수정
     public void updatePw(UserDTO user) {
-    	user.setUser_pw(bCryptPasswordEncoder.encode(user.getUser_pw()));
+    	String temppw = bCryptPasswordEncoder.encode(user.getTemp_pw());
+    	user.setTemp_pw(temppw);
     	userRepository.updatePw(user);
     }
+
 	
 }
