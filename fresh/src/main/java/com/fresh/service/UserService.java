@@ -47,4 +47,9 @@ public class UserService {
 		return userRepository.checkUserUserName(user_username);
 	}
 	
+	// 아이디 찾기 서비스
+    public String findIdByNameAndEmail(UserDTO user) {
+    	return userRepository.findIdByNameAndEmail(user);
+    }
+	
 }
