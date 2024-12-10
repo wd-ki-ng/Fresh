@@ -1,41 +1,41 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/basic">
 <head>
-    <meta charset="UTF-8">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="description" content="Orbitor,business,company,agency,modern,bootstrap4,tech,software">
-	<meta name="author" content="themefisher.com">
-	<th:block th:insert="~{menu.html::metaImport}"></th:block>
-	<title th:text="${detail.board_title}">타이틀</title>
-	<th:block th:insert="~{menu.html::headImport}"></th:block>
-	<!-- Main Stylesheet -->
-	<link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="description"
+	content="Orbitor,business,company,agency,modern,bootstrap4,tech,software">
+<meta name="author" content="themefisher.com">
+<th:block th:insert="~{menu.html::metaImport}"></th:block>
+<title th:text="${detail.board_title}">타이틀</title>
+<th:block th:insert="~{menu.html::headImport}"></th:block>
+<!-- Main Stylesheet -->
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container">
+	<div class="container">
 		<!-- 상단바 - 로고, 게시판 메뉴, 검색창, 마이페이지, 로그인 -->
 		<th:block th:insert="~{menu.html::navBar}"></th:block>
 
-        <!-- 게시글 상세 내용 -->
-        <section class="post-detail">
-            <h1 th:text="${detail.board_title}"></h1>
-            <p class="meta">
-                <span id="postAuthor">작성자: 
-                	<span th:text="${detail.board_write}"></span>
-                </span> | 
-                <span id="postDate">작성시간: 
-                	<span th:text="${#dates.format(detail.board_date, 'yyyy-MM-dd HH:mm')}"></span>
-                </span> | 
-                <span id="postViews">조회수: 
-                	<span th:text="${detail.board_count}"></span>
-                </span> | 
-                <span id="postLikes">좋아요: 
-                	<span th:text="${detail.board_like}"></span>
-                </span>
-            </p>
-            <p id="postContent" th:text="${detail.board_content}"></p>
+		<!-- 게시글 상세 내용 -->
+		<section class="post-detail">
+			<h1 th:text="${detail.board_title}"></h1>
+			<p class="meta">
+				<span id="postAuthor">작성자: <span
+					th:text="${detail.board_write}"></span>
+				</span> | <span id="postDate">작성시간: <span
+					th:text="${#dates.format(detail.board_date, 'yyyy-MM-dd HH:mm')}"></span>
+				</span> | <span id="postViews">조회수: <span
+					th:text="${detail.board_count}"></span>
+				</span> | <span id="postLikes">좋아요: <span
+					th:text="${detail.board_like}"></span>
+				</span>
+			</p>
+			<p id="postContent" th:text="${detail.board_content}"></p>
 
-            <!-- 좋아요 및 게시글 수정/삭제 버튼 -->
+			    <!-- 좋아요 및 게시글 수정/삭제 버튼 -->
             <div class="post-actions">
                 <button id="likeButton" class="btn">좋아요</button>
                 <!-- 글의 작성자가 현재 로그인 한 사람과 같은 경우에만 -->
@@ -46,66 +46,78 @@
             </div>
         </section>
 
-        <!-- 댓글 섹션 -->
-        <section class="comments">
-            <h3>댓글 (<span id="commentCount" th:text="${com_count}"></span>)</h3>
-            <ul id="commentList" th:each="comment:${comments}" class="comment-item">
-                <li>
-                	<div th:id="'com_content'+${comment.com_no}">
-                		<span th:text="${comment.user_username}"></span> : <span th:text="${comment.com_comment}"></span>
-                	</div>
-                	<form th:id="'comment'+${comment.com_no}" name="comment" action="/comUpdate" method="post" style="display:none;">
-                		<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                		<input type="hidden" name="board_no" th:value="${detail.board_no}">
-                		<textarea id="commentContent" name="com_comment" th:placeholder="${comment.com_comment}"></textarea>
-                    	<button type="submit" class="btn" style="display: inline-block; padding: 5px 10px;">수정</button>
-                	</form>
-                	<div class="com_btn">
-	                	<th:block th:if="${comment.user_no == user.user_no}">
-		                	<a href="javascript:void(0);" th:onclick="modifyCom([[${comment.com_no}]])" class="btn" style="display: inline-block; padding: 5px 10px;">수정</a>
-			                <a th:href="@{/#}" class="btn" style="display: inline-block; padding: 5px 10px;">삭제</a>
-	                	</th:block> 
-	                	<a th:href="@{/#}" class="btn" style="display: inline-block; padding: 5px 10px;">대댓글</a>
-                	</div>
-                </li>
-            </ul>
-            <!-- 댓글 페이지네이션 -->
-            <div class="pagination" id="pagination"></div>
+		<!-- 댓글 섹션 -->
+		<section class="comments">
+			<h3>
+				댓글 (<span id="commentCount" th:text="${com_count}"></span>)
+			</h3>
+			<ul id="commentList" th:each="comment:${comments}"
+				class="comment-item">
+				<li>
+					<div th:id="'com_content'+${comment.com_no}">
+						<span th:text="${comment.user_username}"></span> : <span
+							th:text="${comment.com_comment}"></span>
+					</div>
+					<form th:id="'comment'+${comment.com_no}" name="comment"
+						action="/comUpdate" method="post" style="display: none;">
+						<input type="hidden" name="_csrf" th:value="${_csrf.token}" /> <input
+							type="hidden" name="board_no" th:value="${detail.board_no}">
+						<textarea id="commentContent" name="com_comment"
+							th:placeholder="${comment.com_comment}"></textarea>
+						<button type="submit" class="btn"
+							style="display: inline-block; padding: 5px 10px;">수정</button>
+					</form>
+					<div class="com_btn">
+						<th:block th:if="${comment.user_no == user.user_no}">
+							<a href="javascript:void(0);"
+								th:onclick="modifyCom([[${comment.com_no}]])" class="btn"
+								style="display: inline-block; padding: 5px 10px;">수정</a>
+							<a th:href="@{/#}" class="btn"
+								style="display: inline-block; padding: 5px 10px;">삭제</a>
+						</th:block>
+						<a th:href="@{/#}" class="btn"
+							style="display: inline-block; padding: 5px 10px;">대댓글</a>
+					</div>
+				</li>
+			</ul>
+			<!-- 댓글 페이지네이션 -->
+			<div class="pagination" id="pagination"></div>
 
-            <!-- 댓글 작성 폼 -->
-            <div id="commentFormContainer">
-                <form id="commentForm" class="comment-form" name="comment" action="/comWrite" method="post">
-                	<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                	<input type="hidden" name="board_no" th:value="${detail.board_no}">
-                    <textarea id="commentContent" name="com_comment" placeholder="댓글을 입력하세요"></textarea>
-                    <button type="submit" class="btn">댓글 작성</button>
-                </form>
-                <p id="loginMessage" class="login-message" style="display: none;">로그인 후 댓글을 작성할 수 있습니다.</p>
-            </div>
+			<!-- 댓글 작성 폼 -->
+			<div id="commentFormContainer">
+				<form id="commentForm" class="comment-form" name="comment"
+					action="/comWrite" method="post">
+					<input type="hidden" name="_csrf" th:value="${_csrf.token}" /> <input
+						type="hidden" name="board_no" th:value="${detail.board_no}">
+					<textarea id="commentContent" name="com_comment"
+						placeholder="댓글을 입력하세요"></textarea>
+					<button type="submit" class="btn">댓글 작성</button>
+				</form>
+				<p id="loginMessage" class="login-message" style="display: none;">로그인
+					후 댓글을 작성할 수 있습니다.</p>
+			</div>
 
-            <!-- 버튼들 배치 -->
-            <div class="btn-container">
-                <a href="#" class="btn">이전 글</a>
-                <a th:href="@{/board}" class="btn">목록</a>
-                <a href="#" class="btn">다음 글</a>
-                <a th:href="@{/boardWrite}" class="btn">글 작성</a>
-            </div>
-        </section>
-    </div>
-   
-    <!-- Essential Scripts =====================================-->
-    <!-- Main jQuery -->
-    <script src="plugins/jquery/jquery.js"></script>
-    <script>
-    function modifyCom(no){
-    	const com_content = document.getElementById('com_content'+no.toString());
-    	const comment = document.getElementById('comment'+no.toString());
-    	
-    	com_content.style.display = 'none';
-    	comment.style.display = 'block';
-    }
-    
-    
-    </script>
+			<!-- 버튼들 배치 -->
+			<div class="btn-container">
+				<a href="#" class="btn">이전 글</a> <a th:href="@{/board}" class="btn">목록</a>
+				<a href="#" class="btn">다음 글</a> <a th:href="@{/boardWrite}"
+					class="btn">글 작성</a>
+			</div>
+		</section>
+	</div>
+
+	<!-- Essential Scripts =====================================-->
+	<!-- Main jQuery -->
+	<script src="plugins/jquery/jquery.js"></script>
+	<script>
+		function modifyCom(no) {
+			const com_content = document.getElementById('com_content'
+					+ no.toString());
+			const comment = document.getElementById('comment' + no.toString());
+
+			com_content.style.display = 'none';
+			comment.style.display = 'block';
+		}
+	</script>
 </body>
 </html>
