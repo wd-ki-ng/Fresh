@@ -22,13 +22,14 @@
 		 where user_id = #{user_id} and user_email = #{user_email}
 	</select>
 	
-	<!-- 비밀번호 업데이트 -->
-	<update id="updatePw" parameterType="UserDTO">
+	<!-- 임시비밀번호 업데이트 -->
+	<update id="createTempPw" parameterType="UserDTO">
 		update user
 		   set user_pw = #{temp_pw}
 		 where user_no = #{user_no}
 	</update>
 	
+
 	<!-- 아이디 중복체크 -->
 	<select id="checkUserId" parameterType="String" resultType="String">
 		select max(case when user_id = #{user_id} then 'true'

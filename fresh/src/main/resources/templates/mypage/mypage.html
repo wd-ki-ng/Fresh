@@ -51,4 +51,63 @@
 		</div>
 	</div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+	const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+	const checkPW = RegExp(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[~!@#$%^&*()_+])[A-Za-z\d~!@#$%^&*()_+]{4,}$/);
+	let isPwValid = false;																							//비밀번호 상태
+	
+	
+	
+	//스페이스바 금지
+	$(document).keydown(function(event){
+		if(event.keyCode === 32){
+			event.preventDefault();
+		}
+	});
+	
+	 // 버튼 초기 상태 비활성화
+    $(document).ready(function () {
+        $("#chg-btn").prop("disabled", true);
+    });
+	
+	
+	// 입력 필드 유효성 검사 시 상태 업데이트 및 버튼 활성화
+	function updateButtonState() {
+		
+	    if (isPwValid) {
+	        $("#chg-btn").prop("disabled", false);
+	    } else {
+	        $("#chg-btn").prop("disabled", true);
+	    }
+	}
+	
+	// 비밀번호 유효성 검사
+    $("#user_pw").blur(function () {
+    	const userPw = $("#user_pw").val();
+    	
+    	
+        if (!checkPW.test(userPw)) {
+        	alert("영문(대소문자), 숫자, 특수문자를 각 1개 이상 포함한 10자리 이상이어야 합니다." );
+            isPwValid = false;
+        } else {
+            isPwValid = true;
+        }
+        updateButtonState();
+    });
+	
+	//비밀번호 변경 실행
+    function changePw(){
+    	if(isPwValid){
+    		alert("비밀번호 변경이 완료되었습니다.");
+    		$("#change").submit();
+    	}else{
+    		alert("비밀번호를 올바르게 입력해주세요");
+    	}
+    }
+    
+
+
+</script>
 </html>

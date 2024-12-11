@@ -3,9 +3,13 @@ package com.fresh.controller;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fresh.dto.CustomUserDetails;
@@ -13,6 +17,9 @@ import com.fresh.dto.UserDTO;
 import com.fresh.service.CustomUserDetailService;
 import com.fresh.service.MypageService;
 import com.fresh.util.UserUtil;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/mypage")
@@ -59,6 +66,19 @@ public class MyPageController {
 		return "mypage/mypageBoard";
 	}
 	
-	
+	//비밀번호 변경
+   @PostMapping("/change")
+   public String changePw(UserDTO userDTO ,HttpServletRequest request, HttpServletResponse response) {
+	   userDTO.setUser_no(userUtil.getUserData().getUser_no());
+	   mypageService.changePw(userDTO);
+		   
+	   Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	   if(authentication != null) {
+		   new SecurityContextLogoutHandler().logout(request, response, authentication);
+	   }
+	   
+	   return "redirect:/";
+	   
+   }
 	
 }

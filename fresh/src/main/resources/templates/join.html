@@ -52,49 +52,35 @@
 								<label for="user_id">아이디</label>
 								<input type="text" name="user_id" id="user_id" placeholder="4~12자의 영문 대소문자와 숫자만 가능">
 								<button type="button" class="checkId" onclick="checkId()">중복확인</button>
-								<br/>
-								<div id="id_div"></div>
 							</div>
 							<div>
 								<label for="user_pw">비밀번호</label>
 								<input type="password" name="user_pw" id="user_pw" placeholder="8자리 이상의 대소문자와 숫자,특수문자를 포함">
-								<br/>
-								<div id="pw_div"></div>
 							</div>
 							<div>
 								<label for="pw_chk">비밀번호 확인</label>
 								<input type="password" name="pw_chk" id="pw_chk">
-								<br/>
-								<div id="pwc_div"></div>
 							</div>
 							<div>
 								<label for="user_name">이름</label>
 								<input type="text" name="user_name" id="user_name">
-								<br/>
-								<div id="uname_div"></div>
 							</div>
 							<div>
 								<label for="user_email">이메일</label>
 								<input type="email" name="user_email" id="user_email" placeholder="example@example.com">
 								<!--  <button type="button" check="chk-num" onclick="sendEmail()">인증번호 전송</button> -->
-								<br>
-								<div id="email_div"></div>
 							</div>
 							<!--  
 							<div>
 								<label for="email_auth">인증번호</label>
 								<input type="text" name="email_auth" id="email_auth" placeholder="인증번호 입력">
 								<button type="button"  chcek="verifyEmail" onclick="verifyEmail()">인증번호 확인</button>
-								<br>
-								<div id="auth_div"></div>	
 							</div>
 							-->
 							<div>
 								<label for="user_username">닉네임</label>
 								<input type="text" name="user_username" id="user_username" placeholder="닉네임을 입력해주세요">
 								<button type="button" class="checkUserName" onclick="checkUserName()">중복확인</button>
-								<br/>
-								<div id="user_div"></div>
 							</div>
 						</div>
 						
@@ -112,7 +98,7 @@
 
 	    // 정규식 정의
 	    const checkID = RegExp(/^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{4,}$/);
-	    const checkPW = RegExp(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[~!@#$%^&*()_+])[A-Za-z\d~!@#$%^&*()_+]{4,}$/);
+	    const checkPW = RegExp(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[~!@#$%^&*()_+])[A-Za-z\d~!@#$%^&*()_+]{8,}$/);
 	    const checkName = RegExp(/^[가-힣]|[A-Z]|[a-z]$/);
 	    const checkEmail = RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
 	    const checkUserNmae = RegExp(/^[0-9A-Za-z가-힣ㄱ-ㅎㅏ-ㅣぁ-んァ-ヶ\u4E00-\u9FFF]+$/);
@@ -147,11 +133,10 @@
 	        $("#user_id").blur(function () {
 	            const userId = $(this).val();
 	            if (!checkID.test(userId)) {
-	                $("#id_div").text("아이디는 영어 대소문자 및 숫자를 조합해서 4자리 이상만 가능합니다.");
+	            	alert("아이디는 영어 대소문자 및 숫자를 조합해서 4자리 이상만 가능합니다.");
 	                isIdValid = false;
 	                return false;
 	            } else {
-	                $("#id_div").text("");
 	                isIdValid = true;
 	                return true;
 	            }
@@ -160,12 +145,12 @@
 
 	        // 비밀번호 유효성 검사
 	        $("#user_pw").blur(function () {
-	            if (!checkPW.test($(this).val())) {
-	                $("#pw_div").text("영문(대소문자), 숫자, 특수문자를 각 1개 이상 포함한 10자리 이상이어야 합니다.");
+	        	const userPw = $("#user_pw").val();
+	            if (!checkPW.test(userPw)) {
+	            	alert("영문(대소문자), 숫자, 특수문자를 각 1개 이상 포함한 8자리 이상이어야 합니다.");
 	                isPwValid = false;
 	                return false;
-	            } else {
-	                $("#pw_div").text("");
+	            } else {	                
 	                isPwValid = true;
 	                return true;
 	            }
@@ -174,12 +159,14 @@
 
 	        // 비밀번호 확인
 	        $("#pw_chk").blur(function () {
-	            if ($("#user_pw").val() !== $(this).val()) {
-	                $("#pwc_div").text("비밀번호가 다릅니다.");
+	        	const userPw = $("#user_pw").val();
+	        	const checkPw = $("#pw_chk").val();
+	        	
+	            if (userPw !== checkPw) {
+	            	alert("비밀번호와 비밀번호 확인이 서로다릅니다.");
 	                isPwChkValid = false;
 	                return false;
 	            } else {
-	                $("#pwc_div").text("");
 	                isPwChkValid = true;
 	                return true;
 	            }
@@ -188,12 +175,13 @@
 
 	        // 이름 유효성 검사
 	        $("#user_name").blur(function () {
-	            if (!checkName.test($(this).val())) {
-	                $("#uname_div").text("이름을 확인해주세요.");
+	        	const userName = $("#user_name").val();
+	        	
+	            if (!checkName.test(userName)) {
+	                alert("이름을 제대로 입력해주세요");
 	                isNameValid = false;
 	                return false;
 	            } else {
-	                $("#uname_div").text("");
 	                isNameValid = true;
 	                return true;
 	            }
@@ -202,12 +190,13 @@
 
 	        // 이메일 유효성 검사
 	        $("#user_email").blur(function () {
-	            if (!checkEmail.test($(this).val())) {
-	                $("#email_div").text("이메일 형식이 잘못되었습니다.");
+	        	const userEmail = $("#user_email").val();
+	        	
+	            if (!checkEmail.test(userEmail)) {
+					alert("이메일 형식이 잘못되었습니다.");
 	                isEmailValid = false;
 	                return false;
 	            } else {
-	                $("#email_div").text("");
 	                isEmailValid = true;
 	                return true;
 	            }
@@ -216,12 +205,13 @@
 
 	        // 닉네임 유효성 검사
 	        $("#user_username").blur(function () {
-	            if (!checkUserNmae.test($(this).val())) {
-	                $("#user_div").text("닉네임 형식이 올바르지 않습니다.");
+	        	const userNic = $("#user_username").val();
+	        	
+	            if (!checkUserNmae.test(userNic)) {
+	                alert("닉네임 형식이 올바르지 않습니다.");
 	                isUsernameValid = false;
 	                return false;
 	            } else {
-	                $("#user_div").text("");
 	                isUsernameValid = true;
 	                return true;
 	            }
@@ -303,7 +293,6 @@
 	    function sendEmail() {
 	        const email = $("#user_email").val();
 	        
-	        console.log("입력한 이메일 " + email);
 	        
 	        if (!checkEmail.test(email)) {
 	            alert("유효한 이메일 주소를 입력해주세요.");

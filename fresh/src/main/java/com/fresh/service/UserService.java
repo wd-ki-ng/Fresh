@@ -57,11 +57,11 @@ public class UserService {
     	return userRepository.findByIdAndEmail(user);
     }
     
-    //비밀번호 수정
-    public void updatePw(UserDTO user) {
+    //임시비밀번호 발급
+    public void createTempPw(UserDTO user) {
     	String temppw = bCryptPasswordEncoder.encode(user.getTemp_pw());
     	user.setTemp_pw(temppw);
-    	userRepository.updatePw(user);
+    	userRepository.createTempPw(user);
     }
 
 	
