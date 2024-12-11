@@ -2,90 +2,54 @@
 <html xmlns:th="http://www.thymelaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <th:block th:insert="~{mypage/menu.html::scriptImport}"></th:block>
     <th:block th:insert="~{mypage/menu.html::headImport}"></th:block>
-
+    <th:block th:insert="~{mypage/menu.html::metaImport}"></th:block>
     <title>마이페이지</title>
 </head>
-<body>
-	
-	<div class="container">
-		<th:block th:insert="~{mypage/menu.html::navBar}"></th:block>
-		<div class="bodypart">
-			<h1 class="mb-3">마이페이지</h1>
-			<th:block th:insert="~{mypage/menu.html::leftBar}"></th:block>
-			<div class="table-responsive" >
-				<table class="table table-bordered">
-					<tbody>
-						<tr>
-							<th colspan="2" class="col-md-4 text-center">나의 정보</th>
-						</tr>
-						<tr>
-							<th scope="row" class="col-md-4 text-center">아이디</th>
-							<td class="col-md-9" th:text="${user.user_id}"></td>
-						</tr>
-						<tr>
-							<th scope="row" class="col-md-4 text-center">닉네임</th>
-							<td class="col-md-9" th:text="${user.user_username}"></td>
-						</tr>
-						<tr>
-							<th scope="row" class="col-md-4 text-center">이름</th>
-							<td class="col-md-9" th:text="${user.user_name}"></td>
-						</tr>
-						<tr>
-							<th scope="row" class="col-md-4 text-center">비밀번호</th>
-							<td><input type="text" class="col-md-4"	placeholder="변경할 비밀번호를 입력해 주세요" />
-								<button type="button">변경</button>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row" class="col-md-4 text-center">이메일</th>
-							<td class="col-md-9" th:text="${user.user_email}"></td>
-						</tr>
 
 <body class="sb-nav-fixed">
-	<th:block th:insert="~{mypage/mypageMenu::topbar}"></th:block>
-	<th:block th:insert="~{mypage/mypageMenu::leftmenu}"></th:block>
-	<div class="bodypart">
-    <h1 class="mb-3">마이페이지</h1>
-	    <div class="table-responsive">
-	     	<form action="/mypage/change" id="change" name="change" method="post"> 
-	     		<input type="hidden" name="username"/>
-	     		<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-	     		<table class="table table-bordered">
-		        	<tbody>
-		       			<tr>
-		            		<th colspan="2" class="col-md-3 text-center">나의 정보</th>             
-		        		</tr>
-		            	<tr>
-			                <th scope="row" class="col-md-3 text-center">아이디</th>
-			                <td class="col-md-9" th:text="${user.user_id}"></td>
-		            	</tr>
-		            	<tr>
-			                <th scope="row" class="col-md-3 text-center">닉네임</th>
-			                <td class="col-md-9" th:text="${user.user_username}"></td>
-		            	</tr>
-			            <tr>
-			                <th scope="row" class="col-md-3 text-center">이름</th>
-			                <td class="col-md-9" th:text="${user.user_name}"></td>
-			            </tr>
-				        <tr>
-					        <th scope="row" class="col-md-3 text-center">비밀번호</th> 
-					        <td> 
-					        <input type="password" class="col-md-3" id="user_pw" name="user_pw" placeholder="변경할 비밀번호를 입력해 주세요"/> 
-					        <button type="button" onclick="changePw()" id="chg-btn">변경</button> 
-					        </td> 
-				            </tr> 
-			            <tr> 
-			                <th scope="row" class="col-md-3 text-center">이메일</th>
-			                <td class="col-md-9" th:text="${user.user_email}"></td>
-			            </tr>
-		        	</tbody>
-	    		</table>
-	    	</form>
-	  	</div>
+	<div class="container">
+	 <th:block th:insert="~{mypage/menu.html::navBar}"></th:block>
+		<div class="bodypart">
+			<h1 class="mb-3">마이페이지</h1>
+			<div class="table-responsive">
+				<form action="/mypage/change" id="change" name="change" method="post">
+					<input type="hidden" name="username"/> 
+					<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+					<table class="table table-bordered">
+						<tbody>
+							<tr>
+								<th colspan="2" class="col-md-3 text-center">나의 정보</th>
+							</tr>
+							<tr>
+								<th scope="row" class="col-md-3 text-center">아이디</th>
+								<td class="col-md-9" th:text="${user.user_id}"></td>
+							</tr>
+							<tr>
+								<th scope="row" class="col-md-3 text-center">닉네임</th>
+								<td class="col-md-9" th:text="${user.user_username}"></td>
+							</tr>
+							<tr>
+								<th scope="row" class="col-md-3 text-center">이름</th>
+								<td class="col-md-9" th:text="${user.user_name}"></td>
+							</tr>
+							<tr>
+								<th scope="row" class="col-md-3 text-center">비밀번호</th>
+								<td><input type="password" class="col-md-3" id="user_pw" name="user_pw" placeholder="변경할 비밀번호를 입력해 주세요" />
+									<button type="button" onclick="changePw()" id="chg-btn">변경</button>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row" class="col-md-3 text-center">이메일</th>
+								<td class="col-md-9" th:text="${user.user_email}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
 	</div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -93,58 +57,49 @@
 	const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
 	const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 	const checkPW = RegExp(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[~!@#$%^&*()_+])[A-Za-z\d~!@#$%^&*()_+]{4,}$/);
-	let isPwValid = false;																							//비밀번호 상태
-	
-	
-	
+	let isPwValid = false; //비밀번호 상태
+
 	//스페이스바 금지
-	$(document).keydown(function(event){
-		if(event.keyCode === 32){
+	$(document).keydown(function(event) {
+		if (event.keyCode === 32) {
 			event.preventDefault();
 		}
 	});
-	
-	 // 버튼 초기 상태 비활성화
-    $(document).ready(function () {
-        $("#chg-btn").prop("disabled", true);
-    });
-	
-	
+
+	// 버튼 초기 상태 비활성화
+	$(document).ready(function() {
+		$("#chg-btn").prop("disabled", true);
+	});
+
 	// 입력 필드 유효성 검사 시 상태 업데이트 및 버튼 활성화
 	function updateButtonState() {
-		
-	    if (isPwValid) {
-	        $("#chg-btn").prop("disabled", false);
-	    } else {
-	        $("#chg-btn").prop("disabled", true);
-	    }
+		if (isPwValid) {
+			$("#chg-btn").prop("disabled", false);
+		} else {
+			$("#chg-btn").prop("disabled", true);
+		}
 	}
-	
+
 	// 비밀번호 유효성 검사
-    $("#user_pw").blur(function () {
-    	const userPw = $("#user_pw").val();
-    	
-    	
-        if (!checkPW.test(userPw)) {
-        	alert("영문(대소문자), 숫자, 특수문자를 각 1개 이상 포함한 10자리 이상이어야 합니다." );
-            isPwValid = false;
-        } else {
-            isPwValid = true;
-        }
-        updateButtonState();
-    });
-	
+	$("#user_pw").blur(function() {
+		const userPw = $("#user_pw").val();
+		if (!checkPW.test(userPw)) {
+			alert("영문(대소문자), 숫자, 특수문자를 각 1개 이상 포함한 10자리 이상이어야 합니다.");
+			isPwValid = false;
+		} else {
+			isPwValid = true;
+		}
+		updateButtonState();
+	});
+
 	//비밀번호 변경 실행
-    function changePw(){
-    	if(isPwValid){
-    		alert("비밀번호 변경이 완료되었습니다.");
-    		$("#change").submit();
-    	}else{
-    		alert("비밀번호를 올바르게 입력해주세요");
-    	}
-    }
-    
-
-
+	function changePw() {
+		if (isPwValid) {
+			alert("비밀번호 변경이 완료되었습니다.");
+			$("#change").submit();
+		} else {
+			alert("비밀번호를 올바르게 입력해주세요");
+		}
+	}
 </script>
 </html>
