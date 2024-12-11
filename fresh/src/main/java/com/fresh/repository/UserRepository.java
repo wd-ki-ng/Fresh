@@ -32,9 +32,9 @@ public class UserRepository {
 		return sqlSession.selectOne("user.findByUserUserName", user_username);
 	}
 	
-	//비밀번호 업데이트
-	public void updatePw(UserDTO user) {
-		sqlSession.update("user.updatePw", user);
+	//임시 비밀번호 발급
+	public void createTempPw(UserDTO user) {
+		sqlSession.update("user.createTempPw", user);
 	}
 	
 	//아이디 중복체크
