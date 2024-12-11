@@ -45,10 +45,47 @@
 							<td class="col-md-9" th:text="${user.user_email}"></td>
 						</tr>
 
-					</tbody>
-				</table>
-			</div>
-		</div>
+<body class="sb-nav-fixed">
+	<th:block th:insert="~{mypage/mypageMenu::topbar}"></th:block>
+	<th:block th:insert="~{mypage/mypageMenu::leftmenu}"></th:block>
+	<div class="bodypart">
+    <h1 class="mb-3">마이페이지</h1>
+	    <div class="table-responsive">
+	     	<form action="/mypage/change" id="change" name="change" method="post"> 
+	     		<input type="hidden" name="username"/>
+	     		<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+	     		<table class="table table-bordered">
+		        	<tbody>
+		       			<tr>
+		            		<th colspan="2" class="col-md-3 text-center">나의 정보</th>             
+		        		</tr>
+		            	<tr>
+			                <th scope="row" class="col-md-3 text-center">아이디</th>
+			                <td class="col-md-9" th:text="${user.user_id}"></td>
+		            	</tr>
+		            	<tr>
+			                <th scope="row" class="col-md-3 text-center">닉네임</th>
+			                <td class="col-md-9" th:text="${user.user_username}"></td>
+		            	</tr>
+			            <tr>
+			                <th scope="row" class="col-md-3 text-center">이름</th>
+			                <td class="col-md-9" th:text="${user.user_name}"></td>
+			            </tr>
+				        <tr>
+					        <th scope="row" class="col-md-3 text-center">비밀번호</th> 
+					        <td> 
+					        <input type="password" class="col-md-3" id="user_pw" name="user_pw" placeholder="변경할 비밀번호를 입력해 주세요"/> 
+					        <button type="button" onclick="changePw()" id="chg-btn">변경</button> 
+					        </td> 
+				            </tr> 
+			            <tr> 
+			                <th scope="row" class="col-md-3 text-center">이메일</th>
+			                <td class="col-md-9" th:text="${user.user_email}"></td>
+			            </tr>
+		        	</tbody>
+	    		</table>
+	    	</form>
+	  	</div>
 	</div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
