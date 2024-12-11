@@ -22,7 +22,7 @@
 	<div class="bodypart">
     <h1 class="mb-3">마이페이지</h1>
 	    <div class="table-responsive">
-	    	<form action="/mypage/change" id="change" name="change" method="post">
+	    	<form action="/mypage/change" id="change" name="change" method="post"> 
 	    		<input type="hidden" name="username"/>
 	    		<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
 	    		<table class="table table-bordered">
