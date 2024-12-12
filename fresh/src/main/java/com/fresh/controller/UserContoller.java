@@ -84,7 +84,7 @@ public class UserContoller {
 	//회원가입 - 아이디 중복체크
 	   @PostMapping("/checkid")
 	   public ResponseEntity<Boolean> checkId(@RequestParam("userId") String userId) {
-	      System.out.println(userId);
+	      //System.out.println(userId);
 	      String user = userService.checkUserId(userId);
 	      
 	      
@@ -107,7 +107,7 @@ public class UserContoller {
 	//회원가입 - 닉네임 중복체크
 	   @PostMapping("/checkUserName")
 	   public ResponseEntity<Boolean> userName(@RequestParam("userName") String userName){
-		   System.out.println(userName);
+		   //System.out.println(userName);
 		   String user = userService.checkUserUserName(userName);
 		   /*
 		   if(userName.equals(user.getUser_username())) {
