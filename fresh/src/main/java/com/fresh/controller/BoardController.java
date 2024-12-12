@@ -45,6 +45,13 @@ public class BoardController {
 		// 해당 글 정보를 가져옴
 		BoardDTO detail = boardService.getDetail(no);
 		
+		//----- 이전 글과 다음 글 정보를 가져옴------------
+		long prevBoard = boardService.prevBoard(no); // 이전 글
+		long nextBoard = boardService.NextBoard(no); // 다음 글
+		 
+		
+		//---------------------------- 
+	    
 		// 해당 게시글의 댓글 수
 		int com_count = boardService.getCommentCount(no);
 		
@@ -55,7 +62,22 @@ public class BoardController {
 		// 게시글을 성공적으로 가져온 경우
 		model.addAttribute("detail", detail);
 		model.addAttribute("user", user);
+		//-----------------------
+		model.addAttribute("prevBoard", prevBoard); // 이전 글 정보 추가
+		model.addAttribute("nextBoard", nextBoard); // 다음 글 정보 추가
+		//----------------------
+		
+	    if (prevBoard == -1L) {
+	        model.addAttribute("prevBoard", null); // 이전 글이 없다면 null 처리
+	    } else {
+	        model.addAttribute("prevBoard", prevBoard); // 이전 글 ID 추가
+	    }
 
+	    if (nextBoard == -1L) {
+	        model.addAttribute("nextBoard", null); // 다음 글이 없다면 null 처리
+	    } else {
+	        model.addAttribute("nextBoard", nextBoard); // 다음 글 ID 추가
+	    }
 		return "boardview";		
 	}
 	
@@ -120,8 +142,23 @@ public class BoardController {
 			// FindByID로 수정된 내용 다시 조회
 			return "redirect:/boardview?no="+board.getBoard_no();
 		}
+		//-------------댓글 수정---------------------------	
+		//수정버튼 누르면 db에 저장
+		@PostMapping("/comUpdate")
+		public String comUpdate(CommentDTO com , Model model) {
+			// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+			UserDTO user = userUtil.getUserData();
+			model.addAttribute("user", userUtil.getUserNameAndRole());
+			if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
+				return "redirect:/login";
+			}
+			//Update 요청
+		boardService.comUpdate(com);
+			// FindByID로 수정된 내용 다시 조회
+			return "redirect:/boardview?no="+com.getBoard_no();
+		}		
 		
-    //-----------------------------------------	
+		
 	@GetMapping("/submitPost")
 	public String submitPost(Model model) {
 		return "boardWrite";
@@ -156,6 +193,6 @@ public class BoardController {
 		model.addAttribute("BoardList", BoardList);
 		
 		return "board";
-	}
+	}	
 	
 }
