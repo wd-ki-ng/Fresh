@@ -68,20 +68,19 @@ h1 {
 		<th:block th:insert="~{menu.html::navBar}"></th:block>
 
 		<div class="container1">
-
-			<h1>게시글 작성</h1>
-			<form name="board" action="/submitPost" method="POST">
+	
+			<h1>게시글 수정</h1>
+			<form name="board" action="/boardUpdate" method="POST">
 				<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+				<input type="hidden" name="board_no" th:value="${boardUpdate.board_no}" />
 				<div class="form-group">
 					<label for="board_title">제목</label> <input type="text"
-						id="board_title" name="board_title" >
+						id="board_title" name="board_title"  th:value="${boardUpdate.board_title}" required>
 				</div>
 				<div class="form-group">
 					<label for="board_content">내용</label>
-					<textarea id="board_content" name="board_content" required
-						placeholder="게시글 내용을 입력하세요"></textarea>
+					 <textarea id="board_content" name="board_content" th:text="${boardUpdate.board_content}" required></textarea>
 				</div>
-
 				<div class="form-group">
 					<button type="submit" class="btn">수정</button>
 				</div>

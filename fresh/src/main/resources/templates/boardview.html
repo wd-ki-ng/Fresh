@@ -35,16 +35,18 @@
 			</p>
 			<p id="postContent" th:text="${detail.board_content}"></p>
 
-			    <!-- 좋아요 및 게시글 수정/삭제 버튼 -->
-            <div class="post-actions">
-                <button id="likeButton" class="btn">좋아요</button>
-                <!-- 글의 작성자가 현재 로그인 한 사람과 같은 경우에만 -->
-                <th:block th:if="${detail.user_no == user.user_no}">
-                	<a th:href="@{/#}" id="editButton" class="btn" style="display: inline-block;">수정</a>
-                	<a th:href="@{/#}" id="deleteButton" class="btn" style="display: inline-block;">삭제</a>
-                </th:block>
-            </div>
-        </section>
+			<!-- 좋아요 및 게시글 수정/삭제 버튼 -->
+			<div class="post-actions">
+				<button id="likeButton" class="btn">좋아요</button>
+				<!-- 글의 작성자가 현재 로그인 한 사람과 같은 경우에만 -->
+				<th:block th:if="${detail.user_no == user.user_no}">
+					<a th:href="@{/boardUpdate(no=${detail.board_no})}" id="editButton"
+						class="btn" style="display: inline-block;">수정</a>
+					<a th:href="@{/#}" id="deleteButton" class="btn"
+						style="display: inline-block;">삭제</a>
+				</th:block>
+			</div>
+		</section>
 
 		<!-- 댓글 섹션 -->
 		<section class="comments">
