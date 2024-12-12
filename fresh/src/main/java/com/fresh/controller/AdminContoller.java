@@ -171,4 +171,84 @@ public class AdminContoller {
 		// 게시글 목록으로 돌아감
 		return "redirect:/admin/admin";
 	}
+	
+	// 휴지통 복구 - 게시글, 공지
+	@PostMapping("/admin/postRestore")
+	public String postRestore(Model model, @RequestParam(value = "postNum") String postNum) {
+		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		UserDTO user = userUtil.getUserData();
+		model.addAttribute("user", userUtil.getUserNameAndRole());
+		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
+			return "redirect:/login";
+		}
+		
+		String[] postnums = postNum.split(",");
+		for (int i = 0; i < postnums.length; i++) {
+			Long no = (long) Integer.parseInt(postnums[i]);
+			adminService.restorePost(no);
+		}
+		
+		// 게시글 목록으로 돌아감
+		return "redirect:/admin/admin";
+	}
+	
+	// 휴지통 복구 - 댓글
+	@PostMapping("/admin/comRestore")
+	public String comRestore(Model model, @RequestParam(value = "comNum") String comNum) {
+		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		UserDTO user = userUtil.getUserData();
+		model.addAttribute("user", userUtil.getUserNameAndRole());
+		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
+			return "redirect:/login";
+		}
+		
+		String[] comnums = comNum.split(",");
+		for (int i = 0; i < comnums.length; i++) {
+			Long num = (long) Integer.parseInt(comnums[i]);
+			adminService.restoreComment(num);
+		}
+		
+		// 게시글 목록으로 돌아감
+		return "redirect:/admin/admin";
+	}
+	
+	// 휴지통 영구 삭제 - 게시글, 공지
+	@PostMapping("/admin/postEliminate")
+	public String postEliminate(Model model, @RequestParam(value = "postNum") String postNum) {
+		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		UserDTO user = userUtil.getUserData();
+		model.addAttribute("user", userUtil.getUserNameAndRole());
+		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
+			return "redirect:/login";
+		}
+		
+		String[] postnums = postNum.split(",");
+		for (int i = 0; i < postnums.length; i++) {
+			Long no = (long) Integer.parseInt(postnums[i]);
+			adminService.eliminatePost(no);
+		}
+		
+		// 게시글 목록으로 돌아감
+		return "redirect:/admin/admin";
+	}
+	
+	// 휴지통 영구 삭제 - 댓글
+	@PostMapping("/admin/comsEliminate")
+	public String comsEliminate(Model model, @RequestParam(value = "comNum") String comNum) {
+		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		UserDTO user = userUtil.getUserData();
+		model.addAttribute("user", userUtil.getUserNameAndRole());
+		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
+			return "redirect:/login";
+		}
+		
+		String[] comnums = comNum.split(",");
+		for (int i = 0; i < comnums.length; i++) {
+			Long num = (long) Integer.parseInt(comnums[i]);
+			adminService.eliminateComment(num);
+		}
+		
+		// 게시글 목록으로 돌아감
+		return "redirect:/admin/admin";
+	}
 }

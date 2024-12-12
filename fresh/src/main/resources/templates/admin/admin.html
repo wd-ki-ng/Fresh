@@ -296,6 +296,12 @@
 							<button id="del_noti" onclick="clickTrashBtn(2)">삭제된 공지</button>
 						</div>
 						<!-- 삭제된 게시글 -->
+						<form name="postRestore" id="postRestore" action="/admin/postRestore" method="post">
+							<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+						</form>
+						<form name="postEliminate" id="postEliminate" action="/admin/postEliminate" method="post">
+							<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+						</form>
 						<table class="adm_trash adm_body" id="del_posts">
 							<colgroup>
 								<col width="7%"/><!-- 선택 -->
@@ -334,14 +340,20 @@
 							<tfoot>
 								<tr>
 									<td colspan="7" style="text-align: right">
-										<a class="btn" onclick="clickRestore('delPosts')">선택 게시글 복구</a>
-										<button>선택 게시글 영구삭제</button>
+										<button onclick="postsRestore('delPosts')">선택 게시글 복구</button>
+										<button onclick="postsEliminate('delPosts')">선택 게시글 영구삭제</button>
 									</td>
 								</tr>
 							</tfoot>
 						</table>
 						
 						<!-- 삭제된 댓글 -->
+						<form name="comRestore" id="comRestore" action="/admin/comRestore" method="post">
+							<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+						</form>
+						<form name="comsEliminate" id="comsEliminate" action="/admin/comsEliminate" method="post">
+							<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+						</form>
 						<table class="adm_com adm_body" id="del_com" style="display:none;">
 								<colgroup>
 									<col width="7%"/>
@@ -368,7 +380,7 @@
 								</thead>
 								<tbody>
 									<tr th:each="com:${del_coms}">
-										<td><input type="checkbox" name="delComs"></td>
+										<td><input type="checkbox" name="delComs" th:value="${com.com_no}"></td>
 										<td><a th:href="@{#}" th:text="${com.com_no}"></a></td>
 										<td><a th:href="@{#}" th:text="${com.board_no}"></a></td>
 										<td><a th:href="@{#}" th:text="${com.user_username}"></a></td>
@@ -380,8 +392,8 @@
 								<tfoot>
 									<tr>
 										<td colspan="7" style="text-align: right">
-											<button>선택 게시글 복구</button>
-											<button>선택 게시글 영구삭제</button>
+											<button onclick="comsRestore('delComs')">선택 댓글 복구</button>
+											<button onclick="comEliminate('delComs')">선택 댓글 영구삭제</button>
 										</td>
 									</tr>
 								</tfoot>
@@ -412,7 +424,7 @@
 							</thead>
 							<tbody>
 								<tr th:each="noti:${del_notis}">
-									<td><input type="checkbox" name="delNotis"></td>
+									<td><input type="checkbox" name="delNotis" th:value="${noti.board_no}"></td>
 									<td><a th:href="@{#}" th:text="${noti.board_no}"></a></td>
 									<td><a th:href="@{#}" th:text="${noti.board_title}"></a></td>
 									<td><a th:href="@{#}" th:text="${#dates.format(noti.board_date, 'yyyy-MM-dd')}"></a></td>
@@ -423,8 +435,8 @@
 							<tfoot>
 								<tr>
 									<td colspan="7" style="text-align: right">
-										<button onclick="clickRestore('delNotis')">선택 게시글 복구</button>
-										<button>선택 게시글 영구삭제</button>
+										<button onclick="postsRestore('delNotis')">선택 게시글 복구</button>
+										<button onclick="postsEliminate('delNotis')">선택 게시글 영구삭제</button>
 									</td>
 								</tr>
 							</tfoot>
@@ -522,20 +534,6 @@
 					checkbox.checked = allBtn.checked;
 				})
 			}
-			
-			function clickRestore(name) {
-				const chkedElements = document.getElementsByName(name);
-				let eleString = "";
-				
-				chkedElements[0].parentNode.removeChild(chkedElements[0]);
-
-				chkedElements.forEach((checkbox) =>{
-					eleString += checkbox.value;
-					eleString += ",";
-				})
-				
-				alert(eleString);
-			}
 		</script>
 		<script th:inline="javascript">
 	        /*<![CDATA[*/
@@ -617,9 +615,114 @@
 			}
 	        /*]]>*/
     	</script>
-		<script>
-			
-		</script>
+    	<script>
+	        function postsRestore(name){
+	        	const chkedRstPosts = document.getElementsByName(name);
+				let postRstString = "";
+				
+				chkedRstPosts[0].parentNode.removeChild(chkedRstPosts[0]);
 
+				chkedRstPosts.forEach((checkbox) =>{
+					if (checkbox.checked){
+						postRstString += checkbox.value;
+						postRstString += ",";
+					}
+					
+				})
+				
+				postRstString = postRstString.slice(0, -1);
+				
+				if(confirm('정말로 ' + postRstString + '번 게시글을 복구하시겠습니까?')){
+		            var postRstForm = document.getElementById('postRestore');
+		
+		            var postRstNum = document.createElement('input');
+		            postRstNum.type = 'hidden';
+		            postRstNum.name = 'postNum';
+		            postRstNum.value = postRstString;
+		            postRstForm.appendChild(postRstNum);
+		            postRstForm.submit();
+				}
+			}
+	        
+	        function comsRestore(name){
+	        	const chkedRstComs = document.getElementsByName(name);
+				let comRstString = "";
+				
+				chkedRstComs[0].parentNode.removeChild(chkedRstComs[0]);
+
+				chkedRstComs.forEach((checkbox) =>{
+					if (checkbox.checked){
+						comRstString += checkbox.value;
+						comRstString += ",";
+					}
+				})
+				
+				comRstString = comRstString.slice(0, -1);
+				
+				if(confirm('정말로 ' + comRstString + '번 댓글을 복구하시겠습니까?')){
+		            var comRstForm = document.getElementById('comRestore');
+		
+		            var comRstNum = document.createElement('input');
+		            comRstNum.type = 'hidden';
+		            comRstNum.name = 'comNum';
+		            comRstNum.value = comRstString;
+		            comRstForm.appendChild(comRstNum);
+		            comRstForm.submit();
+				}
+			}
+	        function postsEliminate(name){
+	        	const chkedEliPosts = document.getElementsByName(name);
+				let postEliString = "";
+				
+				chkedEliPosts[0].parentNode.removeChild(chkedEliPosts[0]);
+
+				chkedEliPosts.forEach((checkbox) =>{
+					if (checkbox.checked){
+						postEliString += checkbox.value;
+						postEliString += ",";
+					}
+				})
+				
+				postEliString = postEliString.slice(0, -1);
+				
+				if(confirm('정말로 ' + postEliString + '번 게시글을 영구삭제하시겠습니까?')){
+		            var postEliForm = document.getElementById('postEliminate');
+		
+		            var postEliNum = document.createElement('input');
+		            postEliNum.type = 'hidden';
+		            postEliNum.name = 'postNum';
+		            postEliNum.value = postEliString;
+		            postEliForm.appendChild(postEliNum);
+		            postEliForm.submit();
+				}
+			}
+	        
+	        function comEliminate(name){
+	        	const chkedEliComs = document.getElementsByName(name);
+				let comEliString = "";
+				
+				chkedEliComs[0].parentNode.removeChild(chkedEliComs[0]);
+
+				chkedEliComs.forEach((checkbox) =>{
+					if (checkbox.checked){
+						comEliString += checkbox.value;
+						comEliString += ",";
+					}
+				})
+				
+				comEliString = comEliString.slice(0, -1);
+				
+				if(confirm('정말로 ' + comEliString + '번 댓글을 영구삭제하시겠습니까?')){
+		            var comEliForm = document.getElementById('comRestore');
+		
+		            var comEliNum = document.createElement('input');
+		            comEliNum.type = 'hidden';
+		            comEliNum.name = 'comNum';
+		            comEliNum.value = comEliString;
+		            comEliForm.appendChild(comEliNum);
+		            comEliForm.submit();
+				}
+			}
+    	</script>
 	</body>
 </html>

@@ -54,7 +54,7 @@
 	<select id="com_list" resultType="CustomCommentDTO">
 		select comment.*, user.user_username
 		from comment, user 
-		where user.user_no=comment.user_no
+		where user.user_no=comment.user_no and comment.com_del='1'
 		order by comment.com_no desc
 	</select>
 	
@@ -83,6 +83,30 @@
 		where board_del='0'and category != 0
 		order by board_no desc
 	</select>
+	
+	<update id="retorePost" parameterType="Long">
+		update board
+		set
+			board_del='1'
+		where board_no=#{board_no}
+	</update>
+	
+	<update id="retoreCom" parameterType="Long">
+		update comment
+		set
+			com_del='1'
+		where com_no=#{com_no}
+	</update>
+	
+	<delete id="eliminatePost" parameterType="Long">
+		delete from board
+		where board_no=#{board_no}
+	</delete>
+	
+	<delete id="eliminateCom" parameterType="Long">
+		delete from comment
+		where com_no=#{com_no}
+	</delete>
 	
 	<select id="del_com" resultType="CustomCommentDTO">
 		select comment.*, user.user_username
