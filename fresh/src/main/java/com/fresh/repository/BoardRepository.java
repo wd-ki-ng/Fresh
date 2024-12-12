@@ -11,7 +11,10 @@ import com.fresh.dto.CommentDTO;
 import com.fresh.dto.CustomCommentDTO;
 import com.fresh.dto.UserDTO;
 
+import lombok.RequiredArgsConstructor;
+
 @Repository
+@RequiredArgsConstructor
 public class BoardRepository {
 
 	@Autowired
@@ -28,6 +31,16 @@ public class BoardRepository {
 	public int setBoard(BoardDTO board) {
 		return sqlSession.insert("board.write", board);
 	}
+	//------------------- 수정
+	public int boardUpdate(BoardDTO board) {
+		return sqlSession.update("board.boardUpdate", board);
+	}
+	 
+	public BoardDTO findById(long no) {
+		return sqlSession.selectOne("board.findById", no);
+	}
+	
+	//----------------
 	
 	public int getCommentCount(Long no) {
 		return sqlSession.selectOne("board.com_cnt", no);
