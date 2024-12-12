@@ -1,98 +1,147 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 	<head>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<meta charset="UTF-8">
 		<meta name="_csrf" th:content="${_csrf.token}">
         <meta name="_csrf_header" th:content="${_csrf.headerName}">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Member Join</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<meta name="description" content="">
+		<meta name="author" content="">
 		<!-- Bootstrap CSS -->
-  		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-   		 integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<title>회원가입</title>
+		<style>
+		/*@import url("http://fonts.googleapis.com/earlyaccess/nanumgothic.css");*/
 		
-
-  <style>
-    body {
-      min-height: 100vh;
-	  background-color: #F4F4F4;
-      background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
-      background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
-    }
-	.input-form {
-      max-width: 680px;
-
-      margin-top: 80px;
-      padding: 32px;
-
-      background: #fff;
-      -webkit-border-radius: 10px;
-      -moz-border-radius: 10px;
-      border-radius: 10px;
-      -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-      -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
-    }
-	
-  </style>
+		html {
+			height: 100%;
+		}
 		
+		body {
+			
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			padding-top: 200px;
+			padding-bottom: 40px;
+			font-family: "Nanum Gothic", arial, helvetica, sans-serif;
+			background-repeat: no-repeat;
+		}
+		
+		.card {
+			margin: 0 auto; /* Added */
+			float: none; /* Added */
+			margin-bottom: 10px; /* Added */
+		}
+		
+		#join-btn {
+			background-color: #e4932b;
+			border: none;
+		}
+		
+		.form-signin .form-control {
+			position: relative;
+			height: auto;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+			padding: 10px;
+			font-size: 16px;
+		}
+		#check_id{
+			margin-bottom: 5px;
+		}
+		#check_pw{
+			margin-bottom: 5px;
+		}
+		#check_pwc{
+			margin-bottom: 5px;
+		}
+		#check_name{
+			margin-bottom: 5px;
+		}
+		#check_username{
+			margin-bottom: 5px;
+		}
+		#check_email{
+			margin-bottom: 5px;
+		}
+		.card-title {
+			margin-left: 30px;
+		}
+		
+		.links {
+			text-align: center;
+			margin-bottom: 10px;
+		}
+		
+		a {
+			color: #f58b34;
+			text-decoration: none;
+		}
+		
+		</style>
 	</head>
-	<body>
-		<div class="container">
-			<div class="input-form-backgroud row">
-				 <div class="input-form col-md-12 mx-auto">
-				 	<h4 class="mb-3">회원가입</h4>
-					<form action ="/join" id="join" name="join" method="POST" class="validation-form">
-						<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-						<div>
-							<div>
-								<label for="user_id">아이디</label>
-								<input type="text" name="user_id" id="user_id" placeholder="4~12자의 영문 대소문자와 숫자만 가능">
-								<button type="button" class="checkId" onclick="checkId()">중복확인</button>
-							</div>
-							<div>
-								<label for="user_pw">비밀번호</label>
-								<input type="password" name="user_pw" id="user_pw" placeholder="8자리 이상의 대소문자와 숫자,특수문자를 포함">
-							</div>
-							<div>
-								<label for="pw_chk">비밀번호 확인</label>
-								<input type="password" name="pw_chk" id="pw_chk">
-							</div>
-							<div>
-								<label for="user_name">이름</label>
-								<input type="text" name="user_name" id="user_name">
-							</div>
-							<div>
-								<label for="user_email">이메일</label>
-								<input type="email" name="user_email" id="user_email" placeholder="example@example.com">
-								<!--  <button type="button" check="chk-num" onclick="sendEmail()">인증번호 전송</button> -->
-							</div>
-							<!--  
-							<div>
-								<label for="email_auth">인증번호</label>
-								<input type="text" name="email_auth" id="email_auth" placeholder="인증번호 입력">
-								<button type="button"  chcek="verifyEmail" onclick="verifyEmail()">인증번호 확인</button>
-							</div>
-							-->
-							<div>
-								<label for="user_username">닉네임</label>
-								<input type="text" name="user_username" id="user_username" placeholder="닉네임을 입력해주세요">
-								<button type="button" class="checkUserName" onclick="checkUserName()">중복확인</button>
-							</div>
-						</div>
-						
-							
-							<button type="button"  id="join-btn" onclick="submitJoin()">회원가입</button>
-					</form>
-				</div>
+
+	<body cellpadding="0" cellspacing="0" marginleft="0" margintop="0" width="100%" height="100%" align="center">
+		<div class="card align-middle" style="width: 600px;">
+			<div class="card-title" style="margin-top: 30px;">
+				<h2 class="card-title" style="color: #f58b34;">
+					<img th:src ="@{/css/icon/logo.png}"/>
+				</h2>
+			</div>
+			<div class="card-body">
+				<form action="/join" name="join" id="join"method="POST">
+					<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+					<div class="input-group mb-3">
+  						<input type="text" class="form-control" name="user_id" id="user_id" placeholder="아이디">
+  						<button class="btn btn-warning" type="button" onclick="checkId()">중복확인</button>
+					</div>
+					<div id="check_id">&nbsp;</div>
+					
+					<div class= "input-group mb-3">
+						<input type="password" name="user_pw" id="user_pw" class="form-control"placeholder="비밀번호" required>
+					</div>
+					<div id="check_pw">&nbsp;</div>
+					
+					<div class= "input-group mb-3">
+						<input type="password" name="pw_chk" id="pw_chk" class="form-control"placeholder="비밀번호 확인" required>
+					</div>
+					<div id="check_pwc">&nbsp;</div>
+					
+					<div class= "input-group mb-3">
+						<input type="text" name="user_name" id="user_name" class="form-control" placeholder="이름" required>
+					</div>
+					<div id="check_name">&nbsp;</div>
+					
+					<div class= "input-group mb-3">
+						<input type="email" class="form-control" name="user_email" id="user_email" placeholder="이메일을 입력해주세요">
+  						<button class="btn btn-warning" type="button" onclick="sendEmail()">인증번호 전송</button>
+					</div>
+					<div id="check_email">&nbsp;</div>
+					
+					<div class= "input-group mb-3">
+						<input type="text" class="form-control" name="email_auth" id="email_auth" placeholder="인증번호를 입력해주세요">
+  						<button class="btn btn-warning" type="button" onclick="verifyEmail()">인증번호 확인</button>
+					</div>
+					<div>&nbsp;</div>
+					
+					<div class= "input-group mb-3">
+						<input type="text" class="form-control" name="user_username" id="user_username" placeholder="닉네임을 입력해주세요">
+  						<button class="btn btn-warning" type="button" onclick="checkUserName()">중복확인</button>
+					</div>
+					<div id="check_username">&nbsp;</div>		
+					<br>			
+					<button id="join-btn" class="btn btn-lg btn-primary btn-block" type="button">회 원 가 입</button>
+				</form>
 			</div>
 		</div>
-		
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<script type="text/javascript">
+	</body>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript">
 	    const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
 	    const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
@@ -133,10 +182,13 @@
 	        $("#user_id").blur(function () {
 	            const userId = $(this).val();
 	            if (!checkID.test(userId)) {
-	            	alert("아이디는 영어 대소문자 및 숫자를 조합해서 4자리 이상만 가능합니다.");
+	            	$('#check_id').text('아이디는 영어대소문자 및 숫자를 조합해서 4자리 이상입니다.');
+					$('#check_id').css('color', 'red');
 	                isIdValid = false;
 	                return false;
 	            } else {
+	            	$('#check_id').text("아이디 중복검사를 진행해주세요.");
+	            	$('#check_id').css('color', 'green');
 	                isIdValid = true;
 	                return true;
 	            }
@@ -147,10 +199,13 @@
 	        $("#user_pw").blur(function () {
 	        	const userPw = $("#user_pw").val();
 	            if (!checkPW.test(userPw)) {
-	            	alert("영문(대소문자), 숫자, 특수문자를 각 1개 이상 포함한 8자리 이상이어야 합니다.");
-	                isPwValid = false;
+	            	$('#check_pw').text('비밀번호는 영어대소문자 및 숫자와 특수문자를 조합해서 8자리 이상입니다.');
+					$('#check_pw').css('color', 'red');
+					isPwValid = false;
 	                return false;
-	            } else {	                
+	            } else {	             
+	            	$('#check_pw').text('사용가능한 비밀번호입니다.');
+					$('#check_pw').css('color', 'green');
 	                isPwValid = true;
 	                return true;
 	            }
@@ -163,10 +218,13 @@
 	        	const checkPw = $("#pw_chk").val();
 	        	
 	            if (userPw !== checkPw) {
-	            	alert("비밀번호와 비밀번호 확인이 서로다릅니다.");
+	            	$('#check_pwc').text('비밀번호가 서로 다릅니다.');
+					$('#check_pwc').css('color', 'red');
 	                isPwChkValid = false;
 	                return false;
 	            } else {
+	            	$('#check_pwc').text('비밀번호가 서로 일치합니다.');
+					$('#check_pwc').css('color', 'green');
 	                isPwChkValid = true;
 	                return true;
 	            }
@@ -178,10 +236,13 @@
 	        	const userName = $("#user_name").val();
 	        	
 	            if (!checkName.test(userName)) {
-	                alert("이름을 제대로 입력해주세요");
+	            	$('#check_name').text('옳바르지 않은 이름입니다.');
+					$('#check_name').css('color', 'red');
 	                isNameValid = false;
 	                return false;
 	            } else {
+	            	$('#check_name').text('이름이 확인되었습니다.');
+					$('#check_name').css('color', 'green');
 	                isNameValid = true;
 	                return true;
 	            }
@@ -193,10 +254,13 @@
 	        	const userEmail = $("#user_email").val();
 	        	
 	            if (!checkEmail.test(userEmail)) {
-					alert("이메일 형식이 잘못되었습니다.");
+	            	$('#check_email').text('이메일 형식을 옳바르게 입력해주세요.');
+					$('#check_email').css('color', 'red');
 	                isEmailValid = false;
 	                return false;
 	            } else {
+	            	$('#check_email').text('이메일인증을 진행해주세요.');
+					$('#check_email').css('color', 'green');
 	                isEmailValid = true;
 	                return true;
 	            }
@@ -208,10 +272,13 @@
 	        	const userNic = $("#user_username").val();
 	        	
 	            if (!checkUserNmae.test(userNic)) {
-	                alert("닉네임 형식이 올바르지 않습니다.");
+	            	$('#check_username').text('사용할수 없는 닉네임입니다.');
+					$('#check_username').css('color', 'red');
 	                isUsernameValid = false;
 	                return false;
 	            } else {
+	            	$('#check_username').text('닉네임 중복검사를 진행해주세요.');
+					$('#check_username').css('color', 'green');
 	                isUsernameValid = true;
 	                return true;
 	            }
@@ -332,9 +399,13 @@
 	            success: function (data) {
 	                alert(data);
 	                if (data == true) {
+	                	alert("인증이 완료되었습니다.");
 	                    // 인증 성공 후 추가 작업 (예: 회원가입 버튼 활성화 등)
 	                    isAuthValid = true;
 	                    updateButtonState();
+	                }else{
+	                	alert("인증번호가 틀렸습니다.");
+	                	isAuthValid = false;
 	                }
 	            },
 	            error: function () {
@@ -342,7 +413,7 @@
 	            }
 	        });
 	    }
-*/
+	    */
 	 	
 	    // 회원가입 실행
 	    function submitJoin() {
@@ -360,7 +431,5 @@
 	        $("#join-btn").prop("disabled", true);
 	    });
 	    
-		</script>
-	</body>
-
-</html>
+	</script>
+ </html>
