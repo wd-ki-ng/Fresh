@@ -40,7 +40,7 @@
 	<select id="post_list" resultType="BoardDTO">
 		select *
 		from board
-		where board_del='1'
+		where board_del='1' and category != 0
 		order by board_no desc
 	</select>
 	
@@ -58,17 +58,29 @@
 		order by comment.com_no desc
 	</select>
 	
+	<update id="comDel" parameterType="Long">
+		update comment
+		set
+			com_del='0'
+		where com_no=#{com_no}
+	</update>
+	
 	<select id="noti_list" resultType="BoardDTO">
 		select *
 		from board
-		where category=0
+		where category=0 and board_del='1'
 		order by board_no desc
 	</select>
+	
+	<insert id="noti_write" parameterType="BoardDTO">
+		insert into board(user_no, category, board_title, board_content, board_date, board_write)
+		values (#{user_no}, #{category}, #{board_title}, #{board_content}, now(), #{board_write})
+	</insert>
 	
 	<select id="del_post" resultType="BoardDTO">
 		select *
 		from board
-		where board_del='0'
+		where board_del='0'and category != 0
 		order by board_no desc
 	</select>
 	

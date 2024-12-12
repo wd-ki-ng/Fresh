@@ -121,9 +121,54 @@ public class AdminContoller {
 			return "main";
 		}
 		
-		// 게시글 삭제 처리
+		// 게시글 삭제 처리 - board_del을 0으로
 		adminService.setOneBoard_del(board_no);
 		
+		return "redirect:/admin/admin";
+	}
+	
+	@GetMapping("/admin/comDel")
+	public String comDel(Model model, @RequestParam(value = "com_no") Long com_no) {
+		UserDTO user = userUtil.getUserNameAndRole();
+		model.addAttribute("user", user);
+		if (!user.getROLE().equals("ROLE_ADMIN")) {
+			return "main";
+		}
+		
+		// 댓글 삭제 처리 - com_del을 0으로/submitNotice
+		adminService.setOneCom_del(com_no);
+		
+		return "redirect:/admin/admin";
+	}
+	
+	// 글쓰기 페이지로 단순 이동
+	@GetMapping("/admin/noticeWrite")
+	public String noticeWrite(Model model) {
+		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		UserDTO user = userUtil.getUserData();
+		model.addAttribute("user", userUtil.getUserNameAndRole());
+		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
+			return "redirect:/login";
+		}
+		
+		// 로그인한 상태라면　화면 이동
+		return "admin/noticeWrite";
+	}
+	
+	// 글쓰고 제출
+	@PostMapping("/admin/submitNotice")
+	public String submitNotice(Model model, BoardDTO notice) {
+		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		UserDTO user = userUtil.getUserData();
+		model.addAttribute("user", userUtil.getUserNameAndRole());
+		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
+			return "redirect:/login";
+		}
+
+		// 데이터 베이스에 내용 입력
+		adminService.setNotice(notice, user.getUser_no(), user.getUser_username());
+		
+		// 게시글 목록으로 돌아감
 		return "redirect:/admin/admin";
 	}
 }
