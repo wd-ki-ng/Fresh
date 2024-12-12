@@ -47,9 +47,17 @@ public class AdminRepository {
 	public List<CustomCommentDTO> getAllComments() {
 		return sqlSession.selectList("admin.com_list");
 	}
+	
+	public void setOneCom_del(Long com_no) {
+		sqlSession.update("admin.comDel", com_no);
+	}
 
 	public List<BoardDTO> getAllNotices() {
 		return sqlSession.selectList("admin.noti_list");
+	}
+	
+	public void setNotice(BoardDTO notice) {
+		sqlSession.insert("admin.noti_write", notice);
 	}
 
 	public List<BoardDTO> getDelPosts() {

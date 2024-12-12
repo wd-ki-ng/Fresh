@@ -49,9 +49,20 @@ public class AdminService {
 	public List<CustomCommentDTO> getAllComments() {
 		return adminRepository.getAllComments();
 	}
+	
+	public void setOneCom_del(Long com_no) {
+		adminRepository.setOneCom_del(com_no);
+	}
 
 	public List<BoardDTO> getAllNotices() {
 		return adminRepository.getAllNotices();
+	}
+	
+	// 게시글 작성
+	public void setNotice(BoardDTO notice, Long no, String name) {
+		notice.setUser_no(no);
+		notice.setBoard_write(name);
+		adminRepository.setNotice(notice);
 	}
 
 	public List<BoardDTO> getDelPosts() {

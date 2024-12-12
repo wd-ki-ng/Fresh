@@ -118,6 +118,16 @@
 			background-color: gray;
 			color: white;
 		}
+		.adm_noti thead th a.btn {
+			display: inline;
+			border: 1px solid lightgray;
+			width: auto;
+			padding: 10px 12px 5px 12px;
+		}
+		.adm_noti thead th a.btn:hover {
+			background-color: gray;
+			color: white;
+		}
 		</style>
 	</head>
 	
@@ -229,7 +239,10 @@
 									<td><a th:href="@{/boardview(no=${com.board_no})}" th:text="${com.com_comment}"></a></td>
 									<td><a th:href="@{/boardview(no=${com.board_no})}" th:text="${#dates.format(com.com_cdate, 'yyyy-MM-dd')}"></a></td>
 									<td><a th:href="@{/boardview(no=${com.board_no})}" th:text="${#dates.format(com.com_mdate, 'yyyy-MM-dd')}"></a></td>
-									<td class="btn_td"><a th:href="@{#}" class="btn">수정</a><a th:href="@{#}" class="btn">삭제</a></td>
+									<td class="btn_td">
+										<a th:href="@{#}" class="btn">수정</a>
+										<a th:onclick="commentDelete([[${com.com_no}]])" class="btn">삭제</a>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -250,7 +263,7 @@
 							<thead>
 								<tr>
 									<th colspan="6" style="text-align: right">
-										<button>공지 작성</button>
+										<a th:href="@{/admin/noticeWrite}" class="btn">공지 작성</a>
 									</th>
 								</tr>
 								<tr>
@@ -269,7 +282,7 @@
 									<td><a th:href="@{/boardview(no=${noti.board_no})}" th:text="${#dates.format(noti.board_date, 'yyyy-MM-dd')}"></a></td>
 									<td><a th:href="@{/boardview(no=${noti.board_no})}" th:text="${noti.board_like}"></a></td>
 									<td><a th:href="@{/boardview(no=${noti.board_no})}" th:text="${noti.board_count}"></a></td>
-									<td class="btn_td"><a th:href="@{#}" class="btn">수정</a><a th:href="@{#}" class="btn">삭제</a></td>
+									<td class="btn_td"><a th:href="@{#}" class="btn">수정</a><a th:onclick="postDelete([[${noti.board_no}]])" class="btn">삭제</a></td>
 								</tr>
 							</tbody>
 						</table>
@@ -283,137 +296,145 @@
 							<button id="del_noti" onclick="clickTrashBtn(2)">삭제된 공지</button>
 						</div>
 						<!-- 삭제된 게시글 -->
-						<table class="adm_trash adm_body" id="del_posts">
-							<colgroup>
-								<col width="7%"/><!-- 선택 -->
-								<col width="10%"/><!-- 게시글번호 -->
-								<col width="10%"/><!-- 작성자이름 -->
-								<col width="10%"/><!-- 카테고리 -->
-								<col width="33%"/><!-- 제목 -->
-								<col width="15%"/><!-- 작성일 -->
-								<col width="15%"/><!-- 추천/조회수 -->
-							</colgroup>
-							<thead>
-								<tr>
-									<th class="check_all" style="text-align: left;">
-										<input type="checkbox" id="check_all_post">
-										<label for="check_all_post"> 전체</label>
-									</th>
-									<th>게시글번호</th>
-									<th>작성자이름</th>
-									<th>카테고리</th>
-									<th>제목</th>
-									<th>작성일</th>
-									<th>추천/조회수</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="post:${del_posts}">
-									<td><input type="checkbox"></td>
-									<td><a th:href="@{#}" th:text="${post.board_no}"></a></td>
-									<td><a th:href="@{#}" th:text="${post.board_write}"></a></td>
-									<td><a th:href="@{#}" th:text="${post.category}"></a></td>
-									<td><a th:href="@{#}" th:text="${post.board_title}"></a></td>
-									<td><a th:href="@{#}" th:text="${#dates.format(post.board_date, 'yyyy-MM-dd')}"></a></td>
-									<td><a th:href="@{#}" th:text="'❤️ '+${post.board_like}+'/👁️ '+${post.board_count}"></a></td>
-								</tr>
-							</tbody>
-							<tfoot>
-								<tr>
-									<td colspan="7" style="text-align: right">
-										<button>선택 게시글 영구삭제</button>
-									</td>
-								</tr>
-							</tfoot>
-						</table>
+						<form name="selectedPosts" action="/admin/completeDeleteSelectedPost" method="post">
+							<table class="adm_trash adm_body" id="del_posts">
+								<colgroup>
+									<col width="7%"/><!-- 선택 -->
+									<col width="10%"/><!-- 게시글번호 -->
+									<col width="10%"/><!-- 작성자이름 -->
+									<col width="10%"/><!-- 카테고리 -->
+									<col width="33%"/><!-- 제목 -->
+									<col width="15%"/><!-- 작성일 -->
+									<col width="15%"/><!-- 추천/조회수 -->
+								</colgroup>
+								<thead>
+									<tr>
+										<th class="check_all" style="text-align: left;">
+											<input type="checkbox" name="delPosts" id="check_all_post" onclick="selectAll(this)">
+											<label for="check_all_post">전체</label>
+										</th>
+										<th>게시글번호</th>
+										<th>작성자이름</th>
+										<th>카테고리</th>
+										<th>제목</th>
+										<th>작성일</th>
+										<th>추천/조회수</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="post:${del_posts}">
+										<td><input type="checkbox" name="delPosts" th:value="${post.board_no}"></td>
+										<td><a th:href="@{#}" th:text="${post.board_no}"></a></td>
+										<td><a th:href="@{#}" th:text="${post.board_write}"></a></td>
+										<td><a th:href="@{#}" th:text="${post.category}"></a></td>
+										<td><a th:href="@{#}" th:text="${post.board_title}"></a></td>
+										<td><a th:href="@{#}" th:text="${#dates.format(post.board_date, 'yyyy-MM-dd')}"></a></td>
+										<td><a th:href="@{#}" th:text="'❤️ '+${post.board_like}+'/👁️ '+${post.board_count}"></a></td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="7" style="text-align: right">
+											<a class="btn" onclick="clickRestore('delPosts')">선택 게시글 복구</a>
+											<button>선택 게시글 영구삭제</button>
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+						</form>
 						
 						<!-- 삭제된 댓글 -->
-						<table class="adm_com adm_body" id="del_com" style="display:none;">
-							<colgroup>
-								<col width="7%"/>
-								<col width="10%"/>
-								<col width="10%"/>
-								<col width="10%"/>
-								<col width="33%"/>
-								<col width="15%"/>
-								<col width="15%"/>
-							</colgroup>
-							<thead>
-								<tr>
-									<th class="check_all" style="text-align: left;">
-										<input type="checkbox" id="check_all_post">
-										<label for="check_all_post"> 전체</label>
-									</th>
-									<th>댓글번호</th>
-									<th>게시글번호</th>
-									<th>작성자이름</th>
-									<th>내용</th>
-									<th>작성일</th>
-									<th>수정일</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="com:${del_coms}">
-									<td><input type="checkbox"></td>
-									<td><a th:href="@{#}" th:text="${com.com_no}"></a></td>
-									<td><a th:href="@{#}" th:text="${com.board_no}"></a></td>
-									<td><a th:href="@{#}" th:text="${com.user_username}"></a></td>
-									<td><a th:href="@{#}" th:text="${com.com_comment}"></a></td>
-									<td><a th:href="@{#}" th:text="${#dates.format(com.com_cdate, 'yyyy-MM-dd')}"></a></td>
-									<td><a th:href="@{#}" th:text="${#dates.format(com.com_mdate, 'yyyy-MM-dd')}"></a></td>
-								</tr>
-							</tbody>
-							<tfoot>
-								<tr>
-									<td colspan="7" style="text-align: right">
-										<button>선택 게시글 영구삭제</button>
-									</td>
-								</tr>
-							</tfoot>
-						</table>
+						<form name="selectedComs" action="/admin/completeDeleteSelectedCom" method="post">
+							<table class="adm_com adm_body" id="del_com" style="display:none;">
+								<colgroup>
+									<col width="7%"/>
+									<col width="10%"/>
+									<col width="10%"/>
+									<col width="10%"/>
+									<col width="33%"/>
+									<col width="15%"/>
+									<col width="15%"/>
+								</colgroup>
+								<thead>
+									<tr>
+										<th class="check_all" style="text-align: left;">
+											<input type="checkbox" name="delComs" id="check_all_post" onclick="selectAll(this)">
+											<label for="check_all_post"> 전체</label>
+										</th>
+										<th>댓글번호</th>
+										<th>게시글번호</th>
+										<th>작성자이름</th>
+										<th>내용</th>
+										<th>작성일</th>
+										<th>수정일</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="com:${del_coms}">
+										<td><input type="checkbox" name="delComs"></td>
+										<td><a th:href="@{#}" th:text="${com.com_no}"></a></td>
+										<td><a th:href="@{#}" th:text="${com.board_no}"></a></td>
+										<td><a th:href="@{#}" th:text="${com.user_username}"></a></td>
+										<td><a th:href="@{#}" th:text="${com.com_comment}"></a></td>
+										<td><a th:href="@{#}" th:text="${#dates.format(com.com_cdate, 'yyyy-MM-dd')}"></a></td>
+										<td><a th:href="@{#}" th:text="${#dates.format(com.com_mdate, 'yyyy-MM-dd')}"></a></td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="7" style="text-align: right">
+											<button>선택 게시글 복구</button>
+											<button>선택 게시글 영구삭제</button>
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+						</form>
 
 						<!-- 삭제된 공지 -->
-						<table class="adm_noti adm_body" id="del_noti" style="display:none;">
-							<colgroup>
-								<col width="7%"/>
-								<col width="10%"/>
-								<col width="43%"/>
-								<col width="20%"/>
-								<col width="10%"/>
-								<col width="10%"/>
-							</colgroup>
-							<thead>
-								<tr>
-									<th class="check_all" style="text-align: left;">
-										<input type="checkbox" id="check_all_post">
-										<label for="check_all_post"> 전체</label>
-									</th>
-									<th>게시글번호</th>
-									<th>제목</th>
-									<th>작성일</th>
-									<th>추천수</th>
-									<th>조회수</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="noti:${del_notis}">
-									<td><input type="checkbox"></td>
-									<td><a th:href="@{#}" th:text="${noti.board_no}"></a></td>
-									<td><a th:href="@{#}" th:text="${noti.board_title}"></a></td>
-									<td><a th:href="@{#}" th:text="${#dates.format(noti.board_date, 'yyyy-MM-dd')}"></a></td>
-									<td><a th:href="@{#}" th:text="${noti.board_like}"></a></td>
-									<td><a th:href="@{#}" th:text="${noti.board_count}"></a></td>
-								</tr>
-							</tbody>
-							<tfoot>
-								<tr>
-									<td colspan="7" style="text-align: right">
-										<button>선택 게시글 복구</button>
-										<button>선택 게시글 영구삭제</button>
-									</td>
-								</tr>
-							</tfoot>
-						</table>
+						<form name="selectedNotis" action="/admin/completeDeleteSelectedNoti" method="post">
+							<table class="adm_noti adm_body" id="del_noti" style="display:none;">
+								<colgroup>
+									<col width="7%"/>
+									<col width="10%"/>
+									<col width="43%"/>
+									<col width="20%"/>
+									<col width="10%"/>
+									<col width="10%"/>
+								</colgroup>
+								<thead>
+									<tr>
+										<th class="check_all" style="text-align: left;">
+											<input type="checkbox" name="delNotis" id="check_all_post" onclick="selectAll(this)">
+											<label for="check_all_post"> 전체</label>
+										</th>
+										<th>게시글번호</th>
+										<th>제목</th>
+										<th>작성일</th>
+										<th>추천수</th>
+										<th>조회수</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="noti:${del_notis}">
+										<td><input type="checkbox" name="delNotis"></td>
+										<td><a th:href="@{#}" th:text="${noti.board_no}"></a></td>
+										<td><a th:href="@{#}" th:text="${noti.board_title}"></a></td>
+										<td><a th:href="@{#}" th:text="${#dates.format(noti.board_date, 'yyyy-MM-dd')}"></a></td>
+										<td><a th:href="@{#}" th:text="${noti.board_like}"></a></td>
+										<td><a th:href="@{#}" th:text="${noti.board_count}"></a></td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="7" style="text-align: right">
+											<button onclick="clickRestore('delNotis')">선택 게시글 복구</button>
+											<button>선택 게시글 영구삭제</button>
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+						</form>
 					</div>
 				</div>
 				<!-- 본문-오른쪽(메뉴-회원관리, 게시글관리, 댓글관리) -->
@@ -500,6 +521,21 @@
 				}
 			}
 			
+			function selectAll(allBtn){
+				const checkboxes = document.getElementsByName(allBtn.name);
+				
+				checkboxes.forEach((checkbox) => {
+					checkbox.checked = allBtn.checked;
+				})
+			}
+			
+			function clickRestore(name) {
+				const checkboxes = document.getElementsByName(name);
+				
+				checkboxes.forEach((checkbox) =>{
+					alert(checkbox.value);
+				})
+			}
 		</script>
 		<script th:inline="javascript">
 	        /*<![CDATA[*/
@@ -538,7 +574,7 @@
 		            // 동적으로 form 생성
 		            var postDelForm = document.createElement('form');
 		            postDelForm.method = 'get';
-		            postDelForm.action = memUrl;  // 타임리프 URL 사용
+		            postDelForm.action = postDelUrl;  // 타임리프 URL 사용
 		
 		            // user_no 값을 hidden 필드로 전달
 		            var boardNoInput = document.createElement('input');
@@ -554,5 +590,36 @@
 			}
 	        /*]]>*/
     	</script>
+    	<script th:inline="javascript">
+	        /*<![CDATA[*/
+	       	// 타임리프 URL을 동적으로 생성하여 사용할 수 있도록 설정
+	        var comDelUrl = /*[[${'/admin/comDel'}]]*/ '/admin/comDel';  // 타임리프 문법으로 URL 처리
+	        
+	        function commentDelete(com_no){
+				if(confirm('정말로 ' + com_no + '번 댓글을 삭제하시겠습니까?')){
+					com_no = parseInt(com_no, 10);
+		            // 동적으로 form 생성
+		            var comDelForm = document.createElement('form');
+		            comDelForm.method = 'get';
+		            comDelForm.action = comDelUrl;  // 타임리프 URL 사용
+		
+		            // user_no 값을 hidden 필드로 전달
+		            var comNoInput = document.createElement('input');
+		            comNoInput.type = 'hidden';
+		            comNoInput.name = 'com_no';  // 서버에서 사용할 파라미터 이름
+		            comNoInput.value = com_no;  // 버튼 클릭 시 받은 user_no 값
+		            comDelForm.appendChild(comNoInput);
+		
+		            // form을 body에 추가하고 제출
+		            document.body.appendChild(comDelForm);
+		            comDelForm.submit();
+				}
+			}
+	        /*]]>*/
+    	</script>
+		<script>
+			
+		</script>
+
 	</body>
 </html>
