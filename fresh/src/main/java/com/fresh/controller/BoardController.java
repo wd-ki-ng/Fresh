@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fresh.dto.BoardDTO;
@@ -15,6 +16,8 @@ import com.fresh.dto.CustomCommentDTO;
 import com.fresh.dto.UserDTO;
 import com.fresh.service.BoardService;
 import com.fresh.util.UserUtil;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @Controller
@@ -87,6 +90,38 @@ public class BoardController {
 		return "redirect:/board";
 	}
 	
+	//------------ 게시글 수정 버튼 클릭시 수정 화면으로 넘어감--------------
+		@GetMapping("/boardUpdate")
+		public String boardUpdate(Model model,@RequestParam(value = "no") Long no ) {
+			// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+			UserDTO user = userUtil.getUserData();
+			model.addAttribute("user", userUtil.getUserNameAndRole());
+			if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
+				return "redirect:/login";
+			}
+			BoardDTO boardUpdate = boardService.findById(no);
+			model.addAttribute("boardUpdate",boardUpdate);
+			// 수정페이지
+			return "boardUpdate";
+		}
+		
+		
+	//수정버튼 누르면 db에 저장
+		@PostMapping("/boardUpdate")
+		public String boardUpdate(BoardDTO board , Model model) {
+			// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+			UserDTO user = userUtil.getUserData();
+			model.addAttribute("user", userUtil.getUserNameAndRole());
+			if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
+				return "redirect:/login";
+			}
+			//Update 요청
+		boardService.boardUpdate(board);
+			// FindByID로 수정된 내용 다시 조회
+			return "redirect:/boardview?no="+board.getBoard_no();
+		}
+		
+    //-----------------------------------------	
 	@GetMapping("/submitPost")
 	public String submitPost(Model model) {
 		return "boardWrite";
@@ -122,4 +157,5 @@ public class BoardController {
 		
 		return "board";
 	}
+	
 }

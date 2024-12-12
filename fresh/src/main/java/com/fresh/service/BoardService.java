@@ -11,7 +11,10 @@ import com.fresh.dto.CustomCommentDTO;
 import com.fresh.dto.UserDTO;
 import com.fresh.repository.BoardRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class BoardService {
 	
 	@Autowired
@@ -33,7 +36,21 @@ public class BoardService {
 		board.setBoard_write(name);
 		return boardRepository.setBoard(board);
 	}
+	
+	//게시글 수정 ------------------------------------------------------
+	public int boardUpdate(BoardDTO board) {
+		return boardRepository.boardUpdate(board);
+		
+	}
 
+	public BoardDTO findById(Long no) {
+	    return boardRepository.findById(no);
+	}
+	
+	
+	
+	//----------------------------------
+	
 	// 댓글 개수 가져오기
 	public int getCommentCount(Long no) {
 		return boardRepository.getCommentCount(no);
@@ -67,3 +84,5 @@ public class BoardService {
 
 
 }
+
+
