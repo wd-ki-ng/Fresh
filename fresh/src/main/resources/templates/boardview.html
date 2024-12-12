@@ -60,14 +60,12 @@
 						<span th:text="${comment.user_username}"></span> : <span
 							th:text="${comment.com_comment}"></span>
 					</div>
-					<form th:id="'comment'+${comment.com_no}" name="comment"
-						action="/comUpdate" method="post" style="display: none;">
-						<input type="hidden" name="_csrf" th:value="${_csrf.token}" /> <input
-							type="hidden" name="board_no" th:value="${detail.board_no}">
-						<textarea id="commentContent" name="com_comment"
-							th:placeholder="${comment.com_comment}"></textarea>
-						<button type="submit" class="btn"
-							style="display: inline-block; padding: 5px 10px;">수정</button>
+					<form th:id="'comment'+${comment.com_no}" name="comment" th:action="@{/comUpdate}" method="post" style="display: none;">
+						<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+						<input type="hidden" name="board_no" th:value="${detail.board_no}">
+						<input type="hidden" name="board_no" th:value="${comment.com_no}">
+						<textarea id="commentContent" name="com_comment" th:placeholder="${comment.com_comment}"></textarea>
+						<button type="submit" class="btn" style="display: inline-block; padding: 5px 10px;">수정</button>
 					</form>
 					<div class="com_btn">
 						<th:block th:if="${comment.user_no == user.user_no}">
