@@ -85,27 +85,47 @@ h1 {
     margin-right: 5px;
 }
 
-.pagination {
-    text-align: center;
-    margin-top: 20px;
+.pagination{
+	margin-left:25%;
+	display: flex;
+	justify-content: space-around;
+	
 }
-
-.pagination button {
-    background-color: #007BFF;
-    color: white;
+.pagination .prev-btn  {
+	background-color: #333;
+	color: white;
     padding: 5px 10px;
     border: none;
     border-radius: 5px;
-    margin: 0 5px;
-    cursor: pointer;
+    margin-top: 20px;
 }
-
 .pagination button:hover {
-    background-color: #0056b3;
+	background-color: #0056b3;
 }
 
-.pagination button.active {
-    background-color: #28a745;
+.page-info {
+	align-items: center;
+	margin: 0 10px;
+	font-size: 16px;
+	color: #333;
+}
+
+.write-button{
+	margin-left: 63%
+}
+
+.write-button button{
+	background-color: #333;
+	color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+	float: right;
+}
+	
+.write-button :hover {
+	background-color: #555;
 }
 
 .comment-form {
