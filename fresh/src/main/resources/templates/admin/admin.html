@@ -179,7 +179,7 @@
 								<col width="10%"/><!-- カテゴリー -->
 								<col width="27%"/><!-- タイトル -->
 								<col width="13%"/><!-- 作成日-->
-								<col width="15%"/><!-- ビュー/♥ -->
+								<col width="15%"/><!-- ♥/ビュー -->
 								<col width="15%"/><!-- 削除の状態 -->
 							</colgroup>
 							<thead>
@@ -189,7 +189,7 @@
 									<th>カテゴリー</th>
 									<th>タイトル</th>
 									<th>作成日</th>
-									<th>ビュー/♥ </th>
+									<th>♥/ビュー </th>
 									<th>修正/削除</th>
 								</tr>
 							</thead>
@@ -225,7 +225,7 @@
 							</colgroup>
 							<thead>
 								<tr>
-									<th>コメント番号</th>
+									<th>コメント<p>番号</p></th>
 									<th>ポスト番号</th>
 									<th>ユーザー名</th>
 									<th>内容</th>
@@ -294,14 +294,14 @@
 						</table>
 					</div>
 
-					<!-- 휴지통 -->
+					<!-- ゴミ箱 -->
 					<div id="adm_trash" style="display:none">
 						<div class="btn-group">
 							<button class="active" id="del_posts" onclick="clickTrashBtn(0)">削除されたポスト</button>
 							<button id="del_com" onclick="clickTrashBtn(1)">削除されたコメント</button>
 							<button id="del_noti" onclick="clickTrashBtn(2)">削除されたお知らせ</button>
 						</div>
-						<!-- 삭제된 게시글 -->
+						<!-- 削除されたポスト -->
 						<form name="postRestore" id="postRestore" action="/admin/postRestore" method="post">
 							<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 						</form>
@@ -573,7 +573,7 @@
 	        var postDelUrl = /*[[${'/admin/postDel'}]]*/ '/admin/postDel';  // Thymeleafの文法でURLを処理
 	        
 	        function postDelete(board_no){
-				if(confirm('정말로 ' + board_no + '번 게시글을 삭제하시겠습니까?')){
+				if(confirm('本当に ' + board_no + '番ポストを削除しますか？')){
 					board_no = parseInt(board_no, 10);
 		            // 動的にformを生成
 		            var postDelForm = document.createElement('form');
@@ -600,7 +600,7 @@
 	        var comDelUrl = /*[[${'/admin/comDel'}]]*/ '/admin/comDel';  // Thymeleafの文法でURLを処理
 	        
 	        function commentDelete(com_no){
-				if(confirm('정말로 ' + com_no + '번 댓글을 삭제하시겠습니까?')){
+				if(confirm('本当に ' + com_no + '番コメントを削除しますか？')){
 					com_no = parseInt(com_no, 10);
 		            // 動的にformを生成
 		            var comDelForm = document.createElement('form');
