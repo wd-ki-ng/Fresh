@@ -160,12 +160,6 @@ public class BoardController {
 			return "redirect:/boardview?no="+com.getBoard_no();
 		}		
 		
-		
-	@GetMapping("/submitPost")
-	public String submitPost(Model model) {
-		return "boardWrite";
-	}
-
 	@PostMapping("/deleteBoard")
 	@ResponseBody
 	public String deleteBoard(@RequestParam("no") Long no, Model model) {

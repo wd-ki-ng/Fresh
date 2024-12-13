@@ -214,7 +214,7 @@ body {
 				</div>
 				<div class="write-button">
 				<!-- 글쓰기 버튼 -->
-				<button  th:onclick="@{/boardWrite}" >글쓰기</button>
+				<button th:onclick="'location.href=\''+@{/boardWrite}+'\''">글쓰기</button>
 				</div>
 			</div>
 
