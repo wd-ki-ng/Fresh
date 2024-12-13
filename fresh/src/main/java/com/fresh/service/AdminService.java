@@ -68,9 +68,25 @@ public class AdminService {
 	public List<BoardDTO> getDelPosts() {
 		return adminRepository.getDelPosts();
 	}
+	
+	public void restoreComment(Long com_no) {
+		adminRepository.restoreComment(com_no);
+	}
+	
+	public void restorePost(Long board_no) {
+		adminRepository.restorePost(board_no);
+	}
 
 	public List<CustomCommentDTO> getDelComs() {
 		return adminRepository.getDelComs();
+	}
+	
+	public void eliminatePost(Long board_no) {
+		adminRepository.eliminatePost(board_no);
+	}
+	
+	public void eliminateComment(Long com_no) {
+		adminRepository.eliminateComment(com_no);
 	}
 
 	public List<BoardDTO> getDelNotis() {

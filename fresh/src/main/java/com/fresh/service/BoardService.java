@@ -25,6 +25,16 @@ public class BoardService {
 		return boardRepository.getDetail(no);
 	}
 	
+	//---이전글 다음글----------
+	public long prevBoard(Long no) {
+		return boardRepository.prevBoard(no);
+	}
+	
+	public long NextBoard(Long no) {
+		return boardRepository.NextBoard(no);
+	}
+	//----------------------------------
+	
 	// 조회수 늘리기
 	public int setView(Long no) {
 		return boardRepository.setView(no);
@@ -46,10 +56,16 @@ public class BoardService {
 	public BoardDTO findById(Long no) {
 	    return boardRepository.findById(no);
 	}
+	//---------------댓글 수정------------------
+	public int comUpdate(CommentDTO com) {
+	    return boardRepository.comUpdate(com);
+	}
 	
+
+	public int boardDel(Long no) {
+		return boardRepository.boardDel(no);
+	}
 	
-	
-	//----------------------------------
 	
 	// 댓글 개수 가져오기
 	public int getCommentCount(Long no) {
@@ -81,7 +97,6 @@ public class BoardService {
 	public List<BoardDTO> getBoardList() {
 		return boardRepository.getBoardList();
 	}
-
 
 }
 

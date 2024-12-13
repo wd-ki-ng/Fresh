@@ -4,8 +4,11 @@
 	<select id="getMainLogin" parameterType="UserDTO"  resultType="UserDTO">
 		select * from user where user_id = #{user_id} and user_pw = #{user_pw}
 	</select>
-
-
+	
+	<update id="boardDel" parameterType="Long" > 
+		update board set board_del='0' where board_no=#{no} and board_del='1'
+	</update>
+	
 	<select id="detail" parameterType="Long" resultType="BoardDTO">
 		select board_no, user_no, board_title, board_content, board_write,
 		 	   board_date, board_like, board_count, board_del
@@ -53,7 +56,7 @@
 	<select id="main_new" resultType="BoardDTO">
 		select board_no, board_title, board_like, board_count, board_date
 		from board
-		order by board_date desc 
+		order by board_no desc 
 		limit 5
 	</select>
 	
@@ -76,6 +79,34 @@
         from board
         where board_no = #{no}
     </select>
+    
+   
+	<update id="comUpdate" parameterType="CommentDTO">
+		update comment
+        set com_comment= #{com_comment} 
+		where com_no = #{com_no}
+	</update>
 	
+	
+	
+	<select id="prevBoard" parameterType="Long" resultType="Long">
+	<![CDATA[
+		select board_no
+	    from board
+	    where board_no < #{no} and board_del = '1'
+	    order by board_no desc
+	    limit 1
+	]]>
+	</select>
+	
+	<select id="nextBoard" parameterType="Long" resultType="Long">
+	<![CDATA[
+	    select board_no
+	    from board
+	    where board_no > #{no} and board_del = '1'
+	    order by board_no asc
+	    limit 1
+	]]>
+	</select>
 	
 	</mapper>
