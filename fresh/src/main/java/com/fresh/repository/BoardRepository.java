@@ -23,6 +23,17 @@ public class BoardRepository {
 	public BoardDTO getDetail(Long no) {
 		return sqlSession.selectOne("board.detail", no);
 	}
+	//이전글
+	public long prevBoard(Long no) {
+		Long prevBoard = sqlSession.selectOne("board.prevBoard", no);
+		return  prevBoard != null ? prevBoard : -1L; 
+		
+	}
+	// 다음글 
+	public long NextBoard(Long no) {
+		 Long nextBoard = sqlSession.selectOne("board.nextBoard", no);
+		 return nextBoard != null ? nextBoard : -1L; // 다음 게시글이 없으면 -1을 반환
+	}
 	
 	public int setView(Long no) {
 		return sqlSession.update("board.updateView", no);
@@ -31,7 +42,7 @@ public class BoardRepository {
 	public int setBoard(BoardDTO board) {
 		return sqlSession.insert("board.write", board);
 	}
-	//------------------- 수정
+	//------------------- 수정--------------------------
 	public int boardUpdate(BoardDTO board) {
 		return sqlSession.update("board.boardUpdate", board);
 	}
@@ -40,7 +51,11 @@ public class BoardRepository {
 		return sqlSession.selectOne("board.findById", no);
 	}
 	
-	//----------------
+	//-------------------댓글 수정-------------------
+	public int comUpdate(CommentDTO com) {
+		return sqlSession.update("board.comUpdate", com);
+	}
+	//----------------------------------------------
 	
 	public int getCommentCount(Long no) {
 		return sqlSession.selectOne("board.com_cnt", no);

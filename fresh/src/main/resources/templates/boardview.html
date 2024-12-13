@@ -52,7 +52,7 @@
 					<form th:id="'comment'+${comment.com_no}" name="comment" th:action="@{/comUpdate}" method="post" style="display: none;">
 						<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 						<input type="hidden" name="board_no" th:value="${detail.board_no}">
-						<input type="hidden" name="board_no" th:value="${comment.com_no}">
+						<input type="hidden" name="com_no" th:value="${comment.com_no}">
 						<textarea id="commentContent" name="com_comment" th:placeholder="${comment.com_comment}"></textarea>
 						<button type="submit" class="btn" style="display: inline-block; padding: 5px 10px;">수정</button>
 					</form>
@@ -78,12 +78,17 @@
 				</form>
 				<p id="loginMessage" class="login-message" style="display: none;">로그인 후 댓글을 작성할 수 있습니다.</p>
 			</div>
-
+					
 			<!-- 버튼들 배치 -->
 			<div class="btn-container">
-				<a href="#" class="btn">이전 글</a> <a th:href="@{/board}" class="btn">목록</a>
-				<a href="#" class="btn">다음 글</a> <a th:href="@{/boardWrite}"
-					class="btn">글 작성</a>
+				<a th:if ="${prevBoard != null}" th:href="@{/boardview(no=${prevBoard})}" class="btn">이전 글</a> 
+				<a th:if="${prevBoard == null}" class="btn disabled">이전 글</a>
+				
+				<a th:href="@{/board}" class="btn">목록</a>
+				
+				<a th:if="${nextBoard != null}" th:href="@{/boardview(no=${nextBoard})}" class="btn">다음 글</a>
+				<a th:if="${nextBoard == null}" class="btn disabled">다음 글</a>
+				<a th:href="@{/boardWrite}" class="btn">글 작성</a>
 			</div>
 		</section>
 	</div>
