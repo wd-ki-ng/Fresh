@@ -17,9 +17,6 @@
 		.adm_body td{
 			font-size: 14px;
 		}
-		td * {
-			font-family: 'Pretendard-Regular';
-		}
 		/* メニュー css */
 		.adm_menu {
 			width: 100%;
@@ -68,10 +65,9 @@
 			width: 100%;
 		}
 		.adm_body thead button, .adm_body tfoot button{
-			font-family: 'GmarketSansMedium';
 			border: 1px solid lightgray;
 			border-radius: 5px;
-			padding: 10px 10px 5px 10px;
+			padding: 10px;
 			background-color: #F9F9F9;
 		}
 		.btn-group {
@@ -81,7 +77,7 @@
 			border: none;
 			border-radius: 10px 10px 0 0;
 			background-color: transparent;
-			padding: 10px 10px 5px 10px;
+			padding: 10px;
 			font-size: 20px;
 			width: 100%;
 		}
@@ -112,7 +108,7 @@
 			display: inline;
 			border: 1px solid lightgray;
 			width: auto;
-			padding: 5px 12px 0px 12px; 
+			padding: 5px 12px; 
 		}
 		.adm_body td a.btn:hover {
 			background-color: gray;
@@ -122,7 +118,7 @@
 			display: inline;
 			border: 1px solid lightgray;
 			width: auto;
-			padding: 10px 12px 5px 12px;
+			padding: 10px 12px;
 		}
 		.adm_noti thead th a.btn:hover {
 			background-color: gray;
@@ -265,8 +261,8 @@
 							</colgroup>
 							<thead>
 								<tr>
-									<th colspan="6" style="text-align: right">
-										<a th:href="@{/admin/noticeWrite}" class="btn">お知らせ作成</a>
+									<th colspan="6" style="text-align: right;">
+										<a th:href="@{/admin/noticeWrite}" class="btn" style="margin-bottom: 5px">お知らせ作成</a>
 									</th>
 								</tr>
 								<tr>
