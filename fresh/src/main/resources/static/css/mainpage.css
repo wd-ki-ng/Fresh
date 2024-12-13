@@ -1,7 +1,7 @@
 @charset "UTF-8";
-/* 메인페이지에 적용할 스타일 시트 */
+/* メインページに適用するスタイルシート */
 
-/* 기본 폰트 설정 */
+/* フォント設定 */
 * {
 	font-family: "Hina Mincho", serif;
 	font-weight: 400;
@@ -11,8 +11,8 @@ a {
 	text-decoration-line: none;
 	color: black;
 }
-/* <--------------------------------------상단바(NavBar) 스타일 설정--------------------------------------> */
-/* 전체 div 적용 */
+/* <--------------------------------------メニューバー(NavBar)スタイル設定--------------------------------------> */
+/* 全体div設定 */
 .NavBar {
 	height: 100px;
 }
@@ -25,7 +25,7 @@ a {
 	flex-direction: column;
     justify-content: space-evenly;
 }
-/* 로고 */
+/* ロゴ */
 .NavBar .logo {
 	background-image: url('icon/logo.png');
 	background-position: center;
@@ -35,7 +35,7 @@ a {
 	cursor: pointer;
 	background-color: transparent;
 }
-/* 게시판 메뉴 */
+/* 掲示板メニュー */
 .board_menu {
 	list-style-type: none; 
 	padding: 0;
@@ -43,7 +43,7 @@ a {
 	display: flex;
 	justify-content: space-around;
 }
-/* 검색창 */
+/* 検索欄 */
 .NavBar div.searchbar {
 	display: flex;
 	align-items: center;
@@ -79,13 +79,13 @@ a {
 	height: 20px;
 	background-color: transparent;
 }
-/* <--------------------------------------상단바(NavBar) 스타일 설정--------------------------------------> */
+/* <--------------------------------------メニューバー(NavBar)スタイル設定--------------------------------------> */
 
-/* <-------------------------------------본문(Main_Body) 스타일 설정-------------------------------------> */
+/* <-------------------------------------本文(Main_Body)スタイル設定-------------------------------------> */
 div.Main_Body {
 	margin: 20px 0;
 }
-/* 왼쪽 부분 - 게시글 */
+/* 左の部分 - ポスト */
 div.Main_Body > div.Main_LeftBody {
 	padding: 20px;
 	background-color: white;
@@ -95,7 +95,7 @@ div.Main_Body > div.Main_LeftBody {
 div.leftbody_2col {
 	padding: 20px 15px;
 }
-/* 통합 인기글 */
+/* 人気のポスト */
 .table_wrap {
 	margin-bottom: 20px;
 }
@@ -131,7 +131,7 @@ div.leftbody_2col {
 	background-color: #F9F9F9;
 	cursor: pointer;
 }
-/* 2단으로 배치될 게시글들 */
+/* 2段で配置されるポスト */
 .leftbody_2col table{
 	width: 100%;
 }
@@ -164,17 +164,17 @@ div.leftbody_2col {
 	background-color: #F9F9F9;
 	cursor: pointer;
 }
-/* 오른쪽 - 로그인 되있으면 회원정보창, 로그인 안되어있으면 로그인창 */
+/* 右の部分 - ログインされていると会員情報ウィンドウ、されていないとログインウィンドウ */
 div.Main_RightBody > div {
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	border-radius: 10px;
 	display: flex;
 	justify-content: space-evenly;
     flex-direction: row;
-    background-color: #F9F9F9;
+    background-color: white;
     padding: 20px 10px;
 }
-/* 로그인창 */
+/* ログインウィンドウ  */
 .side_login th{
 	font-size: 20px;
 }
@@ -199,4 +199,4 @@ div.Main_RightBody > div {
     width: auto;
     box-sizing: border-box;
 }
-/* <-------------------------------------본문(Main_Body) 스타일 설정-------------------------------------> */
+/* <-------------------------------------本文(Main_Body)スタイル設定-------------------------------------> */
