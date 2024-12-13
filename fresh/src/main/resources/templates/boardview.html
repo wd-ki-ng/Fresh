@@ -7,41 +7,41 @@
 	<meta name="author" content="themefisher.com">
 	<th:block th:insert="~{menu.html::metaImport}"></th:block>
 	<th:block th:insert="~{menu.html::headImport}"></th:block>
-	<title th:text="${detail.board_title}">타이틀</title>
+	<title th:text="${detail.board_title}">タイトル</title>
 	<!-- Main Stylesheet -->
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 	<div class="container">
-		<!-- 상단바 - 로고, 게시판 메뉴, 검색창, 마이페이지, 로그인 -->
+		<!-- 上段のバー - ロゴ, 掲示板メニュー, 検索ボックス, マイページ, ログイン -->
 		<th:block th:insert="~{menu.html::navBar}"></th:block>
 
-		<!-- 게시글 상세 내용 -->
+		<!-- ポストの詳細な内容 -->
 		<section class="post-detail">
 			<h1 th:text="${detail.board_title}"></h1>
 			<p class="meta">
-				작성자:[[${detail.board_write}]] | 
-				작성시간: [[${#dates.format(detail.board_date, 'yyyy-MM-dd HH:mm')}]] | 
-				조회수: [[${detail.board_count}]] | 
-				좋아요: [[${detail.board_like}]]
+				ユーザー名:[[${detail.board_write}]] | 
+				掲示時間: [[${#dates.format(detail.board_date, 'yyyy-MM-dd HH:mm')}]] | 
+				ビュー: [[${detail.board_count}]] | 
+				♥: [[${detail.board_like}]]
 			</p>
 			<p id="postContent" th:text="${detail.board_content}"></p>
 
-			<!-- 좋아요 및 게시글 수정/삭제 버튼 -->
+			<!-- ♥ ＆ ポスト 修正/削除 ボタン -->
 			<div class="post-actions">
-				<button id="likeButton" class="btn">좋아요</button>
-				<!-- 글의 작성자가 현재 로그인 한 사람과 같은 경우에만 -->
+				<button id="likeButton" class="btn">♥</button>
+				<!-- ポストの作成者が現在 ログインしている人と同じ場合限定 -->
 				<th:block th:if="${detail.user_no == user.user_no}">
-					<a th:href="@{/boardUpdate(no=${detail.board_no})}" id="editButton" class="btn" style="display: inline-block;">수정</a>
-					<a th:href="@{/board}" id="deleteButton" class="btn" th:onclick="deleteBoard([[${detail.board_no}]])" style="display: inline-block;">삭제</a>
+					<a th:href="@{/boardUpdate(no=${detail.board_no})}" id="editButton" class="btn" style="display: inline-block;">修正</a>
+					<a th:href="@{/board}" id="deleteButton" class="btn" th:onclick="deleteBoard([[${detail.board_no}]])" style="display: inline-block;">削除</a>
 				</th:block>
 			</div>
 		</section>
 
-		<!-- 댓글 섹션 -->
+		<!-- コメントエリア -->
 		<section class="comments">
 			<h3>
-				댓글 (<span id="commentCount" th:text="${com_count}"></span>)
+				コメント (<span id="commentCount" th:text="${com_count}"></span>)
 			</h3>
 			<ul id="commentList" th:each="comment:${comments}" class="comment-item">
 				<li>
@@ -54,41 +54,41 @@
 						<input type="hidden" name="board_no" th:value="${detail.board_no}">
 						<input type="hidden" name="com_no" th:value="${comment.com_no}">
 						<textarea id="commentContent" name="com_comment" th:placeholder="${comment.com_comment}"></textarea>
-						<button type="submit" class="btn" style="display: inline-block; padding: 5px 10px;">수정</button>
+						<button type="submit" class="btn" style="display: inline-block; padding: 5px 10px;">修正</button>
 					</form>
 					<div class="com_btn">
 						<th:block th:if="${comment.user_no == user.user_no}">
-							<a href="javascript:void(0);" th:onclick="modifyCom([[${comment.com_no}]])" class="btn" style="display: inline-block; padding: 5px 10px;">수정</a>
-							<a th:href="@{#}" class="btn" style="display: inline-block; padding: 5px 10px;">삭제</a>
+							<a href="javascript:void(0);" th:onclick="modifyCom([[${comment.com_no}]])" class="btn" style="display: inline-block; padding: 5px 10px;">修正</a>
+							<a th:href="@{#}" class="btn" style="display: inline-block; padding: 5px 10px;">削除</a>
 						</th:block>
-						<a th:href="@{/#}" class="btn" style="display: inline-block; padding: 5px 10px;">대댓글</a>
+						<a th:href="@{/#}" class="btn" style="display: inline-block; padding: 5px 10px;">リコメント</a>
 					</div>
 				</li>
 			</ul>
-			<!-- 댓글 페이지네이션 -->
+			<!-- コメントページネーション -->
 			<div class="pagination" id="pagination"></div>
 
-			<!-- 댓글 작성 폼 -->
+			<!-- コメント作成ボックス -->
 			<div id="commentFormContainer">
 				<form id="commentForm" class="comment-form" name="comment" action="/comWrite" method="post">
 					<input type="hidden" name="_csrf" th:value="${_csrf.token}" /> 
 					<input type="hidden" name="board_no" th:value="${detail.board_no}">
 					<textarea id="commentContent" name="com_comment" placeholder="댓글을 입력하세요"></textarea>
-					<button type="submit" class="btn">댓글 작성</button>
+					<button type="submit" class="btn">コメント作成</button>
 				</form>
-				<p id="loginMessage" class="login-message" style="display: none;">로그인 후 댓글을 작성할 수 있습니다.</p>
+				<p id="loginMessage" class="login-message" style="display: none;">コメントの作成はログインした後からできます。</p>
 			</div>
 					
-			<!-- 버튼들 배치 -->
+			<!-- ボタンの配置 -->
 			<div class="btn-container">
-				<a th:if ="${prevBoard != null}" th:href="@{/boardview(no=${prevBoard})}" class="btn">이전 글</a> 
-				<a th:if="${prevBoard == null}" class="btn disabled">이전 글</a>
+				<a th:if ="${prevBoard != null}" th:href="@{/boardview(no=${prevBoard})}" class="btn">Prev</a> 
+				<a th:if="${prevBoard == null}" class="btn disabled">Prev</a>
 				
-				<a th:href="@{/board}" class="btn">목록</a>
+				<a th:href="@{/board}" class="btn">リスト</a>
 				
-				<a th:if="${nextBoard != null}" th:href="@{/boardview(no=${nextBoard})}" class="btn">다음 글</a>
-				<a th:if="${nextBoard == null}" class="btn disabled">다음 글</a>
-				<a th:href="@{/boardWrite}" class="btn">글 작성</a>
+				<a th:if="${nextBoard != null}" th:href="@{/boardview(no=${nextBoard})}" class="btn">Next</a>
+				<a th:if="${nextBoard == null}" class="btn disabled">Next</a>
+				<a th:href="@{/boardWrite}" class="btn">ポスト作成</a>
 			</div>
 		</section>
 	</div>
@@ -101,12 +101,12 @@
 </body>
 
 	<script>
- 	// csrf 토큰
+ 	// csrf token
     const header = $("meta[name='_csrf_header']").attr('content');
     const token = $("meta[name='_csrf']").attr('content');
     
 	function deleteBoard(no) {
-		if (confirm("글을 삭제 하시겠습니까?")) {
+		if (confirm("ポストを削除しますか？")) {
 			$.ajax({
 				url: "/deleteBoard",
 				type: "post",
@@ -117,7 +117,7 @@
 				success: function(result) {
 					debugger;
 					if (result == "true") {
-    					alert("삭제 완료되었습니다.");
+    					alert("削除完了");
     					location.href="/board";
 					} else {
 						location.href="/login";
@@ -128,7 +128,7 @@
 				}
 			});
 		}  else {
-			alert("글 삭제를 취소하였습니다.");
+			alert("ポストの削除を取り消しました.");
 		}
 	}
 	

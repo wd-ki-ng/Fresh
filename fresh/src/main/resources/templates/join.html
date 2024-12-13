@@ -15,7 +15,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-		<title>회원가입</title>
+		<title>会員登録</title>
 		<style>
 		/*@import url("http://fonts.googleapis.com/earlyaccess/nanumgothic.css");*/
 		
@@ -100,35 +100,35 @@
 				<form action="/join" name="join" id="join"method="POST">
 					<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
 					<div class="input-group mb-3">
-  						<input type="text" class="form-control" name="user_id" id="user_id" placeholder="아이디">
-  						<button class="btn btn-warning" type="button" onclick="checkId()">중복확인</button>
+  						<input type="text" class="form-control" name="user_id" id="user_id" placeholder="ID">
+  						<button class="btn btn-warning" type="button" onclick="checkId()">重複確認</button>
 					</div>
 					<div id="check_id">&nbsp;</div>
 					
 					<div class= "input-group mb-3">
-						<input type="password" name="user_pw" id="user_pw" class="form-control"placeholder="비밀번호" required>
+						<input type="password" name="user_pw" id="user_pw" class="form-control"placeholder="パスワード" required>
 					</div>
 					<div id="check_pw">&nbsp;</div>
 					
 					<div class= "input-group mb-3">
-						<input type="password" name="pw_chk" id="pw_chk" class="form-control"placeholder="비밀번호 확인" required>
+						<input type="password" name="pw_chk" id="pw_chk" class="form-control"placeholder="パスワードの再確認" required>
 					</div>
 					<div id="check_pwc">&nbsp;</div>
 					
 					<div class= "input-group mb-3">
-						<input type="text" name="user_name" id="user_name" class="form-control" placeholder="이름" required>
+						<input type="text" name="user_name" id="user_name" class="form-control" placeholder="名前を入力して下さい。" required>
 					</div>
 					<div id="check_name">&nbsp;</div>
 					
 					<div class= "input-group mb-3">
-						<input type="email" class="form-control" name="user_email" id="user_email" placeholder="이메일을 입력해주세요">
-  						<button class="btn btn-warning" type="button" onclick="sendEmail()">인증번호 전송</button>
+						<input type="email" class="form-control" name="user_email" id="user_email" placeholder="メールアドレスを入力して下さい。">
+  						<button class="btn btn-warning" type="button" onclick="sendEmail()">認証番号を送信</button>
 					</div>
 					<div id="check_email">&nbsp;</div>
 					
 					<div class= "input-group mb-3">
-						<input type="text" class="form-control" name="email_auth" id="email_auth" placeholder="인증번호를 입력해주세요">
-  						<button class="btn btn-warning" type="button" onclick="verifyEmail()">인증번호 확인</button>
+						<input type="text" class="form-control" name="email_auth" id="email_auth" placeholder="認証番号を入力して下さい。">
+  						<button class="btn btn-warning" type="button" onclick="verifyEmail()">認証番号を確認</button>
 					</div>
 					<div>&nbsp;</div>
 					
