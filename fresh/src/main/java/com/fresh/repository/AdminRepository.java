@@ -63,6 +63,22 @@ public class AdminRepository {
 	public List<BoardDTO> getDelPosts() {
 		return sqlSession.selectList("admin.del_post");
 	}
+	
+	public void restorePost(Long board_no) {
+		sqlSession.update("admin.retorePost", board_no);
+	}
+	
+	public void restoreComment(Long com_no) {
+		sqlSession.update("admin.retoreCom", com_no);
+	}
+	
+	public void eliminatePost(Long board_no) {
+		sqlSession.delete("admin.eliminatePost", board_no);
+	}
+	
+	public void eliminateComment(Long com_no) {
+		sqlSession.delete("admin.eliminateCom", com_no);
+	}
 
 	public List<CustomCommentDTO> getDelComs() {
 		return sqlSession.selectList("admin.del_com");
