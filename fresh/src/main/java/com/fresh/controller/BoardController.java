@@ -166,37 +166,6 @@ public class BoardController {
 		return "boardWrite";
 	}
 
-	// 수정버튼 누르면 db에 저장
-	@PostMapping("/boardUpdate")
-	public String boardUpdate(BoardDTO board, Model model) {
-		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
-		UserDTO user = userUtil.getUserData();
-		model.addAttribute("user", userUtil.getUserNameAndRole());
-		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
-			return "redirect:/login";
-		}
-		// Update 요청
-		boardService.boardUpdate(board);
-		// FindByID로 수정된 내용 다시 조회
-		return "redirect:/boardview?no=" + board.getBoard_no();
-	}
-
-	// -------------댓글 수정---------------------------
-	// 수정버튼 누르면 db에 저장
-	@PostMapping("/comUpdate")
-	public String comUpdate(CommentDTO com, Model model) {
-		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
-		UserDTO user = userUtil.getUserData();
-		model.addAttribute("user", userUtil.getUserNameAndRole());
-		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
-			return "redirect:/login";
-		}
-		// Update 요청
-		boardService.comUpdate(com);
-		// FindByID로 수정된 내용 다시 조회
-		return "redirect:/boardview?no=" + com.getBoard_no();
-	}
-
 	@PostMapping("/deleteBoard")
 	@ResponseBody
 	public String deleteBoard(@RequestParam("no") Long no, Model model) {
