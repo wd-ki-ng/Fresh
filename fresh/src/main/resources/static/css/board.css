@@ -88,7 +88,8 @@ h1 {
 .pagination{
 	margin-left:25%;
 	display: flex;
-	justify-content: space-around;
+	/* justify-content: space-around; */
+	justify-content: space-between;
 	
 }
 .pagination .prev-btn  {
@@ -110,9 +111,7 @@ h1 {
 	color: #333;
 }
 
-.write-button{
-	margin-left: 63%
-}
+
 
 .write-button button{
 	background-color: #333;
