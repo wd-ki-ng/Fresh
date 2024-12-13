@@ -1,0 +1,161 @@
+@charset "UTF-8";
+
+/* --------------------------------------------------------admin.htmlスタイル設定-------------------------------------------------------- */
+a {
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #f4f4f4;
+}
+
+.Main_LeftBody div {
+	width: 100%;
+}
+
+.adm_body td {
+	font-size: 14px;
+}
+/* メニュー css */
+.adm_menu {
+	width: 100%;
+}
+
+.adm_menu tr {
+	border-bottom: 1px solid lightgray;
+}
+
+.adm_menu th, .adm_menu td {
+	padding: 10px 5px;
+}
+
+.adm_menu thead th {
+	font-size: 20px;
+}
+
+.adm_menu tbody tr:hover {
+	background-color: #F9F9F9;
+	cursor: pointer;
+}
+
+/* 本文 css */
+.adm_body {
+	width: 100%;
+}
+
+.adm_body tr {
+	border-bottom: 1px solid lightgray;
+}
+
+.adm_body thead th {
+	font-size: 16px;
+}
+
+.adm_body tfoot tr {
+	border-bottom: none;
+}
+
+.adm_body tbody tr:hover {
+	background-color: #F9F9F9;
+	cursor: pointer;
+}
+
+.adm_body th, .adm_body td {
+	padding: 10px 5px;
+	text-align: center;
+	border-right: 1px solid lightgray;
+}
+
+.adm_body th:last-child, .adm_body td:last-child {
+	border-right: none;
+}
+
+.adm_body td a {
+	display: inline-block;
+	width: 100%;
+}
+
+.adm_body thead button, .adm_body tfoot button {
+	border: 1px solid lightgray;
+	border-radius: 5px;
+	padding: 10px;
+	background-color: white;
+}
+
+adm_body thead button, .adm_body tfoot button:hover {
+	background-color: gray;
+	color: white;
+}
+
+.btn-group {
+	justify-content: space-evenly;
+}
+
+.btn-group button {
+	border: none;
+	border-radius: 10px 10px 0 0;
+	background-color: transparent;
+	padding: 10px;
+	font-size: 20px;
+	width: 100%;
+}
+
+.btn-group button:hover {
+	background-color: #E3E3E3;
+}
+
+.active {
+	background-color: #E3E3E3;
+}
+
+button.active {
+	background-color: #E3E3E3;
+}
+
+.adm_trash th.check_all {
+	vertical-align: middle;
+	padding: 5px;
+}
+
+.check_all * {
+	vertical-align: middle;
+}
+
+.adm_trash input[type="checkbox"], .adm_trash label {
+	cursor: pointer;
+}
+
+.adm_body td.btn_td {
+	display: flex;
+	justify-content: space-around;
+}
+
+.adm_body td a.btn {
+	display: inline;
+	border: 1px solid lightgray;
+	width: auto;
+	padding: 5px 12px;
+}
+
+.adm_body td a.btn:hover {
+	background-color: gray;
+	color: white;
+}
+
+.adm_noti thead th a.btn {
+	display: inline;
+	border: 1px solid lightgray;
+	width: auto;
+	padding: 10px 12px;
+}
+
+.adm_noti thead th a.btn:hover {
+	background-color: gray;
+	color: white;
+}
+
+/* --------------------------------------------------------admin.htmlスタイル設定-------------------------------------------------------- */

@@ -8,25 +8,16 @@
 <th:block th:insert="~{menu.html::headImport}"></th:block>
 <style>
 /* 基本スタイル */
-body {
-	
-	width:1300pt;
-	height:100%;
-	font-family: 'Arial', sans-serif;
-	background-color: #f8f9fa;
-	margin: 0;
-	padding: 0;
+.row {
+    align-items: center;
+    padding: 0;
+    margin: 0;
 }
 
 /* ナビゲーションバースタイル */
 
 /* 掲示板スタイル */
-.board-container {
-	display: flex;
-	flex-direction: column;
-	margin: 20px auto;
-	width: 95%;
-	max-width: 1320px;
+.boardlistRow {
 	background-color: white;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	border-radius: 8px;
@@ -158,11 +149,18 @@ body {
 		<th:block th:insert="~{menu.html::navBar}"></th:block>
 
 		<!-- 掲示板 エリア -->
-		<div class="board-container">
-			<!-- 検索ボックスエリア -->
-			<div class="search-container">
-				<div>掲示板</div>
-				<div>
+		<div class="row boardlistRow">
+			<!-- ポストの数変更&検索ボックスエリア -->
+			<div class="row">
+				<div class="col-md-2">
+					<label for="itemsPerPage">ポスト数: </label>
+					<select id="itemsPerPage" onchange="updateItemsPerPage()">
+						<option value="10">10固</option>
+						<option value="20">20固</option>
+						<option value="30">30固</option>
+					</select>
+				</div>
+				<div class="offset-md-6 col-md-4">
 					<form>
 						<select name="type" class="type-box">
 							<option value="">検索タイプ</option>
@@ -175,50 +173,51 @@ body {
 				</div>
 			</div>
 
-			<!-- ポストの数変更 -->
-			<div class="items-per-page">
-				<label for="itemsPerPage">ポスト数: </label>
-				<select id="itemsPerPage" onchange="updateItemsPerPage()">
-					<option value="10">10固</option>
-					<option value="20">20固</option>
-					<option value="30">30固</option>
-				</select>
-			</div>
 			<!-- ポストリスト -->
-			<table class="board-list" id="boardList">
-				<thead>
-					<tr>
-						<th>No</th>
-						<th>タイトル</th>
-						<th>ユーザー名</th>
-						<th>作成日</th>
-						<th>ビュー</th>
-						<th>♥</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="board:${BoardList}">
-						<td><span th:text="${board.board_no}"></span></td>
-						<td><span th:text="${board.board_title}"></span></td>
-						<td><span th:text="${board.board_write}"></span></td>
-						<td><span th:text="${board.board_date}"></span></td>
-						<td><span th:text="${board.board_count}"></span></td>
-						<td><span th:text="${board.board_like}"></span></td>
-					</tr>
-				</tbody>
-			</table>
-
+			<div class="row">
+				<table class="board-list" id="boardList">
+					<colgroup>
+						<col width="10%"/>
+						<col width="40%"/>
+						<col width="15%"/>
+						<col width="15%"/>
+						<col width="10%"/>
+						<col width="10%"/>
+					</colgroup>
+					<thead>
+						<tr>
+							<th>No</th>
+							<th>タイトル</th>
+							<th>ユーザー名</th>
+							<th>作成日</th>
+							<th>ビュー</th>
+							<th>♥</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="board:${BoardList}">
+							<td><span th:text="${board.board_no}"></span></td>
+							<td><span th:text="${board.board_title}"></span></td>
+							<td><span th:text="${board.board_write}"></span></td>
+							<td><span th:text="${board.board_date}"></span></td>
+							<td><span th:text="${board.board_count}"></span></td>
+							<td><span th:text="${board.board_like}"></span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
 			<!-- ページ番号 ＆ ナビゲーション -->
-			<div class="pagination">
-				<div class="pagination-btn">
-				<button class="prev-btn" onclick="changePage('prev')">Prev</button>
-				<span class="page-info">現在ページ: 1 / 1</span>
-				<!-- ページ番号表示 -->
-				<button class="prev-btn" onclick="changePage('next')">Next</button>
+			<div class="row pagination">
+				<div class="pagination-btn col-md-9">
+					<button class="prev-btn" onclick="changePage('prev')">Prev</button>
+					<span class="page-info">現在ページ: 1 / 1</span>
+					<!-- ページ番号表示 -->
+					<button class="prev-btn" onclick="changePage('next')">Next</button>
 				</div>
-				<div class="write-button">
-				<!-- 作成ボタン -->
-				<button th:onclick="'location.href=\''+@{/boardWrite}+'\''">ポスト作成</button>
+				<div class="write-button col-md-3">
+					<!-- 作成ボタン -->
+					<button th:onclick="'location.href=\''+@{/boardWrite}+'\''">ポスト作成</button>
 				</div>
 			</div>
 			<!-- ページ移動する時、メッセージ出力 -->
