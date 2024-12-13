@@ -10,13 +10,13 @@
 	<body>
 		<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
 		<div class="container">
-			<!-- 상단바 - 로고, 게시판 메뉴, 검색창, 마이페이지, 로그인 -->
+			<!-- 上段のバー - ロゴ, 掲示板メニュー, 検索ボックス, マイページ, ログイン -->
 			<th:block th:insert="~{menu.html::navBar}"></th:block>
-			<!-- 본문 -->
+			<!-- 本文 -->
 			<div class="row Main_Body">
-				<!-- 본문-왼쪽(통합인기글, 통합최신글, 공지사항, 테마별최신글) -->
+				<!-- 本文の左側(統合ホットポスト,統合最新ポスト,お知らせ,各カテゴリーの最新ポスト) -->
 				<div class="col-md-9 Main_LeftBody">
-					<!-- 통합 인기글 -->
+					<!-- 統合ホットポスト -->
 					<div class="table_wrap">
 						<table class="BestAll_table">
 							<colgroup>
@@ -26,8 +26,8 @@
 							</colgroup>
 							<thead class="table_label">
 								<tr>
-									<th scope="col" colspan="2" class="table_title">인기 게시글</th>
-									<th scope="col" class="more_btn"><a th:href="@{/board}">더보기 > </a></th>
+									<th scope="col" colspan="2" class="table_title">人気ポスト</th>
+									<th scope="col" class="more_btn"><a th:href="@{/board}">もっと見る > </a></th>
 								</tr>
 							</thead>
 							<tbody class="table_body">
@@ -39,9 +39,9 @@
 							</tbody>
 						</table>
 					</div>
-					<!-- 2단으로 배치될 글들 -->
+					<!-- 二段で配置されるポスト -->
 					<div class="row 2col_row">
-						<!-- 통합 최신글 -->
+						<!-- 統合最新ポスト-->
 						<div class="col-md-6 leftbody_2col">
 							<table class="NewAll_table">
 								<colgroup>
@@ -51,8 +51,8 @@
 								</colgroup>
 								<thead class="table_label">
 									<tr>
-										<th scope="col" colspan="2" class="table_title">최신 게시글</th>
-										<th scope="col" class="more_btn"><a th:href="@{/board}">더보기 > </a></th>
+										<th scope="col" colspan="2" class="table_title">最新ポスト</th>
+										<th scope="col" class="more_btn"><a th:href="@{/board}">もっと見る > </a></th>
 									</tr>
 								</thead>
 								<tbody class="table_body">
@@ -64,7 +64,7 @@
 								</tbody>
 							</table>
 						</div>
-						<!-- 공지사항 -->
+						<!-- お知らせ -->
 						<div class="col-md-6 leftbody_2col">
 							<table class="NewAll_table">
 								<colgroup>
@@ -74,8 +74,8 @@
 								</colgroup>
 								<thead class="table_label">
 									<tr>
-										<th scope="col" colspan="2" class="table_title">공지사항</th>
-										<th scope="col" class="more_btn"><a th:href="@{/board}">더보기 > </a></th>
+										<th scope="col" colspan="2" class="table_title">お知らせ</th>
+										<th scope="col" class="more_btn"><a th:href="@{/board}">もっと見る > </a></th>
 									</tr>
 								</thead>
 								<tbody class="table_body">
@@ -89,9 +89,9 @@
 						</div>
 					</div>
 				</div>
-				<!-- 본문-오른쪽(로그인창 혹은 회원정보창) -->
+				<!-- 本文右側(ログインボックスor 会員情報ボックス) -->
 				<div class="col-md-3 Main_RightBody">
-						<!-- 로그인창 - 로그인 안 되어 있을 시 -->
+						<!-- ログインボックス　- ログインしていない場合 -->
 					<th:block th:if="${user.ROLE eq 'ROLE_ANONYMOUS'}">
 						<div class="side_login">
 							<form method="post" name="side_login" action="/login">
@@ -103,32 +103,32 @@
 									</colgroup>
 									<thead>
 										<tr>
-											<th colspan="3">로그인</th>
+											<th colspan="3">ログイン</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<td colspan="2"><input type="text" name="username" placeholder="아이디"></td>
+											<td colspan="2"><input type="text" name="username" placeholder="ID`"></td>
 											<td rowspan="2" class="btn_td"><button type="submit">LogIn</button></td>
 											<td><input type="hidden" name="_csrf" th:value="${_csrf.token}"/></td>
 										</tr>
 										<tr>
-											<td colspan="2"><input type="password" name="password" placeholder="비밀번호"></td>
+											<td colspan="2"><input type="password" name="password" placeholder="パスワード"></td>
 										</tr>
 										<tr>
-											<td>아이디/비밀번호 찾기</td>
-											<td colspan="2"><a th:href="@{/join}">회원가입</a></td>
+											<td>ID/パスワードを探す</td>
+											<td colspan="2"><a th:href="@{/join}">会員登録</a></td>
 										</tr>
 									</tbody>
 								</table>
 							</form>
 						</div>
 					</th:block>
-					<!-- 회원 정보창 - 로그인 되어 있을 시 -->
+					<!-- 会員情報ボックス - ログインした場合 -->
 					<th:block th:unless="${user.ROLE eq 'ROLE_ANONYMOUS'}">
 					<div class="side_meminfo">
 						<div style= "text-align:center;">
-							<span id="user_id">[[${idandname.user_id}]] 님 환영합니다</span><br>
+							<span id="user_id">[[${idandname.user_id}]] 様、歓迎します</span><br>
 							<span id="user_username">[[${idandname.user_username}]]</span><br>
 							<span id="user_mypage"><a th:href="@{/mypage/mypage}">MyPage&nbsp;</a></span>
 	               			<span id="user_logout"><a th:href="@{/logout}">&nbsp;Logout</a></span>

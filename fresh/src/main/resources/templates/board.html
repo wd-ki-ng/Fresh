@@ -7,7 +7,7 @@
 <title>掲示板</title>
 <th:block th:insert="~{menu.html::headImport}"></th:block>
 <style>
-/* 기본 스타일 */
+/* 基本スタイル */
 body {
 	
 	width:1300pt;
@@ -18,9 +18,9 @@ body {
 	padding: 0;
 }
 
-/* 네비게이션 바 스타일 */
+/* ナビゲーションバースタイル */
 
-/* 게시판 영역 스타일 */
+/* 掲示板スタイル */
 .board-container {
 	display: flex;
 	flex-direction: column;
@@ -62,14 +62,14 @@ body {
 
 .search-container form {
 	display: flex;
-	align-items: center; /* 검색창과 버튼을 같은 라인에 배치 */
+	align-items: center; /* 検索ボックスとボタンを同じラインに配置 */
 }
 
 .search-container select, .search-container input {
-	margin-right: 5px; /* 검색어 입력창과 버튼 사이 간격 */
+	margin-right: 5px; /* 検索ボックスとボタンの間隔 */
 }
 
-/* 게시판 리스트 스타일 */
+/* 掲示板リストスタイル */
 .board-list {
 	width: 100%;
 	table-layout: fixed;
@@ -85,7 +85,7 @@ body {
 	border: 1px solid #ddd;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	white-space: nowrap; /* 텍스트가 길어질 경우 줄바꿈을 방지 */
+	white-space: nowrap; /* テキストが長くなる場合、改行を防止 */
 }
 
 .board-list th {
@@ -102,7 +102,7 @@ body {
 .board-list td a:hover {
 	color: #007bff;
 }
-/* 제목 외의 열 폭을 좁힘 */
+/* タイトル以外の列の幅を狭める */
 
 .board-list th:nth-child(3),
 .board-list td:nth-child(3),
@@ -116,11 +116,11 @@ body {
 .board-list td:nth-child(5),
 .board-list th:nth-child(6),
 .board-list td:nth-child(6) {
-    width: 6%; /* 번호, 작성자, 작성일시, 조회수, 추천수 열의 폭을 좁게 설정 */
+    width: 6%; /* 番号、ユーザー名、デート、ビュー、♥を狭くする */
 }
 
 
-/* 하단 스타일 */
+/* 下段のスタイル */
 
 .items-per-page {
 	margin-top: 20px;
@@ -136,7 +136,7 @@ body {
 	border-radius: 5px;
 	border: 1px solid #ccc;
 }
-/* 반응형 디자인 */
+/* 反応型スタイル */
 @media ( max-width : 768px) {
 	.search-container {
 		flex-direction: column;
@@ -191,7 +191,7 @@ body {
 						<th>No</th>
 						<th>タイトル</th>
 						<th>ユーザー名</th>
-						<th>掲示時間</th>
+						<th>作成日</th>
 						<th>ビュー</th>
 						<th>♥</th>
 					</tr>
@@ -253,7 +253,7 @@ body {
             const row = document.createElement('tr');
             
             
-            // デートのフォーマットを'yyyy-MM-dd'に 変更
+            //作成日のフォーマットを'yyyy-MM-dd'に 変更
             const formattedDate = new Date(post.board_date);
             const formattedDateString = formattedDate.getFullYear() + '-' +
                 String(formattedDate.getMonth() + 1).padStart(2, '0') + '-' +

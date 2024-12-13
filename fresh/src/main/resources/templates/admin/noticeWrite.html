@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <th:block th:insert="~{menu.html::metaImport}"></th:block>
-<title>게시글 작성</title>
+<title>お知らせ作成</title>
 <th:block th:insert="~{menu.html::headImport}"></th:block>
 <style>
 body {
@@ -64,24 +64,24 @@ h1 {
 </head>
 <body>
 	<div class="container">
-		<!-- 상단바 - 로고, 게시판 메뉴, 검색창, 마이페이지, 로그인 -->
+		<!-- 上段のバー - ロゴ, 掲示板メニュー, 検索ボックス, マイページ, ログイン -->
 		<th:block th:insert="~{menu.html::navBar}"></th:block>
 		<div class="container1">
-			<h1>공지글 작성</h1>
+			<h1>お知らせ作成</h1>
 			<form name="notice" action="/admin/submitNotice" method="POST">
 				<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 				<input type="hidden" name="category" th:value="0" />
 				<div class="form-group">
-					<label for="board_title">제목</label>
-					<input type="text" id="board_title" name="board_title" required placeholder="공지사항 제목을 입력하세요">
+					<label for="board_title">タイトル</label>
+					<input type="text" id="board_title" name="board_title" required placeholder="お知らせのタイトルを入力して下さい。">
 				</div>
 				<div class="form-group">
-					<label for="board_content">내용</label>
-					<textarea id="board_content" name="board_content" required placeholder="공지사항 내용을 입력하세요"></textarea>
+					<label for="board_content">内容</label>
+					<textarea id="board_content" name="board_content" required placeholder="お知らせの内容を入力して下さい。"></textarea>
 				</div>
 				<div class="form-group">
-					<button type="submit" class="btn">작성 완료</button>
-					<button class="btn" th:onclick="history.back()">작성 취소</button>
+					<button type="submit" class="btn">作成完了</button>
+					<button class="btn" th:onclick="history.back()">作成キャンセル</button>
 				</div>
 			</form>
 		</div>

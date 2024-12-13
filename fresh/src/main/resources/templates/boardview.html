@@ -21,7 +21,7 @@
 			<h1 th:text="${detail.board_title}"></h1>
 			<p class="meta">
 				ユーザー名:[[${detail.board_write}]] | 
-				掲示時間: [[${#dates.format(detail.board_date, 'yyyy-MM-dd HH:mm')}]] | 
+				作成日: [[${#dates.format(detail.board_date, 'yyyy-MM-dd HH:mm')}]] | 
 				ビュー: [[${detail.board_count}]] | 
 				♥: [[${detail.board_like}]]
 			</p>
@@ -73,7 +73,7 @@
 				<form id="commentForm" class="comment-form" name="comment" action="/comWrite" method="post">
 					<input type="hidden" name="_csrf" th:value="${_csrf.token}" /> 
 					<input type="hidden" name="board_no" th:value="${detail.board_no}">
-					<textarea id="commentContent" name="com_comment" placeholder="댓글을 입력하세요"></textarea>
+					<textarea id="commentContent" name="com_comment" placeholder="コメントを入力して下さい。"></textarea>
 					<button type="submit" class="btn">コメント作成</button>
 				</form>
 				<p id="loginMessage" class="login-message" style="display: none;">コメントの作成はログインした後からできます。</p>

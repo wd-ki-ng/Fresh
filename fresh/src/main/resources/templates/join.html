@@ -133,12 +133,12 @@
 					<div>&nbsp;</div>
 					
 					<div class= "input-group mb-3">
-						<input type="text" class="form-control" name="user_username" id="user_username" placeholder="닉네임을 입력해주세요">
-  						<button class="btn btn-warning" type="button" onclick="checkUserName()">중복확인</button>
+						<input type="text" class="form-control" name="user_username" id="user_username" placeholder="ユーザー名を入力して下さい。">
+  						<button class="btn btn-warning" type="button" onclick="checkUserName()">重複確認</button>
 					</div>
 					<div id="check_username">&nbsp;</div>		
 					<br>			
-					<button id="join-btn" class="btn btn-lg btn-primary btn-block" type="button">회 원 가 입</button>
+					<button id="join-btn" class="btn btn-lg btn-primary btn-block" type="button">会員登録</button>
 				</form>
 			</div>
 		</div>
@@ -148,29 +148,29 @@
 	    const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
 	    const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
-	    // 정규식 정의
+	    // 正規表現
 	    const checkID = RegExp(/^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{4,}$/);
 	    const checkPW = RegExp(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[~!@#$%^&*()_+])[A-Za-z\d~!@#$%^&*()_+]{8,}$/);
 	    const checkName = RegExp(/^[가-힣]|[A-Z]|[a-z]$/);
 	    const checkEmail = RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
 	    const checkUserNmae = RegExp(/^[0-9A-Za-z가-힣ㄱ-ㅎㅏ-ㅣぁ-んァ-ヶ\u4E00-\u9FFF]+$/);
 
-	    // 모든 입력 필드의 유효성 상태를 추적
-	    let isIdValid = false;					//아이디 상태
-	    let isPwValid = false;					//비밀번호 상태
-	    let isPwChkValid = false;				//비밀번호 확인 상태
-	    let isNameValid = false;				//이름 상태
-	    let isEmailValid = false;				//이메일 상태
-	    let isUsernameValid = false;			//닉네임 상태
-	    let isAuthValid = false; 				//인증번호 상태 추적
+	    // 全ての入力ボックスのバリデーションの状態を追跡
+	    let isIdValid = false;					//IDの状態
+	    let isPwValid = false;					//パスワードの状態
+	    let isPwChkValid = false;				//パスワード再確認の状態
+	    let isNameValid = false;				//名前の状態
+	    let isEmailValid = false;				//メールの状態
+	    let isUsernameValid = false;			//ユーザー名の状態
+	    let isAuthValid = false; 				//認証番号の状態
 
-	  //회원가입 페이지 스페이스바 금지 시발
+	  //会員登録ページのスペースバー禁止
 		$(document).keydown(function(event){
 			if(event.keyCode === 32){
 				event.preventDefault();
 			}
 		})
-	    // 입력 필드 유효성 검사 시 상태 업데이트 및 버튼 활성화
+	    // 入力ボックスでバリデーションが行われた場合、状態をアップデート＆ボタンの活性化
 	    function updateButtonState() {
 	        if (isIdValid && isPwValid && isPwChkValid && isNameValid && isEmailValid && isUsernameValid) {
 	            $("#join-btn").prop("disabled", false);
@@ -179,18 +179,18 @@
 	        }
 	    }
 
-	    // 유효성 검사 이벤트 등록
+	    // バリデーション検索のイベント登録
 	    $(function () {
-	        // 아이디 유효성 검사
+	        // IDのバリデーション検査
 	        $("#user_id").blur(function () {
 	            const userId = $(this).val();
 	            if (!checkID.test(userId)) {
-	            	$('#check_id').text('아이디는 영어대소문자 및 숫자를 조합해서 4자리 이상입니다.');
+	            	$('#check_id').text('IDは英語の大小文字と数字を含めて4文字以上にして下さい。');
 					$('#check_id').css('color', 'red');
 	                isIdValid = false;
 	                return false;
 	            } else {
-	            	$('#check_id').text("아이디 중복검사를 진행해주세요.");
+	            	$('#check_id').text("IDの重複確認をして下さい。");
 	            	$('#check_id').css('color', 'green');
 	                isIdValid = true;
 	                return true;
@@ -198,16 +198,16 @@
 	            updateButtonState();
 	        });
 
-	        // 비밀번호 유효성 검사
+	        // パスワードのバリエーション検査
 	        $("#user_pw").blur(function () {
 	        	const userPw = $("#user_pw").val();
 	            if (!checkPW.test(userPw)) {
-	            	$('#check_pw').text('비밀번호는 영어대소문자 및 숫자와 특수문자를 조합해서 8자리 이상입니다.');
+	            	$('#check_pw').text('パスワードは英語の大小文字と数字、特殊文字を各1つ以上含めて8文字以上にして下さい。');
 					$('#check_pw').css('color', 'red');
 					isPwValid = false;
 	                return false;
 	            } else {	             
-	            	$('#check_pw').text('사용가능한 비밀번호입니다.');
+	            	$('#check_pw').text('使用可能なパスワードです。');
 					$('#check_pw').css('color', 'green');
 	                isPwValid = true;
 	                return true;
@@ -215,18 +215,18 @@
 	            updateButtonState();
 	        });
 
-	        // 비밀번호 확인
+	        // パスワード確認
 	        $("#pw_chk").blur(function () {
 	        	const userPw = $("#user_pw").val();
 	        	const checkPw = $("#pw_chk").val();
 	        	
 	            if (userPw !== checkPw) {
-	            	$('#check_pwc').text('비밀번호가 서로 다릅니다.');
+	            	$('#check_pwc').text('パスワードが違います。');
 					$('#check_pwc').css('color', 'red');
 	                isPwChkValid = false;
 	                return false;
 	            } else {
-	            	$('#check_pwc').text('비밀번호가 서로 일치합니다.');
+	            	$('#check_pwc').text('パスワードが一致します。');
 					$('#check_pwc').css('color', 'green');
 	                isPwChkValid = true;
 	                return true;
@@ -234,17 +234,17 @@
 	            updateButtonState();
 	        });
 
-	        // 이름 유효성 검사
+	        // 名前のバリデーション検査
 	        $("#user_name").blur(function () {
 	        	const userName = $("#user_name").val();
 	        	
 	            if (!checkName.test(userName)) {
-	            	$('#check_name').text('옳바르지 않은 이름입니다.');
+	            	$('#check_name').text('正しくない名前です。');
 					$('#check_name').css('color', 'red');
 	                isNameValid = false;
 	                return false;
 	            } else {
-	            	$('#check_name').text('이름이 확인되었습니다.');
+	            	$('#check_name').text('正しい名前です。');
 					$('#check_name').css('color', 'green');
 	                isNameValid = true;
 	                return true;
@@ -252,17 +252,17 @@
 	            updateButtonState();
 	        });
 
-	        // 이메일 유효성 검사
+	        // メールのバリデーション検査
 	        $("#user_email").blur(function () {
 	        	const userEmail = $("#user_email").val();
 	        	
 	            if (!checkEmail.test(userEmail)) {
-	            	$('#check_email').text('이메일 형식을 옳바르게 입력해주세요.');
+	            	$('#check_email').text('正しいメールを入力して下さい。');
 					$('#check_email').css('color', 'red');
 	                isEmailValid = false;
 	                return false;
 	            } else {
-	            	$('#check_email').text('이메일인증을 진행해주세요.');
+	            	$('#check_email').text('メールで認証を進行して下さい。');
 					$('#check_email').css('color', 'green');
 	                isEmailValid = true;
 	                return true;
@@ -270,17 +270,17 @@
 	            updateButtonState();
 	        });
 
-	        // 닉네임 유효성 검사
+	        // ユーザー名バリデーション検査
 	        $("#user_username").blur(function () {
 	        	const userNic = $("#user_username").val();
 	        	
 	            if (!checkUserNmae.test(userNic)) {
-	            	$('#check_username').text('사용할수 없는 닉네임입니다.');
+	            	$('#check_username').text('使用不可能なユーザー名です。');
 					$('#check_username').css('color', 'red');
 	                isUsernameValid = false;
 	                return false;
 	            } else {
-	            	$('#check_username').text('닉네임 중복검사를 진행해주세요.');
+	            	$('#check_username').text('ユーザー名の重複確認を進行して下さい。');
 					$('#check_username').css('color', 'green');
 	                isUsernameValid = true;
 	                return true;
@@ -289,13 +289,13 @@
 	        });
 	    });
 
-	    // 아이디 중복 확인 후 상태 업데이트
+	    // ID重複確認後、状態アップデート
 	    function checkId() {
 	        const userId = $("#user_id").val();
 	        if (!checkID.test(userId)) {
             	Swal.fire({
           	      icon: 'warning',
-          	      text: '아이디는 영어 대소문자 및 숫자를 조합해서 4자리 이상만 가능합니다.'
+          	      text: 'IDは英語の大小文字と数字を含めて4文字以上にして下さい。'
           	    });
 	            return false;
 	        } else{
@@ -311,18 +311,18 @@
 	                if (data) {
 	                	Swal.fire({
 	                	      icon: 'error',
-	                	      title: '이미 존재하는 아이디입니다.'
+	                	      title: '存在するIDです。'
 	                	    });
-		            	$('#check_id').text("다른 아이디를 입력해 주세요");
+		            	$('#check_id').text("他のIDを入力して下さい。");
 		            	$('#check_id').css('color', 'red');
 	                    isIdValid = false;
 	                    return false;
 	                } else {
 	                	Swal.fire({
 	                	      icon: 'success',
-	                	      title: '사용 가능한 아이디입니다.'
+	                	      title: '使用可能なIDです。'
 	                	    });
-		            	$('#check_id').text("사용 가능한 아이디입니다.");
+		            	$('#check_id').text("使用可能なIDです。");
 		            	$('#check_id').css('color', 'green');
 	                    isIdValid = true;
 	                    return true;
@@ -332,7 +332,7 @@
 	            error: function () {
                 	Swal.fire({
               	      icon: 'error',
-              	      title: '요청 처리 중 문제가 발생했습니다.'
+              	      title: 'エラーが発生しました。'
               	    });
 	                isIdValid = false;
 	                updateButtonState();
@@ -340,13 +340,13 @@
 	        });
 	      }
 	    }
-	 	// 닉네임 중복 확인 후 상태 업데이트
+	 	// ユーザー名の重複確認後、状態アップデート
 	    function checkUserName() {
 	        const userName = $("#user_username").val();
 	        if (!checkUserNmae.test(userName)) {
             	Swal.fire({
             	      icon: 'error',
-            	      text: '닉네임 형식이 올바르지 않습니다.'
+            	      text: 'ユーザー名を正しく入力して下さい。'
             	    });
 	            return false;
 	        } else{
@@ -362,17 +362,17 @@
 	                if (data) {
 	                	Swal.fire({
 	              	      icon: 'warning',
-	              	      title: '이미 존재하는 닉네임입니다.'
+	              	      title: '存在するユーザー名です。'
 	              	    });
-	                	$('#check_username').text('다른 닉네임을 입력해주세요.');
+	                	$('#check_username').text('他のユーザー名を入力して下さい。');
 						$('#check_username').css('color', 'red');
 	                    isUsernameValid = false;
 	                } else {
 	                	Swal.fire({
 	                	      icon: 'success',
-	                	      title: '사용 가능한 닉네임입니다.'
+	                	      title: '使用可能なユーザー名です。'
 	                	    });
-	                	$('#check_username').text('사용 가능한 닉네임입니다.');
+	                	$('#check_username').text('使用可能なユーザー名です。');
 						$('#check_username').css('color', 'green');
 	                    isUsernameValid = true;
 	                }
@@ -381,7 +381,7 @@
 	            error: function () {
                 	Swal.fire({
                 	      icon: 'error',
-                	      title: '요청 처리 중 문제가 발생했습니다.'
+                	      title: 'エラーが発生しました。'
                 	    });
 	                isUsernameValid = false;
 	                updateButtonState();
@@ -391,7 +391,7 @@
 	 	}
 	 
 	 /*
-	 	// 이메일 인증번호 전송 함수
+	 	// メールに認証番号を送信する機能
 	    function sendEmail() {
 	        const email = $("#user_email").val();
 	        
@@ -399,7 +399,7 @@
 	        if (!checkEmail.test(email)) {
             	Swal.fire({
           	      icon: 'warning',
-          	      title: '유효한 이메일 주소를 입력해주세요.'
+          	      title: '正しいメールアドレスを入力して下さい。'
           	    });
 	            return false;
 	        }
@@ -414,22 +414,22 @@
 	            success: function (data) {
                 	Swal.fire({
               	      icon: 'success',
-              	      title: '인증번호가 전송되었습니다.'
+              	      title: '認証番号を送信しました。'
               	    });
-	                // 이메일 전송 후 인증번호 입력란 활성화
+	                // メール送信後、認証番号バックスを活性化
 	                $("#email_auth").prop("disabled", false);
 	                $("#verifyEmail").prop("disabled", false);
 	            },
 	            error: function () {
                 	Swal.fire({
                 	      icon: 'error',
-                	      title: '인증번호 전송에 실패했습니다.'
+                	      title: 'エラーが発生しました。'
                 	    });
 	            }
 	        });
 	    }
 
-	    // 이메일 인증번호 확인 함수
+	    // 認証番号の確認
 	    function verifyEmail() {
 	        const verificationCode = $("#email_auth").val();
 
@@ -445,15 +445,15 @@
 	                if (data == true) {
 	                	Swal.fire({
 	                	      icon: 'success',
-	                	      title: '인증이 완료되었습니다.'
+	                	      title: '認証完了'
 	                	    });
-	                    // 인증 성공 후 추가 작업 (예: 회원가입 버튼 활성화 등)
+	                    // 認証成功後、追加作業(例: 会員登録ボタン活性化など)
 	                    isAuthValid = true;
 	                    updateButtonState();
 	                }else{
 	                	Swal.fire({
 	                	      icon: 'error',
-	                	      title: '인증번호가 틀렸습니다.'
+	                	      title: '認証番号が間違いました。'
 	                	    });
 	                	isAuthValid = false;
 	                }
@@ -461,32 +461,32 @@
 	            error: function () {
                 	Swal.fire({
               	      icon: 'error',
-              	      title: '인증번호 확인 중 오류가 발생했습니다.'
+              	      title: 'エラーが発生しました。'
               	    });
 	            }
 	        });
 	    }
 	    */
 	 	
-	    // 회원가입 실행
+	    // 会員登録を実行
 	    function submitJoin() {
 																				
 	        if(isIdValid && isPwValid && isPwChkValid && isNameValid && isEmailValid && isUsernameValid /*&& isAuthValid*/ ) {
             	Swal.fire({
           	      icon: 'success',
-          	      title: '회원가입이 완료되었습니다.',
-          	      text: '회원 가입을 축하합니다'
+          	      title: '会員登録完了',
+          	      text: '会員登録を歓迎します。'
           	    });
 	            $("#join").submit();
 	        }else {
             	Swal.fire({
             	      icon: 'warning',
-            	      title: '모든 항목을 올바르게 입력해주세요.'
+            	      title: '全ての入力ボックスの内容を正しく入力して下さい。'
             	    });
 	        }
 	    }
 
-	    // 버튼 초기 상태 비활성화
+	    // ボタンの初期の状態の非活性化
 	    $(document).ready(function () {
 	        $("#join-btn").prop("disabled", true);
 	    });
