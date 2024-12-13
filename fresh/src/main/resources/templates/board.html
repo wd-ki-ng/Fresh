@@ -2,13 +2,16 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
 <th:block th:insert="~{menu.html::metaImport}"></th:block>
 <title>掲示板</title>
 <th:block th:insert="~{menu.html::headImport}"></th:block>
 <style>
 /* 기본 스타일 */
 body {
+	
+	width:1300pt;
+	height:100%;
 	font-family: 'Arial', sans-serif;
 	background-color: #f8f9fa;
 	margin: 0;
@@ -118,51 +121,6 @@ body {
 
 
 /* 하단 스타일 */
-.pagination {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-top: 20px;
-}
-
-.pagination button {
-	padding: 5px 10px;
-	margin: 0 5px;
-	background-color: #333;
-	color: white;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-}
-
-.pagination button:hover {
-	background-color: #0056b3;
-}
-
-.pagination span {
-	margin: 0 10px;
-}
-
-.write-button {
-	padding: 15px 20px;
-	background-color: #333;
-	color: white;
-	border: none;
-	cursor: pointer;
-	font-size: 18px;
-	border-radius: 5px;
-	display: flex;
-	justify-content: flex-end;
-}
-
-.write-button:hover {
-	background-color: #555;
-}
-
-.page-info {
-	font-size: 16px;
-	color: #333;
-}
 
 .items-per-page {
 	margin-top: 20px;
@@ -178,7 +136,6 @@ body {
 	border-radius: 5px;
 	border: 1px solid #ccc;
 }
-
 /* 반응형 디자인 */
 @media ( max-width : 768px) {
 	.search-container {
@@ -189,10 +146,10 @@ body {
 		width: 100%;
 		margin-bottom: 10px;
 	}
-	.write-button {
-		justify-content: center;
-	}
+
+
 }
+
 </style>
 </head>
 <body>
@@ -211,8 +168,8 @@ body {
 							<option value="">検索タイプ</option>
 							<option value="title">タイトル</option>
 							<option value="write">ユーザー名</option>
-						</select> <span><input type="text" name="keyword"
-							placeholder="検索語入力"></span>
+						</select> 
+						<span><input type="text" name="keyword" placeholder="検索語入力"></span>
 						<button type="button" onclick="searchPosts();">検索</button>
 					</form>
 				</div>
@@ -220,14 +177,13 @@ body {
 
 			<!-- ポストの数変更 -->
 			<div class="items-per-page">
-				<label for="itemsPerPage">ポスト数: </label> <select id="itemsPerPage"
-					onchange="updateItemsPerPage()">
+				<label for="itemsPerPage">ポスト数: </label>
+				<select id="itemsPerPage" onchange="updateItemsPerPage()">
 					<option value="10">10固</option>
 					<option value="20">20固</option>
 					<option value="30">30固</option>
 				</select>
 			</div>
-
 			<!-- ポストリスト -->
 			<table class="board-list" id="boardList">
 				<thead>
@@ -255,29 +211,23 @@ body {
 			<!-- ページ番号 ＆ ナビゲーション -->
 			<div class="pagination">
 				<div class="pagination-btn">
-				<button class="prev-btn" onclick="changePage('prev')">이전</button>
-				<span class="page-info">현재 페이지: 1 / 1</span>
-				<!-- 페이지 번호 표시 -->
-				<button class="prev-btn" onclick="changePage('next')">다음</button>
+					<button class="prev-btn" onclick="changePage('prev')">이전</button>
+					<span class="page-info">현재 페이지: 1 / 1</span>
+					<!-- 페이지 번호 표시 -->
+					<button class="prev-btn" onclick="changePage('next')">다음</button>
 				</div>
 				<div class="write-button">
-				<!-- 글쓰기 버튼 -->
-				<button th:onclick="'location.href=\''+@{/boardWrite}+'\''">글쓰기</button>
+					<!-- 글쓰기 버튼 -->
+					<button th:onclick="'location.href=\''+@{/boardWrite}+'\''">글쓰기</button>
 				</div>
 			</div>
-
-			
 			<!-- ページ移動する時、メッセージ出力 -->
-			<div class="page-info" id="message">
-			</div>
+			<div class="page-info" id="message"></div>
 		</div>
 
 		<!-- ポスト作成ボタン -->
-		<div
-			style="display: flex; justify-content: flex-end; margin-top: 10px;">
-			<a th:href="@{/boardWrite}" class="write-button">
-				<button>ポスト作成</button>
-			</a>
+		<div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+			<a th:href="@{/boardWrite}" class="write-button"><button>ポスト作成</button></a>
 		</div>
 	</div>
 	<script th:inline="javascript">
@@ -315,12 +265,12 @@ body {
                 String(formattedDate.getDate()).padStart(2, '0');
             
             row.innerHTML = `
-                <td><a href="/boardview?no=${post.board_no}">${post.board_no}</a></td>
+                <td>${post.board_no}</td>
                 <td><a href="/boardview?no=${post.board_no}">${post.board_title}</a></td>
-                <td><a href="/boardview?no=${post.board_no}">${post.board_write}</a></td>
-                <td><a href="/boardview?no=${post.board_no}">${formattedDateString}</a></td>
-                <td><a href="/boardview?no=${post.board_no}">${post.board_count}</a></td>
-                <td><a href="/boardview?no=${post.board_no}">${post.board_like}</a></td>
+                <td>${post.board_write}</td>
+                <td>${formattedDateString}</td>
+                <td>${post.board_count}</td>
+                <td>${post.board_like}</td>
             `;
             boardList.appendChild(row);
         });
