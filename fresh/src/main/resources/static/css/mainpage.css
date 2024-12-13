@@ -103,6 +103,7 @@ div.Main_Body > div.Main_LeftBody {
 	padding: 20px;
 	background-color: white;
 	border-radius: 10px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 div.leftbody_2col {
 	padding: 20px 15px;
@@ -182,16 +183,17 @@ div.leftbody_2col {
 }
 /* 오른쪽 - 로그인 되있으면 회원정보창, 로그인 안되어있으면 로그인창 */
 div.Main_RightBody > div {
-	margin: 10px;
-	border: 1px solid #E6E6E6;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	border-radius: 10px;
 	display: flex;
 	justify-content: space-evenly;
     flex-direction: row;
+    background-color: #F9F9F9;
+    padding: 20px 10px;
 }
 /* 로그인창 */
 .side_login {
-	padding: 10px;
+	/* padding: 10px; */
 }
 .side_login th{
 	font-size: 20px;
