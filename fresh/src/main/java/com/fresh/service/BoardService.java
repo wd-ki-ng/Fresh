@@ -77,6 +77,11 @@ public class BoardService {
 		return boardRepository.getMainNewPost();
 	}
 	
+	// 메인페이지 공지글 : 게재일 순으로 정렬해서 가장 최신 글 5개
+	public List<BoardDTO> getMainNotice() {
+		return boardRepository.getMainNotice();
+	}
+	
 	// 게시판 리스트 
 	public List<BoardDTO> getBoardList() {
 		return boardRepository.getBoardList();

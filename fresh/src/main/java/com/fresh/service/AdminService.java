@@ -42,6 +42,15 @@ public class AdminService {
 		return adminRepository.getAllPosts();
 	}
 	
+	public int boardUpdate(BoardDTO board) {
+		return adminRepository.boardUpdate(board);
+		
+	}
+
+	public BoardDTO findById(Long no) {
+	    return adminRepository.findById(no);
+	}
+	
 	public void setOneBoard_del(Long board_no) {
 		adminRepository.setOneBoard_del(board_no);
 	}

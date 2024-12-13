@@ -201,7 +201,10 @@
 									<td><a th:href="@{/boardview(no=${post.board_no})}" th:text="${post.board_title}"></a></td>
 									<td><a th:href="@{/boardview(no=${post.board_no})}" th:text="${#dates.format(post.board_date, 'yyyy-MM-dd')}"></a></td>
 									<td><a th:href="@{/boardview(no=${post.board_no})}" th:text="'❤️ '+${post.board_like}+'/👁️ '+${post.board_count}"></a></td>
-									<td class="btn_td"><a th:href="@{#}" class="btn">수정</a><a th:onclick="postDelete([[${post.board_no}]])" class="btn">삭제</a></td>
+									<td class="btn_td">
+										<a th:href="@{/admin/boardUpdate(no=${post.board_no})}" class="btn">수정</a>
+										<a th:onclick="postDelete([[${post.board_no}]])" class="btn">삭제</a>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -282,7 +285,10 @@
 									<td><a th:href="@{/boardview(no=${noti.board_no})}" th:text="${#dates.format(noti.board_date, 'yyyy-MM-dd')}"></a></td>
 									<td><a th:href="@{/boardview(no=${noti.board_no})}" th:text="${noti.board_like}"></a></td>
 									<td><a th:href="@{/boardview(no=${noti.board_no})}" th:text="${noti.board_count}"></a></td>
-									<td class="btn_td"><a th:href="@{#}" class="btn">수정</a><a th:onclick="postDelete([[${noti.board_no}]])" class="btn">삭제</a></td>
+									<td class="btn_td">
+										<a th:href="@{/admin/boardUpdate(no=${noti.board_no})}" class="btn">수정</a>
+										<a th:onclick="postDelete([[${noti.board_no}]])" class="btn">삭제</a>
+									</td>
 								</tr>
 							</tbody>
 						</table>

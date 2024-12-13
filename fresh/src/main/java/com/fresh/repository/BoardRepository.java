@@ -62,6 +62,10 @@ public class BoardRepository {
 		return sqlSession.selectList("board.main_new");
 	}
 	
+	public List<BoardDTO> getMainNotice() {
+		return sqlSession.selectList("board.main_notice");
+	}
+	
 	public List<BoardDTO> getBoardList() {
 		return sqlSession.selectList("board.boardList");
 	}

@@ -251,4 +251,33 @@ public class AdminContoller {
 		// 게시글 목록으로 돌아감
 		return "redirect:/admin/admin";
 	}
+	
+	@GetMapping("/admin/boardUpdate")
+	public String boardUpdate(Model model, @RequestParam(value = "no") Long no) {
+		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		UserDTO user = userUtil.getUserData();
+		model.addAttribute("user", userUtil.getUserNameAndRole());
+		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
+			return "redirect:/login";
+		}
+		BoardDTO boardUpdate = adminService.findById(no);
+		model.addAttribute("boardUpdate", boardUpdate);
+		// 수정페이지
+		return "boardUpdate";
+	}
+
+	// 수정버튼 누르면 db에 저장
+	@PostMapping("/admin/boardUpdate")
+	public String boardUpdate(BoardDTO board, Model model) {
+		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		UserDTO user = userUtil.getUserData();
+		model.addAttribute("user", userUtil.getUserNameAndRole());
+		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
+			return "redirect:/login";
+		}
+		// Update 요청
+		adminService.boardUpdate(board);
+		// FindByID로 수정된 내용 다시 조회
+		return "redirect:/boardview?no=" + board.getBoard_no();
+	}
 }

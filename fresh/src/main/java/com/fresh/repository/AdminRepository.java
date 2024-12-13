@@ -40,6 +40,14 @@ public class AdminRepository {
 		return sqlSession.selectList("admin.post_list");
 	}
 	
+	public int boardUpdate(BoardDTO board) {
+		return sqlSession.update("admin.boardUpdate", board);
+	}
+	 
+	public BoardDTO findById(long no) {
+		return sqlSession.selectOne("admin.findById", no);
+	}
+	
 	public void setOneBoard_del(Long board_no) {
 		sqlSession.update("admin.postDel", board_no);
 	}

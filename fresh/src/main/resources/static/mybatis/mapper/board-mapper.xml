@@ -46,6 +46,7 @@
 	<select id="main_hot" resultType="BoardDTO">
 		select board_no, board_title, board_like, board_count, (board_like+board_count) as board_react
 		from board
+		where category!=0 and board_del='1'
 		order by board_react desc
 		limit 10
 	</select>
@@ -53,7 +54,16 @@
 	<select id="main_new" resultType="BoardDTO">
 		select board_no, board_title, board_like, board_count, board_date
 		from board
-		order by board_date desc 
+		where category!=0 and board_del='1'
+		order by board_no desc 
+		limit 5
+	</select>
+	
+	<select id="main_notice" resultType="BoardDTO">
+		select board_no, board_title, board_like, board_count, board_date
+		from board
+		where category=0 and board_del='1'
+		order by board_no desc 
 		limit 5
 	</select>
 	

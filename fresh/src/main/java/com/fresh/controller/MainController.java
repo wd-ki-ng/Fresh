@@ -35,9 +35,13 @@ public class MainController {
 		List<BoardDTO> MainHotPosts = boardService.getMainHotPost();
 		model.addAttribute("MainHotPosts", MainHotPosts);
 		
-		// 최신글 10개 가져와서 model에 추가
+		// 최신글 5개 가져와서 model에 추가
 		List<BoardDTO> MainNewPosts = boardService.getMainNewPost();
 		model.addAttribute("MainNewPosts", MainNewPosts);
+		
+		// 공지사항 5개 가져와서 model에 추가
+		List<BoardDTO> MainNotice = boardService.getMainNotice();
+		model.addAttribute("MainNotice", MainNotice);
 
 		return "main";
 	}

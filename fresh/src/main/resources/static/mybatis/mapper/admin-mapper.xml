@@ -44,6 +44,18 @@
 		order by board_no desc
 	</select>
 	
+	<update id="boardUpdate" parameterType="BoardDTO">
+		update board
+        set board_title= #{board_title}, board_content= #{board_content}
+		where board_no = #{board_no}
+	</update>
+	
+	<select id="findById" parameterType="Long" resultType="BoardDTO">
+       select board_no, user_no, board_title, board_content, board_write
+        from board
+        where board_no = #{no}
+    </select>
+	
 	<update id="postDel" parameterType="Long">
 		update board
 		set

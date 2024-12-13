@@ -57,7 +57,7 @@
 								</thead>
 								<tbody class="table_body">
 									<tr th:each="board:${MainNewPosts}">
-										<td th:text="${board.board_title}"></td>
+										<td><a th:href="@{/boardview(no=${board.board_no})}" th:text="${board.board_title}"></a></td>
 										<td>❤️<span th:text="${board.board_like}"></span></td>
 										<td>👁️<span th:text="${board.board_count}"></span></td>
 									</tr>
@@ -79,38 +79,10 @@
 									</tr>
 								</thead>
 								<tbody class="table_body">
-									<!-- 본작업때 넣을 거
-										<tr th:each="board:${hot_boards}">
-											<td th:text="${board.board_title}">게시글1</td>
-											<td>❤️<span th:text="${board.board_like}"></span></td>
-											<td>👁️<span th:text="${board.board_count}"></span></td>
-										</tr>
-									 -->
-									<!-- 프론트 제작만을 위해 임시로 만들 거 -->
-									<tr>
-										<td><a href="#">프론트 임시 게시글 1</a></td>
-										<td>❤️ 1</td>
-										<td>👁️ 1</td>
-									</tr>
-									<tr>
-										<td><a href="#">프론트 임시 게시글 2</a></td>
-										<td>❤️ 2</td>
-										<td>👁️ 2</td>
-									</tr>
-									<tr>
-										<td><a href="#">프론트 임시 게시글 3</a></td>
-										<td>❤️ 3</td>
-										<td>👁️ 3</td>
-									</tr>
-									<tr>
-										<td><a href="#">프론트 임시 게시글 4</a></td>
-										<td>❤️ 4</td>
-										<td>👁️ 4</td>
-									</tr>
-									<tr>
-										<td><a href="#">프론트 임시 게시글 5</a></td>
-										<td>❤️ 5</td>
-										<td>👁️ 5</td>
+									<tr th:each="board:${MainNotice}">
+										<td><a th:href="@{/boardview(no=${board.board_no})}" th:text="${board.board_title}"></a></td>
+										<td>❤️<span th:text="${board.board_like}"></span></td>
+										<td>👁️<span th:text="${board.board_count}"></span></td>
 									</tr>
 								</tbody>
 							</table>
