@@ -255,14 +255,14 @@ body {
 			<!-- ページ番号 ＆ ナビゲーション -->
 			<div class="pagination">
 				<div class="pagination-btn">
-				<button class="prev-btn" onclick="changePage('prev')">이전</button>
-				<span class="page-info">현재 페이지: 1 / 1</span>
-				<!-- 페이지 번호 표시 -->
-				<button class="prev-btn" onclick="changePage('next')">다음</button>
+				<button class="prev-btn" onclick="changePage('prev')">Prev</button>
+				<span class="page-info">現在ページ: 1 / 1</span>
+				<!-- ページ番号表示 -->
+				<button class="prev-btn" onclick="changePage('next')">Next</button>
 				</div>
 				<div class="write-button">
-				<!-- 글쓰기 버튼 -->
-				<button th:onclick="'location.href=\''+@{/boardWrite}+'\''">글쓰기</button>
+				<!-- 作成ボタン -->
+				<button th:onclick="'location.href=\''+@{/boardWrite}+'\''">ポスト作成</button>
 				</div>
 			</div>
 
@@ -325,7 +325,7 @@ body {
             boardList.appendChild(row);
         });
 
-        document.querySelector('.page-info').innerText = `현재 페이지: ${currentPage} / ${Math.ceil(filteredPosts.length / itemsPerPage)}`;
+        document.querySelector('.page-info').innerText = `現在ページ: ${currentPage} / ${Math.ceil(filteredPosts.length / itemsPerPage)}`;
     }
 
  	// ページ変更
