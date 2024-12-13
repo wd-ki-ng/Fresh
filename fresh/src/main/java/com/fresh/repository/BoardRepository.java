@@ -66,4 +66,8 @@ public class BoardRepository {
 		return sqlSession.selectList("board.boardList");
 	}
 
+	public int boardDel(Long no) {
+		return sqlSession.update("board.boardDel",no);
+	}
+
 }

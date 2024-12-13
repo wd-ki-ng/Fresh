@@ -47,7 +47,10 @@ public class BoardService {
 	    return boardRepository.findById(no);
 	}
 	
-	
+
+	public int boardDel(Long no) {
+		return boardRepository.boardDel(no);
+	}
 	
 	//----------------------------------
 	
@@ -81,7 +84,6 @@ public class BoardService {
 	public List<BoardDTO> getBoardList() {
 		return boardRepository.getBoardList();
 	}
-
 
 }
 

@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="layout/basic">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="description"
-	content="Orbitor,business,company,agency,modern,bootstrap4,tech,software">
-<meta name="author" content="themefisher.com">
-<th:block th:insert="~{menu.html::metaImport}"></th:block>
-<title th:text="${detail.board_title}">타이틀</title>
-<th:block th:insert="~{menu.html::headImport}"></th:block>
-<!-- Main Stylesheet -->
-<link rel="stylesheet" href="css/style.css">
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="description" content="Orbitor,business,company,agency,modern,bootstrap4,tech,software">
+	<meta name="author" content="themefisher.com">
+	<th:block th:insert="~{menu.html::metaImport}"></th:block>
+	<th:block th:insert="~{menu.html::headImport}"></th:block>
+	<title th:text="${detail.board_title}">타이틀</title>
+	<!-- Main Stylesheet -->
+	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 	<div class="container">
@@ -23,15 +20,10 @@
 		<section class="post-detail">
 			<h1 th:text="${detail.board_title}"></h1>
 			<p class="meta">
-				<span id="postAuthor">작성자: <span
-					th:text="${detail.board_write}"></span>
-				</span> | <span id="postDate">작성시간: <span
-					th:text="${#dates.format(detail.board_date, 'yyyy-MM-dd HH:mm')}"></span>
-				</span> | <span id="postViews">조회수: <span
-					th:text="${detail.board_count}"></span>
-				</span> | <span id="postLikes">좋아요: <span
-					th:text="${detail.board_like}"></span>
-				</span>
+				작성자:[[${detail.board_write}]] | 
+				작성시간: [[${#dates.format(detail.board_date, 'yyyy-MM-dd HH:mm')}]] | 
+				조회수: [[${detail.board_count}]] | 
+				좋아요: [[${detail.board_like}]]
 			</p>
 			<p id="postContent" th:text="${detail.board_content}"></p>
 
@@ -40,10 +32,8 @@
 				<button id="likeButton" class="btn">좋아요</button>
 				<!-- 글의 작성자가 현재 로그인 한 사람과 같은 경우에만 -->
 				<th:block th:if="${detail.user_no == user.user_no}">
-					<a th:href="@{/boardUpdate(no=${detail.board_no})}" id="editButton"
-						class="btn" style="display: inline-block;">수정</a>
-					<a th:href="@{/#}" id="deleteButton" class="btn"
-						style="display: inline-block;">삭제</a>
+					<a th:href="@{/boardUpdate(no=${detail.board_no})}" id="editButton" class="btn" style="display: inline-block;">수정</a>
+					<a th:href="@{/board}" id="deleteButton" class="btn" th:onclick="deleteBoard([[${detail.board_no}]])" style="display: inline-block;">삭제</a>
 				</th:block>
 			</div>
 		</section>
@@ -53,13 +43,12 @@
 			<h3>
 				댓글 (<span id="commentCount" th:text="${com_count}"></span>)
 			</h3>
-			<ul id="commentList" th:each="comment:${comments}"
-				class="comment-item">
+			<ul id="commentList" th:each="comment:${comments}" class="comment-item">
 				<li>
 					<div th:id="'com_content'+${comment.com_no}">
-						<span th:text="${comment.user_username}"></span> : <span
-							th:text="${comment.com_comment}"></span>
-					</div>
+						<span th:text="${comment.user_username} +' :'"></span>  
+						<span th:text="${comment.com_comment}"></span>
+					</div><br>
 					<form th:id="'comment'+${comment.com_no}" name="comment" th:action="@{/comUpdate}" method="post" style="display: none;">
 						<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 						<input type="hidden" name="board_no" th:value="${detail.board_no}">
@@ -69,14 +58,10 @@
 					</form>
 					<div class="com_btn">
 						<th:block th:if="${comment.user_no == user.user_no}">
-							<a href="javascript:void(0);"
-								th:onclick="modifyCom([[${comment.com_no}]])" class="btn"
-								style="display: inline-block; padding: 5px 10px;">수정</a>
-							<a th:href="@{/#}" class="btn"
-								style="display: inline-block; padding: 5px 10px;">삭제</a>
+							<a href="javascript:void(0);" th:onclick="modifyCom([[${comment.com_no}]])" class="btn" style="display: inline-block; padding: 5px 10px;">수정</a>
+							<a th:href="@{#}" class="btn" style="display: inline-block; padding: 5px 10px;">삭제</a>
 						</th:block>
-						<a th:href="@{/#}" class="btn"
-							style="display: inline-block; padding: 5px 10px;">대댓글</a>
+						<a th:href="@{/#}" class="btn" style="display: inline-block; padding: 5px 10px;">대댓글</a>
 					</div>
 				</li>
 			</ul>
@@ -85,16 +70,13 @@
 
 			<!-- 댓글 작성 폼 -->
 			<div id="commentFormContainer">
-				<form id="commentForm" class="comment-form" name="comment"
-					action="/comWrite" method="post">
-					<input type="hidden" name="_csrf" th:value="${_csrf.token}" /> <input
-						type="hidden" name="board_no" th:value="${detail.board_no}">
-					<textarea id="commentContent" name="com_comment"
-						placeholder="댓글을 입력하세요"></textarea>
+				<form id="commentForm" class="comment-form" name="comment" action="/comWrite" method="post">
+					<input type="hidden" name="_csrf" th:value="${_csrf.token}" /> 
+					<input type="hidden" name="board_no" th:value="${detail.board_no}">
+					<textarea id="commentContent" name="com_comment" placeholder="댓글을 입력하세요"></textarea>
 					<button type="submit" class="btn">댓글 작성</button>
 				</form>
-				<p id="loginMessage" class="login-message" style="display: none;">로그인
-					후 댓글을 작성할 수 있습니다.</p>
+				<p id="loginMessage" class="login-message" style="display: none;">로그인 후 댓글을 작성할 수 있습니다.</p>
 			</div>
 
 			<!-- 버튼들 배치 -->
@@ -108,16 +90,51 @@
 
 	<!-- Essential Scripts =====================================-->
 	<!-- Main jQuery -->
-	<script src="plugins/jquery/jquery.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</body>
+
 	<script>
+ 	// csrf 토큰
+    const header = $("meta[name='_csrf_header']").attr('content');
+    const token = $("meta[name='_csrf']").attr('content');
+    
+	function deleteBoard(no) {
+		if (confirm("글을 삭제 하시겠습니까?")) {
+			$.ajax({
+				url: "/deleteBoard",
+				type: "post",
+				data: {'no' : no},
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader(header, token);
+				},
+				success: function(result) {
+					debugger;
+					if (result == "true") {
+    					alert("삭제 완료되었습니다.");
+    					location.href="/board";
+					} else {
+						location.href="/login";
+					}
+				},
+				error: function (xhr, status, error) {
+					
+				}
+			});
+		}  else {
+			alert("글 삭제를 취소하였습니다.");
+		}
+	}
+	
+
 		function modifyCom(no) {
-			const com_content = document.getElementById('com_content'
-					+ no.toString());
+			const com_content = document.getElementById('com_content' + no.toString());
 			const comment = document.getElementById('comment' + no.toString());
 
 			com_content.style.display = 'none';
 			comment.style.display = 'block';
 		}
+		
 	</script>
-</body>
 </html>

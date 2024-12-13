@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fresh.dto.BoardDTO;
 import com.fresh.dto.CommentDTO;
@@ -17,8 +18,6 @@ import com.fresh.dto.UserDTO;
 import com.fresh.service.BoardService;
 import com.fresh.util.UserUtil;
 import org.springframework.web.bind.annotation.RequestBody;
-
-
 
 @Controller
 public class BoardController {
@@ -73,6 +72,11 @@ public class BoardController {
 		return "boardWrite";
 	}
 	
+	@GetMapping("/submitPost")
+	public String submitPost() {
+		return "boardWrite";
+	}
+	
 	// 글쓰고 제출
 	@PostMapping("/submitPost")
 	public String submitPost(Model model, BoardDTO board) {
@@ -121,11 +125,21 @@ public class BoardController {
 			return "redirect:/boardview?no="+board.getBoard_no();
 		}
 		
-    //-----------------------------------------	
-	@GetMapping("/submitPost")
-	public String submitPost(Model model) {
-		return "boardWrite";
-	}
+		@PostMapping("/deleteBoard")
+		@ResponseBody
+		public String deleteBoard(@RequestParam("no") Long no, Model model) {
+			UserDTO user = userUtil.getUserData();
+			model.addAttribute("user", userUtil.getUserNameAndRole());
+			if (user != null || !user.getROLE().equals("ROLE_ANONYMOUS")) {				
+				boardService.boardDel(no);
+				return "true";
+			} else {
+				return "false";
+			}
+		}
+
+		 		
+
 	
 	// 댓글 작성 버튼
 	@PostMapping("/comWrite")
