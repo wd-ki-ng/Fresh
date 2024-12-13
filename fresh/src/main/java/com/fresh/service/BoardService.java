@@ -102,6 +102,12 @@ public class BoardService {
 	public List<BoardDTO> getBoardList() {
 		return boardRepository.getBoardList();
 	}
+	
+	// 입력한 키워드에 맞는 게시글 리스트 가져옴
+	public List<BoardDTO> getSearchBoard(String keyword) {
+		keyword = "%" + keyword + "%";
+		return boardRepository.getSearchBoard(keyword);
+	}
 
 }
 

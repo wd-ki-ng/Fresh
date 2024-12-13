@@ -47,7 +47,6 @@ public class BoardController {
 		// ----- 이전 글과 다음 글 정보를 가져옴------------
 		long prevBoard = boardService.prevBoard(no); // 이전 글
 		long nextBoard = boardService.NextBoard(no); // 다음 글
-
 		// ----------------------------
 
 		// 해당 게시글의 댓글 수
@@ -203,5 +202,4 @@ public class BoardController {
 
 		return "board";
 	}
-
 }

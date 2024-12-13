@@ -88,5 +88,9 @@ public class BoardRepository {
 	public int boardDel(Long no) {
 		return sqlSession.update("board.boardDel",no);
 	}
+	
+	public List<BoardDTO> getSearchBoard(String keyword) {
+		return sqlSession.selectList("board.searchBoard", keyword);
+	}
 
 }

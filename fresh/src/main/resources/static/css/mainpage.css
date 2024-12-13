@@ -75,6 +75,7 @@ a {
 	vertical-align: middle;
 	flex-grow: 1;
 	padding-right: 5px;
+	background-color: transparent;
 }
 .NavBar input.searchbar:focus {
 	outline: none;
@@ -100,6 +101,8 @@ div.Main_Body {
 /* 왼쪽 부분 - 게시글 */
 div.Main_Body > div.Main_LeftBody {
 	padding: 20px;
+	background-color: white;
+	border-radius: 10px;
 }
 div.leftbody_2col {
 	padding: 20px 15px;

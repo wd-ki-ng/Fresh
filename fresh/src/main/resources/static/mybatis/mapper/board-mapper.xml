@@ -119,4 +119,12 @@
 	]]>
 	</select>
 	
+	<select id="searchBoard" parameterType="String" resultType="BoardDTO">
+		select board_no, user_no, board_title, board_content, board_write,
+		 	   board_date, board_like, board_count, board_del
+		from board
+		where board_del = '1' and (board_title like #{keyword} or board_content like #{keyword})
+		order by board_no desc
+	</select>
+	
 	</mapper>

@@ -49,10 +49,11 @@
 				</ul>
 			</div>
 			<div class="col-md-4">
-				<form name="SearchBar" method="get" action="#">
+				<form name="SearchBar" method="get" action="/search">
+					<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 					<div class="searchbar">
-						<input class="searchbar" type="text">
-						<button class="search_icon"></button>
+						<input class="searchbar" name="keyword" type="text" placeholder="게시글을 검색할 키워드를 입력해주세요">
+						<button class="search_icon" type="submit"></button>
 					</div>
 				</form>
 			</div>
