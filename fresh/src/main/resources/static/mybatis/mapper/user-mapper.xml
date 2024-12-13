@@ -10,19 +10,19 @@
 		where user_id = #{user_id}
 	</select>
 	
-	<!-- 아이디 찾기: 이름과 이메일로 아이디 찾기 -->
+	<!-- IDを探す: ユーザーの名前とメールでIDを探す -->
     <select id="findIdByNameAndEmail" resultType="String">
         select user_id from user
         where user_name = #{user_name} and user_email = #{user_email}
     </select>
 	
-	<!-- ID와 email로 해당하는 사용자 있는지 찾기 -->
+	<!-- IDとメールでユーザーの存否確認 -->
 	<select id="findByIdAndEmail" parameterType="UserDTO" resultType="UserDTO">
 		select user_name,user_no from user
 		 where user_id = #{user_id} and user_email = #{user_email}
 	</select>
 	
-	<!-- 임시비밀번호 업데이트 -->
+	<!-- 仮のパスワードをアップデート -->
 	<update id="createTempPw" parameterType="UserDTO">
 		update user
 		   set user_pw = #{temp_pw}

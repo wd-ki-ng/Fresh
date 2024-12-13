@@ -10,11 +10,11 @@ import lombok.Setter;
 @Setter
 public class CommentDTO {
 	
-	private Long com_no; // 댓글 번호
-	private Long user_no; // 작성자 번호
-	private Long board_no; // 게시글 번호
-	private Date com_cdate; // 작성일
-	private Date com_mdate; // 수정일
-	private String com_comment; // 댓글 내용
-	private int com_del; // 삭제 여부 ( 1:미삭제, 0:삭제 )
+	private Long com_no; // コメント番号
+	private Long user_no; // ユーザー番号
+	private Long board_no; // ポスト番号
+	private Date com_cdate; // 作成日
+	private Date com_mdate; // 修正日
+	private String com_comment; // コメントの内容
+	private int com_del; // 削除可否 ( 1:未削除, 0:削除 )
 }

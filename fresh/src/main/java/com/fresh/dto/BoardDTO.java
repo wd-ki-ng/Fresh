@@ -10,15 +10,15 @@ import lombok.Setter;
 @Setter
 public class BoardDTO {
 	
-	private Long board_no; // 글 번호
+	private Long board_no; // ポスト番号
 	private Long user_no;
 	private int category;
-	private String board_title; // 제목
-	private String board_content; // 내용
-	private String board_write; // 작성자
-	private Date board_date; // 작성일
-	private Long board_like; // 좋아요
-	private int board_count; // 조횟수
-	private int board_del; // 삭제 여부 ( 1:미삭제, 0:삭제 )
+	private String board_title; // タイトル
+	private String board_content; // 内容
+	private String board_write; // ユーザー名
+	private Date board_date; // 作成日
+	private Long board_like; // ♥
+	private int board_count; // ビュー
+	private int board_del; // 削除可否 ( 1:未削除, 0:削除 )
 	
 }

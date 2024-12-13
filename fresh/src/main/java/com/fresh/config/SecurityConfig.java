@@ -26,15 +26,15 @@ public class SecurityConfig {
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers("/img/**", "/css/**", "/js/**", "/scss/**", "/plugins/**").permitAll()
                 .requestMatchers("/", "/main", "/login", "/join","/board", "/checkid", "/checkUserName", "/verify-email", "/send-email", "/findid", "/findpassword", "/findPw", "/search").permitAll()           // 공개 경로 허용
-                .requestMatchers("/admin/**").hasAnyRole("ADMIN")              // 관리자 전용
-                .requestMatchers("/mypage/**").hasAnyRole("USER")		       // 사용자 전용
-                .anyRequest().authenticated()                                  // 그 외 인증 필요
+                .requestMatchers("/admin/**").hasAnyRole("ADMIN")              // 管理者、専用
+                .requestMatchers("/mypage/**").hasAnyRole("USER")		       // ユーザー専用
+                .anyRequest().authenticated()                                  // その他、認証必要
             );
 
-        // 로그인이 안되어 오류 페이지 발생 시 로그인 페이지로 이동
+        // ログインできなくてエラーページが発生する場合、ログインページへ移動
         http.formLogin((auth) -> auth
         		.loginPage("/login")
-        		.loginProcessingUrl("/login")// 로그인 시 해당 URL로 값 전송     
+        		.loginProcessingUrl("/login")// ログインを成功する場合、当URLにバリュー伝達     
         		.failureUrl("/login?error=1")
         		.defaultSuccessUrl("/",true)   		
         		.permitAll()
@@ -42,26 +42,26 @@ public class SecurityConfig {
         		);
         
         
-        // 세션 중복 로그인 허용 여부
+        // セッションの重複ログインの許容の可否
         http .sessionManagement((auth) -> auth
-                .maximumSessions(1) // 다중 로그인 허용 개수
+                .maximumSessions(1) //多重ログインの許容の個数
                 .maxSessionsPreventsLogin(true));
-        // true : 초과 시 새로운 로그인 차단
-        // false : 초과 시 기존 세션 삭제
+        // true : 超過する場合、新しいログインを遮断する
+        // false : 超過する場合、既存のセッションを削除する
         
 
         
-        // 세션 고정 보호, 10강
+        // セッション固定保護、10
         http.sessionManagement((auth) -> auth
                 .sessionFixation().changeSessionId());
         
-        // 로그아웃 하기
+        // ログアウト
         http.logout((auth) -> auth
         		.logoutUrl("/logout")
         		.logoutSuccessUrl("/")
         		.invalidateHttpSession(true));
        
-        //http.csrf((auth) -> auth.disable()); // 개발 중에는 잠시 꺼두기
+        //http.csrf((auth) -> auth.disable()); //開発中には使用禁止
         
         return http.build();
     }

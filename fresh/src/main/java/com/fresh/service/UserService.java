@@ -37,27 +37,27 @@ public class UserService {
 		return userRepository.findByUserUserName(user_username);
 	}
 	
-	//아이디 중복체크
+	//IDの重複確認
 	public String checkUserId(String user_id) {
 		return userRepository.checkUserId(user_id);
 	}
 	
-	//닉네임 중복체크
+	//ユーザー名の重複確認
 	public String checkUserUserName(String user_username) {
 		return userRepository.checkUserUserName(user_username);
 	}
 	
-	// 아이디 찾기 서비스
+	//IDを探す
     public String findIdByNameAndEmail(UserDTO user) {
     	return userRepository.findIdByNameAndEmail(user);
     }
     
-    //아이디와 이메일로 회원이 존재하는지 확인
+    //IDとメールで会員の存否を確認
     public UserDTO findByIdAndEmail(UserDTO user) {
     	return userRepository.findByIdAndEmail(user);
     }
     
-    //임시비밀번호 발급
+    //仮のパスワードの発給
     public void createTempPw(UserDTO user) {
     	String temppw = bCryptPasswordEncoder.encode(user.getTemp_pw());
     	user.setTemp_pw(temppw);

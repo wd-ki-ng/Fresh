@@ -12,7 +12,7 @@ public class MypageRepository {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	//비밀번호 변경
+	//パスワードの変更
 	public void changePw(UserDTO user) {
 		sqlSession.update("myPage.changePw", user);
 	}

@@ -40,7 +40,7 @@ public class CustomUserDetails implements UserDetails {
         return userDTO.getUser_username();
     }
 
-    // 사용자의 이름 반환
+    // ユーザーの名前
     public String getName() {
         return userDTO.getUser_name();
     }

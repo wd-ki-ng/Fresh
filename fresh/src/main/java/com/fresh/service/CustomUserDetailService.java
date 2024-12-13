@@ -25,7 +25,7 @@ public class CustomUserDetailService implements UserDetailsService {
 			System.out.println("CustomUserDetailService : " + user.toString());
 			return new CustomUserDetails(user);
 		}
-		System.out.println("없는 회원");
+		System.out.println("存在しない会員");
 		return null;
 	}
 	

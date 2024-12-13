@@ -38,22 +38,22 @@ public class MyPageController {
 	@GetMapping("/mypage")
 	public  String mypage(Model model, Principal principal) {
         if (principal == null) {
-            // 로그인되지 않은 경우 로그인 페이지로 리다이렉트
+            // ログインしていない場合、ログインページへ
             return "redirect:/login";
         }
 
-        // Principal 객체에서 사용자의 이름 가져오기
+        // Principal オブジェクトでユーザーの名前をもらう
         String name = principal.getName();
 
-        // 사용자 이름으로 CustomUserDetails 객체 가져오기
+        // ユーザーの名前でCustomUserDetailsのオブジェクトをもらう
         CustomUserDetails customUserDetails = (CustomUserDetails) customUserDetailService.loadUserByUsername(name);
         
-        // CustomUserDetails 객체에서 사용자의 이름 가져오기
+        // CustomUserDetailsのオブジェクトからユーザーの名前とユーザーの名をもらう
         String username = customUserDetails.getName();
         String userId = customUserDetails.getUsername();
         
         
-        // 다른 필요한 데이터들을 모델에 추가
+        // 他に必要なデータをモデルに追加
         model.addAttribute("user", userUtil.getUserData());
 
         return "mypage/mypage";
@@ -66,7 +66,7 @@ public class MyPageController {
 		return "mypage/mypageBoard";
 	}
 	
-	//비밀번호 변경
+	//パスワードを変更する
    @PostMapping("/change")
    public String changePw(UserDTO userDTO ,HttpServletRequest request, HttpServletResponse response) {
 	   userDTO.setUser_no(userUtil.getUserData().getUser_no());
