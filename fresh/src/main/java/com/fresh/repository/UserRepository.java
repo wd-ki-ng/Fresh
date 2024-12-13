@@ -32,27 +32,27 @@ public class UserRepository {
 		return sqlSession.selectOne("user.findByUserUserName", user_username);
 	}
 	
-	//임시 비밀번호 발급
+	//仮のパスワードを発給
 	public void createTempPw(UserDTO user) {
 		sqlSession.update("user.createTempPw", user);
 	}
 	
-	//아이디 중복체크
+	//IDの重複確認
 	public String checkUserId(String user_id) {
 		return sqlSession.selectOne("user.checkUserId", user_id);
 	}
 	
-	//닉네임 중복체크
+	//ユーザー名の重複確認
 	public String checkUserUserName(String user_username) {
 		return sqlSession.selectOne("user.checkUserUserName", user_username);
 	}
 	
-	 //아이디 찾기
+	 //IDを探す
 	public String findIdByNameAndEmail(UserDTO user) {
 		return sqlSession.selectOne("user.findIdByNameAndEmail", user);
 	}
 	
-	//아이디와 이메일로 회원이 존재하는지 확인
+	//IDとメールで会員の存否を確認
 	public UserDTO findByIdAndEmail(UserDTO user) {
 		return sqlSession.selectOne("user.findByIdAndEmail", user);
 	}

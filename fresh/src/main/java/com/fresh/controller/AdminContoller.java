@@ -36,31 +36,31 @@ public class AdminContoller {
 			return "main";
 		}
 		
-		// 회원 정보 가져오기
+		// 会員の情報をもらう
 		List<UserDTO> members = adminService.getMemList();
 		model.addAttribute("members", members);
 		
-		// 게시글 정보 가져오기
+		// ポストの情報をもらう
 		List<BoardDTO> posts = adminService.getAllPosts();
 		model.addAttribute("posts", posts);
 		
-		// 댓글 정보 가져오기
+		// コメントの情報をもらう
 		List<CustomCommentDTO> comments = adminService.getAllComments();
 		model.addAttribute("comments", comments);
 		
-		// 공지사항 정보 가져오기
+		// お知らせの情報をもらう
 		List<BoardDTO> notices = adminService.getAllNotices();
 		model.addAttribute("notices", notices);
 		
-		// 삭제한 게시글 가져오기
+		// 削除したポストの情報をもらう
 		List<BoardDTO> del_posts = adminService.getDelPosts();
 		model.addAttribute("del_posts", del_posts);
 		
-		// 삭제한 댓글 가져오기
+		// 削除したコメントの情報をもらう
 		List<CustomCommentDTO> del_coms = adminService.getDelComs();
 		model.addAttribute("del_coms", del_coms);
 		
-		// 삭제한 공지 가져오기
+		// 削除したお知らせの情報をもらう
 		List<BoardDTO> del_notis = adminService.getDelNotis();
 		model.addAttribute("del_notis", del_notis);
 		
@@ -74,11 +74,11 @@ public class AdminContoller {
 		if (!user.getROLE().equals("ROLE_ADMIN")) {
 			return "main";
 		}
-		// 조회하려는 유저의 모든 정보 가져오기
+		// 照会したいユーザーの全ての情報をもらう
 		UserDTO member = adminService.getOneMem(user_no);
 		model.addAttribute("member", member);
 		
-		// 유저가 작성한 게시글 가져오기
+		// ユーザーが作成した全てのポストの情報をもらう
 		List<BoardDTO> memPosts = adminService.getMemPosts(user_no);
 		model.addAttribute("memPosts", memPosts);
 		
@@ -93,7 +93,7 @@ public class AdminContoller {
 			return "main";
 		}
 		
-		// 수정사항 반영 - update
+		// 修正の反映 - update
 		adminService.setOneMem(member);
 		
 		return "redirect:/admin/adminMem?user_no="+member.getUser_no();
@@ -107,7 +107,7 @@ public class AdminContoller {
 			return "main";
 		}
 		
-		// 유저 탈퇴처리
+		// ユーザーの退会の処理
 		adminService.delOneMem(user_no);
 		
 		return "redirect:/admin/admin";
@@ -121,7 +121,7 @@ public class AdminContoller {
 			return "main";
 		}
 		
-		// 게시글 삭제 처리 - board_del을 0으로
+		// ポストの削除の処理 - board_del을 0で
 		adminService.setOneBoard_del(board_no);
 		
 		return "redirect:/admin/admin";
@@ -135,47 +135,47 @@ public class AdminContoller {
 			return "main";
 		}
 		
-		// 댓글 삭제 처리 - com_del을 0으로/submitNotice
+		// コメントの削除の処理 - com_del을 0で/submitNotice
 		adminService.setOneCom_del(com_no);
 		
 		return "redirect:/admin/admin";
 	}
 	
-	// 글쓰기 페이지로 단순 이동
+	// お知らせの作成ページへ移動
 	@GetMapping("/admin/noticeWrite")
 	public String noticeWrite(Model model) {
-		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		// ログインの情報をもらってログインをしていない場合はログインページに移動
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
 			return "redirect:/login";
 		}
 		
-		// 로그인한 상태라면　화면 이동
+		// ログインしている場合はお知らせの作成ページに移動
 		return "admin/noticeWrite";
 	}
 	
-	// 글쓰고 제출
+	// お知らせを作成して、提出
 	@PostMapping("/admin/submitNotice")
 	public String submitNotice(Model model, BoardDTO notice) {
-		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		// ログインの情報をもらってログインをしていない場合はログインページに移動
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
 			return "redirect:/login";
 		}
 
-		// 데이터 베이스에 내용 입력
+		// データベースに内容を入力
 		adminService.setNotice(notice, user.getUser_no(), user.getUser_username());
 		
-		// 게시글 목록으로 돌아감
+		// リストページへ
 		return "redirect:/admin/admin";
 	}
 	
-	// 휴지통 복구 - 게시글, 공지
+	// ゴミ箱の復旧 - ポスト、お知らせ
 	@PostMapping("/admin/postRestore")
 	public String postRestore(Model model, @RequestParam(value = "postNum") String postNum) {
-		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		// ログインの情報をもらって来てログインをしていない場合はログインページに移動
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
@@ -188,14 +188,14 @@ public class AdminContoller {
 			adminService.restorePost(no);
 		}
 		
-		// 게시글 목록으로 돌아감
+		// リストページへ
 		return "redirect:/admin/admin";
 	}
 	
-	// 휴지통 복구 - 댓글
+	// ゴミ箱の復旧 - コメント
 	@PostMapping("/admin/comRestore")
 	public String comRestore(Model model, @RequestParam(value = "comNum") String comNum) {
-		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		// ログインの情報をもらって来てログインをしていない場合はログインページに移動
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
@@ -208,14 +208,14 @@ public class AdminContoller {
 			adminService.restoreComment(num);
 		}
 		
-		// 게시글 목록으로 돌아감
+		// リストページへ
 		return "redirect:/admin/admin";
 	}
 	
-	// 휴지통 영구 삭제 - 게시글, 공지
+	// ゴミ箱、永久削除 - ポスト, お知らせ
 	@PostMapping("/admin/postEliminate")
 	public String postEliminate(Model model, @RequestParam(value = "postNum") String postNum) {
-		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		// ログインの情報をもらって来てログインをしていない場合はログインページに移動
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
@@ -228,14 +228,14 @@ public class AdminContoller {
 			adminService.eliminatePost(no);
 		}
 		
-		// 게시글 목록으로 돌아감
+		// リストページへ
 		return "redirect:/admin/admin";
 	}
 	
-	// 휴지통 영구 삭제 - 댓글
+	// ゴミ箱、永久削除 - コメント
 	@PostMapping("/admin/comsEliminate")
 	public String comsEliminate(Model model, @RequestParam(value = "comNum") String comNum) {
-		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		// ログインの情報をもらって来てログインをしていない場合はログインページに移動
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
@@ -248,13 +248,13 @@ public class AdminContoller {
 			adminService.eliminateComment(num);
 		}
 		
-		// 게시글 목록으로 돌아감
+		// リストページへ
 		return "redirect:/admin/admin";
 	}
 	
 	@GetMapping("/admin/boardUpdate")
 	public String boardUpdate(Model model, @RequestParam(value = "no") Long no) {
-		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		// ログインの情報をもらって来てログインをしていない場合はログインページに移動
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
@@ -262,22 +262,22 @@ public class AdminContoller {
 		}
 		BoardDTO boardUpdate = adminService.findById(no);
 		model.addAttribute("boardUpdate", boardUpdate);
-		// 수정페이지
+		// ポストの修正ページ
 		return "boardUpdate";
 	}
 
-	// 수정버튼 누르면 db에 저장
+	// 修正のボタンを押す場合、データベースにセーブ
 	@PostMapping("/admin/boardUpdate")
 	public String boardUpdate(BoardDTO board, Model model) {
-		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		// ログインの情報をもらって来てログインをしていない場合はログインページに移動
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
 			return "redirect:/login";
 		}
-		// Update 요청
+		//Updateを要請
 		adminService.boardUpdate(board);
-		// FindByID로 수정된 내용 다시 조회
+		// FindByIDで修正された内容を照会
 		return "redirect:/boardview?no=" + board.getBoard_no();
 	}
 }

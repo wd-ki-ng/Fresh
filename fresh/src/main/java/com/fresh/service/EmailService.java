@@ -19,22 +19,22 @@ public class EmailService {
 	
 	public String sendVerificationCode(String code) {
 		String verificationCode = generateEmailCode();
-		String subject = "fresh 인증번호";
-		String message = "인증번호는 " + verificationCode + " 입니다.";
+		String subject = "fresh 認証番号";
+		String message = "認証番号は " + verificationCode + " でございます.";
 		
 		sendEmail(code, subject, message);
-		return verificationCode; 									//세션에 저장하기위해서 반환
+		return verificationCode; 									//セッションにセーブする為に返還
 	}
 	
 	public void sendEmail(String recipient, String subject, String text) {
 		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(recipient);							//수신자 설정
-		message.setSubject(subject);						//제목 설정
-		message.setText(text);								//내용 설정
+		message.setTo(recipient);							//受信者を設定
+		message.setSubject(subject);						//タイトルを設定
+		message.setText(text);								//内容を設定
 		javaMailSender.send(message);
 	}
 	
-	//이메일 인증번호 생성 , 6자리 랜덤 알파벳 인증번호
+	//メールの認証番号を生成する, 6文字のランダムのアルファベットの認証番号
 	public String generateEmailCode() {
 		int codeLength = 6;
 		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -49,13 +49,13 @@ public class EmailService {
 		return sb.toString();
 	}
 	
-	//임시비밀번호 전송
+	//仮のパスワードを送信
 	public void sendTempPw(String userEmail, String tempPw) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		
 		message.setTo(userEmail);
-		message.setSubject("임시비밀번호입니다");
-		message.setText("안녕하세요,\n\n Fresh로그인 임시비밀번호는 " + tempPw + " 입니다.\n로그인 후 비밀번호를 변경해 주세요.");
+		message.setSubject("仮のパスワードでございます。");
+		message.setText("Freshです,\n\n Freshの仮のパスワードは " + tempPw + " でございます。\nログインした後にパスワードを変更して下さい。");
 		javaMailSender.send(message);
 	}
 }

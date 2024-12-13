@@ -19,7 +19,7 @@ public class UserUtil {
 	private UserRepository userRepository;
 
 	public String getUsername() {
-		// 현재 사용자 아이디
+		// 現在のユーザーのID
 		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
 		
 		return user_id;
@@ -27,7 +27,7 @@ public class UserUtil {
 	}
 
 	public String getUserRole() {
-		// 세션 사용자 권한
+		// セッションのユーザーの権限
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();

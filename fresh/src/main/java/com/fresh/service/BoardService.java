@@ -20,12 +20,12 @@ public class BoardService {
 	@Autowired
 	private BoardRepository boardRepository;
 	
-	// 상세 게시글 보기
+	// ポストの詳細を見る
 	public BoardDTO getDetail(Long no) {
 		return boardRepository.getDetail(no);
 	}
 	
-	//---이전글 다음글----------
+	//---以前のポスト/ 次のポスト----------
 	public long prevBoard(Long no) {
 		return boardRepository.prevBoard(no);
 	}
@@ -35,19 +35,19 @@ public class BoardService {
 	}
 	//----------------------------------
 	
-	// 조회수 늘리기
+	// ビューを増やす
 	public int setView(Long no) {
 		return boardRepository.setView(no);
 	}
 	
-	// 게시글 작성
+	// ポスト作成
 	public int setBoard(BoardDTO board, Long no, String name) {
 		board.setUser_no(no);
 		board.setBoard_write(name);
 		return boardRepository.setBoard(board);
 	}
 	
-	//게시글 수정 ------------------------------------------------------
+	//ポスト修正------------------------------------------------------
 	public int boardUpdate(BoardDTO board) {
 		return boardRepository.boardUpdate(board);
 		
@@ -56,7 +56,7 @@ public class BoardService {
 	public BoardDTO findById(Long no) {
 	    return boardRepository.findById(no);
 	}
-	//---------------댓글 수정------------------
+	//---------------コメント修正------------------
 	public int comUpdate(CommentDTO com) {
 	    return boardRepository.comUpdate(com);
 	}
@@ -67,43 +67,43 @@ public class BoardService {
 	}
 	
 	
-	// 댓글 개수 가져오기
+	// コメントのリストをもらう
 	public int getCommentCount(Long no) {
 		return boardRepository.getCommentCount(no);
 	}
 	
-	// 댓글 가져오기
+	// コメントの情報をもらう
 	public List<CustomCommentDTO> getComments(Long no) {
 		return boardRepository.getComments(no);
 	}
 	
-	// 댓글 작성
+	// コメント作成
 	public int setComment(CommentDTO comment, Long user_no) {
 		comment.setUser_no(user_no);
 		return boardRepository.setComment(comment);
 	}
 	
-	// 통합 인기글 : 추천수 + 조회수를 더한 '반응수' 열을 만들고, 반응수가 높은 순으로 정렬
+	// 統合の人気ポスト : ♥ + ビューをプラスした'反応数'の列を作り,反応数が高い順に並べる
 	public List<BoardDTO> getMainHotPost() {
 		return boardRepository.getMainHotPost();
 	}
 	
-	// 통합 최신글 : 게재일 순으로 정렬해서 가장 최신 글 5개
+	// 統合の最新ポスト: 作成日順に整列して一番最新ポストを5個
 	public List<BoardDTO> getMainNewPost() {
 		return boardRepository.getMainNewPost();
 	}
 	
-	// 메인페이지 공지글 : 게재일 순으로 정렬해서 가장 최신 글 5개
+	// メインページのお知らせ : 作成日順に整列して一番最新のポストを5個
 	public List<BoardDTO> getMainNotice() {
 		return boardRepository.getMainNotice();
 	}
 	
-	// 게시판 리스트 
+	// 掲示板リスト 
 	public List<BoardDTO> getBoardList() {
 		return boardRepository.getBoardList();
 	}
 	
-	// 입력한 키워드에 맞는 게시글 리스트 가져옴
+	// 入力したキーワードに会うポストのリストをもらう
 	public List<BoardDTO> getSearchBoard(String keyword) {
 		keyword = "%" + keyword + "%";
 		return boardRepository.getSearchBoard(keyword);

@@ -81,7 +81,7 @@ public class UserContoller {
 	
 
 	
-	//회원가입 - 아이디 중복체크
+	//会員登録 - IDの重複確認
 	   @PostMapping("/checkid")
 	   public ResponseEntity<Boolean> checkId(@RequestParam("userId") String userId) {
 	      //System.out.println(userId);
@@ -104,7 +104,7 @@ public class UserContoller {
 	   
 
 
-	//회원가입 - 닉네임 중복체크
+	//会員登録 - ユーザー名の重複確認
 	   @PostMapping("/checkUserName")
 	   public ResponseEntity<Boolean> userName(@RequestParam("userName") String userName){
 		   //System.out.println(userName);
@@ -122,7 +122,7 @@ public class UserContoller {
 		    	  return ResponseEntity.ok(true);
 		      }
 	   }
-	   // 아이디 찾기 요청 처리
+	   // IDを探すの要請を処理
 	   @PostMapping("/findid")
 	   @ResponseBody
 	   public Map<String, Object> findId(@RequestParam("name") String name, @RequestParam("email") String email){
@@ -132,10 +132,10 @@ public class UserContoller {
 		   user.setUser_name(name);
 		   user.setUser_email(email);
 		   
-		   //서비스에서 아이디 찾기
+		   //サービスでIDを探す
 		   String userId = userService.findIdByNameAndEmail(user);
 		   
-		   //아이디가 존재하면 성공, 응답 없으면 실패 반환
+		   //IDが存在する場合は成功、応答がない場合は失敗
 		   if(userId != null) {
 			   response.put("success", true);
 			   response.put("id", userId);

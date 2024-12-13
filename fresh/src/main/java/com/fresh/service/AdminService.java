@@ -67,7 +67,7 @@ public class AdminService {
 		return adminRepository.getAllNotices();
 	}
 	
-	// 게시글 작성
+	// ポスト作成
 	public void setNotice(BoardDTO notice, Long no, String name) {
 		notice.setUser_no(no);
 		notice.setBoard_write(name);

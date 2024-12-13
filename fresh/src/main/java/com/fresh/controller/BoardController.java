@@ -31,64 +31,64 @@ public class BoardController {
 	@GetMapping("/boardview")
 	public String boardview(Model model, @RequestParam(value = "no") Long no) {
 		UserDTO user = userUtil.getUserData();
-		// 로그인 안한 사람은 못보게 막음
-		// 'or' 연산 시 앞이 true면 뒤의 연산은 하지 않기 때문에 순서도 잘 지정해야 함
-		// == null 을 뒤로 밀면 user가 null 일 경우 nullpoint 에러 발생하여 null 체크를 우선으로 진행
+		// ログインしていない人には接近不可能
+		// 'or' 演算をする時、前のバリューがtrueなら後ろの演算はしないので順番に気を付けて指定すること
+		// == null を後ろにするとuserのバリューがnullの場合、nullpointエラーが発生するのでnullのチェックを優先すること
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
 			return "redirect:/login";
 		}
 
-		// 해당 글의 조회수를 늘림
+		// 該当ポストのビューを増やす
 		boardService.setView(no);
 
-		// 해당 글 정보를 가져옴
+		// 該当ポストの情報をもらう
 		BoardDTO detail = boardService.getDetail(no);
 
-		// ----- 이전 글과 다음 글 정보를 가져옴------------
-		long prevBoard = boardService.prevBoard(no); // 이전 글
-		long nextBoard = boardService.NextBoard(no); // 다음 글
+		// ----- 以前のポストと次のポストの情報をもらう------------
+		long prevBoard = boardService.prevBoard(no); // 以前のポスト
+		long nextBoard = boardService.NextBoard(no); // 次のポスト
 		// ----------------------------
 
-		// 해당 게시글의 댓글 수
+		// 該当ポストのコメントの数
 		int com_count = boardService.getCommentCount(no);
 
-		// 해당 게시글의 댓글이 1개라도 있다면, 댓글 리스트 가져오기
+		// 該当ポストのコメントが存在する場合、コメントのリストをもらう
 		List<CustomCommentDTO> comments = boardService.getComments(no);
 		model.addAttribute("comments", comments);
 		model.addAttribute("com_count", com_count);
-		// 게시글을 성공적으로 가져온 경우
+		// ポストの情報をもらった場合
 		model.addAttribute("detail", detail);
 		model.addAttribute("user", user);
 		// -----------------------
-		model.addAttribute("prevBoard", prevBoard); // 이전 글 정보 추가
-		model.addAttribute("nextBoard", nextBoard); // 다음 글 정보 추가
+		model.addAttribute("prevBoard", prevBoard); // 以前のポストの情報を追加
+		model.addAttribute("nextBoard", nextBoard); // 次のポストの情報を追加
 		// ----------------------
 
 		if (prevBoard == -1L) {
-			model.addAttribute("prevBoard", null); // 이전 글이 없다면 null 처리
+			model.addAttribute("prevBoard", null); // 以前のポストの情報がない場合、null処理
 		} else {
-			model.addAttribute("prevBoard", prevBoard); // 이전 글 ID 추가
+			model.addAttribute("prevBoard", prevBoard); // 以前のポストのID追加
 		}
 
 		if (nextBoard == -1L) {
-			model.addAttribute("nextBoard", null); // 다음 글이 없다면 null 처리
+			model.addAttribute("nextBoard", null); // 次のポストの情報がない場合、null処理
 		} else {
-			model.addAttribute("nextBoard", nextBoard); // 다음 글 ID 추가
+			model.addAttribute("nextBoard", nextBoard); // 次のポストのID追加
 		}
 		return "boardview";
 	}
 
-	// 글쓰기 페이지로 단순 이동
+	// ポストの作成ページへ
 	@GetMapping("/boardWrite")
 	public String boardWrite(Model model) {
-		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		// ログインの情報をもらってログインをしていない場合はログインページに移動
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
 			return "redirect:/login";
 		}
 
-		// 로그인한 상태라면 화면 이동
+		// ログインしている場合作成ページへ
 		return "boardWrite";
 	}
 
@@ -97,27 +97,27 @@ public class BoardController {
 		return "boardWrite";
 	}
 
-	// 글쓰고 제출
+	//作成して提出
 	@PostMapping("/submitPost")
 	public String submitPost(Model model, BoardDTO board) {
-		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		// ログインの情報をもらってログインをしていない場合はログインページに移動
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
 			return "redirect:/login";
 		}
 
-		// 데이터 베이스에 내용 입력
+		// データベースに内容をセーブ
 		boardService.setBoard(board, user.getUser_no(), user.getUser_username());
 
-		// 게시글 목록으로 돌아감
+		// リストページへ
 		return "redirect:/board";
 	}
 
-	// ------------ 게시글 수정 버튼 클릭시 수정 화면으로 넘어감--------------
+	// ------------ 修正ボタンを押す場合、修正ページへ--------------
 	@GetMapping("/boardUpdate")
 	public String boardUpdate(Model model, @RequestParam(value = "no") Long no) {
-		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		// ログインの情報をもらってログインをしていない場合はログインページに移動
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
@@ -125,37 +125,37 @@ public class BoardController {
 		}
 		BoardDTO boardUpdate = boardService.findById(no);
 		model.addAttribute("boardUpdate", boardUpdate);
-		// 수정페이지
+		// 修正ページへ
 		return "boardUpdate";
 	}
 
-	// 수정버튼 누르면 db에 저장
+	// 修正ボタンを押す場合、データベースに内容をセーブ
 	@PostMapping("/boardUpdate")
 	public String boardUpdate(BoardDTO board, Model model) {
-		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		// ログインの情報をもらってログインをしていない場合はログインページに移動
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
 			return "redirect:/login";
 		}
-		// Update 요청
+		// Updateを要請
 		boardService.boardUpdate(board);
-			// FindByID로 수정된 내용 다시 조회
+			// FindByIDで修正された内容を照会
 			return "redirect:/boardview?no="+board.getBoard_no();
 		}
-		//-------------댓글 수정---------------------------	
-		//수정버튼 누르면 db에 저장
+		//-------------コメント修正---------------------------	
+		//修正ボタンを押す場合、データベースに内容をセーブ
 		@PostMapping("/comUpdate")
 		public String comUpdate(CommentDTO com , Model model) {
-			// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+			// ログインの情報をもらってログインをしていない場合はログインページに移動
 			UserDTO user = userUtil.getUserData();
 			model.addAttribute("user", userUtil.getUserNameAndRole());
 			if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
 				return "redirect:/login";
 			}
-			//Update 요청
+			//Updateを要請
 		boardService.comUpdate(com);
-			// FindByID로 수정된 내용 다시 조회
+			// FindByIDで修正された内容を照会
 			return "redirect:/boardview?no="+com.getBoard_no();
 		}		
 		
@@ -172,31 +172,31 @@ public class BoardController {
 		}
 	}
 
-	// 댓글 작성 버튼
+	// コメント作成ボタン
 	@PostMapping("/comWrite")
 	public String comWrite(Model model, CommentDTO comment) {
-		// 로그인 정보를 가져와서 로그인을 하지 않은 상태면 로그인 화면으로 보냄
+		// ログインの情報をもらってログインをしていない場合はログインページに移動
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
 			return "redirect:/login";
 		}
 
-		// 데이터 베이스에 내용 입력
+		// データベースに内容をセーブ
 		boardService.setComment(comment, user.getUser_no());
 
-		// 게시글 상세 페이지로 돌아감
+		// ポストの詳細ページへ
 		return "redirect:/boardview?no=" + comment.getBoard_no();
 	}
 
-	// 게시판 리스트 페이지
+	// ポストのリストページ
 	@GetMapping("/board")
 	public String boardList(Model model) {
-		// 현재 유저 받아옴. 로그인 안 한 경우엔 역할이 "ROLE_ANONYMOUS"거나, user 자체가 null이 됨
+		// 現在、ユーザーの情報をもらう.ログインしていない場合、役割が"ROLE_ANONYMOUS"や userのバリューがnullになる
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 
-		// 게시글 가져와서 model에 추가
+		// ポストをもらってmodelに追加
 		List<BoardDTO> BoardList = boardService.getBoardList();
 		model.addAttribute("BoardList", BoardList);
 

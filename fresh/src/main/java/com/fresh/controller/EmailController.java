@@ -30,13 +30,13 @@ public class EmailController {
 	
 	@PostMapping("/send-email")
 	public ResponseEntity<Void> sendEmail(@RequestParam("email") String email, HttpSession session){
-		//이메일 발송 및 인증번호 저장
+		//メール送信＆認証番号をセーブ
 		String verificationCode = emailService.sendVerificationCode(email);
-		session.setAttribute("verificationCode", verificationCode);							//세션에 전송된 인증번호 저장
+		session.setAttribute("verificationCode", verificationCode);							//セッションに伝達された認証番号をセーブ
 		return ResponseEntity.ok().build();
 	}
 	
-	//입력한 인증번호와 세션에 저장된 인증번호 비교
+	//入力した認証番号とセッションにセーブされている認証番号を比べる
 	@PostMapping("/verify-email")
 	public ResponseEntity<Boolean> verifyCode(@RequestParam("verificationCode") String verificationCode, HttpSession session){
 		String storedCode = (String) session.getAttribute("verificationCode");
@@ -48,14 +48,14 @@ public class EmailController {
 		}
 	}
 	
-	//임시 비밀번호 발급용
+	//仮パスワードを発給する
 	@PostMapping("/findPw")
 	@ResponseBody
 	public Map<String, Object> sendTempPw(UserDTO user){
 		Map<String, Object> response = new HashMap<>();
 		
 		
-		UserDTO userDTO = userService.findByIdAndEmail(user);		//사용자 확인
+		UserDTO userDTO = userService.findByIdAndEmail(user);		//ユーザーの確認
 		
 		
 		if(userDTO.getUser_no() != null) {
@@ -64,8 +64,8 @@ public class EmailController {
 			//response.put("tempPw", userDTO.setTemp_pw(tempPw));
 			
 			userDTO.setTemp_pw(tempPw);
-			userService.createTempPw(userDTO);								//암호화된 비밀번호 저장
-			emailService.sendTempPw(user.getUser_email(), tempPw); 			//임시 비밀번호 전송(이메일)
+			userService.createTempPw(userDTO);								//エンコーディングされたパスワードをセーブする
+			emailService.sendTempPw(user.getUser_email(), tempPw); 			//仮のパスワードを送信(メール)
 			
 			response.put("success", true);
 		} else {
@@ -75,8 +75,8 @@ public class EmailController {
 		return response;
 	}
 	
-	//임시 비밀번호 생성 로직
+	//仮のパスワードの生成ロジック
 	private String generateTempPw() {
-		return UUID.randomUUID().toString().substring(0,12); 		//12자리 임시비밀번호 생성
+		return UUID.randomUUID().toString().substring(0,12); 		//12文字の仮のパスワードを生成
 	}
 }

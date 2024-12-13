@@ -16,7 +16,7 @@ public class MypageService {
 	@Autowired
 	private MypageRepository mypageRepository;
 	
-	//비밀번호 변경
+	//パスワードを変更
 	public void changePw(UserDTO user) {
     	user.setUser_pw(bCryptPasswordEncoder.encode(user.getUser_pw()));
     	mypageRepository.changePw(user);
