@@ -6,14 +6,14 @@
     <th:block th:insert="~{mypage/menu.html::scriptImport}"></th:block>
     <th:block th:insert="~{mypage/menu.html::headImport}"></th:block>
     <th:block th:insert="~{mypage/menu.html::metaImport}"></th:block>
-    <title>마이페이지</title>
+    <title>マイページ</title>
 </head>
 
 <body class="sb-nav-fixed">
 	<div class="container">
 	 <th:block th:insert="~{mypage/menu.html::navBar}"></th:block>
 		<div class="bodypart">
-			<h1 class="mb-3">마이페이지</h1>
+			<h1 class="mb-3">マイページ</h1>
 			<div class="table-responsive">
 				<form action="/mypage/change" id="change" name="change" method="post">
 					<input type="hidden" name="username"/> 
@@ -21,28 +21,28 @@
 					<table class="table table-bordered">
 						<tbody>
 							<tr>
-								<th colspan="2" class="col-md-3 text-center">나의 정보</th>
+								<th colspan="2" class="col-md-3 text-center">情報</th>
 							</tr>
 							<tr>
-								<th scope="row" class="col-md-3 text-center">아이디</th>
+								<th scope="row" class="col-md-3 text-center">ID</th>
 								<td class="col-md-9" th:text="${user.user_id}"></td>
 							</tr>
 							<tr>
-								<th scope="row" class="col-md-3 text-center">닉네임</th>
+								<th scope="row" class="col-md-3 text-center">ユーザー名</th>
 								<td class="col-md-9" th:text="${user.user_username}"></td>
 							</tr>
 							<tr>
-								<th scope="row" class="col-md-3 text-center">이름</th>
+								<th scope="row" class="col-md-3 text-center">名前</th>
 								<td class="col-md-9" th:text="${user.user_name}"></td>
 							</tr>
 							<tr>
-								<th scope="row" class="col-md-3 text-center">비밀번호</th>
-								<td><input type="password" class="col-md-3" id="user_pw" name="user_pw" placeholder="변경할 비밀번호를 입력해 주세요" />
-									<button type="button" onclick="changePw()" id="chg-btn">변경</button>
+								<th scope="row" class="col-md-3 text-center">パスワード</th>
+								<td><input type="password" class="col-md-3" id="user_pw" name="user_pw" placeholder="変更するパスワードを入力して下さい。" />
+									<button type="button" onclick="changePw()" id="chg-btn">変更</button>
 								</td>
 							</tr>
 							<tr>
-								<th scope="row" class="col-md-3 text-center">이메일</th>
+								<th scope="row" class="col-md-3 text-center">メール</th>
 								<td class="col-md-9" th:text="${user.user_email}"></td>
 							</tr>
 						</tbody>
@@ -57,21 +57,21 @@
 	const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
 	const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 	const checkPW = RegExp(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[~!@#$%^&*()_+])[A-Za-z\d~!@#$%^&*()_+]{4,}$/);
-	let isPwValid = false; //비밀번호 상태
+	let isPwValid = false; //パスワードの状態
 
-	//스페이스바 금지
+	//スペースバー禁止
 	$(document).keydown(function(event) {
 		if (event.keyCode === 32) {
 			event.preventDefault();
 		}
 	});
 
-	// 버튼 초기 상태 비활성화
+	// ボタンの初期の状態を非活性化
 	$(document).ready(function() {
 		$("#chg-btn").prop("disabled", true);
 	});
 
-	// 입력 필드 유효성 검사 시 상태 업데이트 및 버튼 활성화
+	// 入力ボックスバリデーションを検査して状態をアップデート＆ボタンを活性化
 	function updateButtonState() {
 		if (isPwValid) {
 			$("#chg-btn").prop("disabled", false);
@@ -80,11 +80,11 @@
 		}
 	}
 
-	// 비밀번호 유효성 검사
+	// パスワードのバリデーション検査
 	$("#user_pw").blur(function() {
 		const userPw = $("#user_pw").val();
 		if (!checkPW.test(userPw)) {
-			alert("영문(대소문자), 숫자, 특수문자를 각 1개 이상 포함한 10자리 이상이어야 합니다.");
+			alert("英文(大、小),数字,特殊文字を各1つ以上含めた10文字以上を入力して下さい。");
 			isPwValid = false;
 		} else {
 			isPwValid = true;
@@ -92,13 +92,13 @@
 		updateButtonState();
 	});
 
-	//비밀번호 변경 실행
+	//パスワードの変更
 	function changePw() {
 		if (isPwValid) {
-			alert("비밀번호 변경이 완료되었습니다.");
+			alert("パスワードの変更完了");
 			$("#change").submit();
 		} else {
-			alert("비밀번호를 올바르게 입력해주세요");
+			alert("正しいパスワードを入力して下さい。");
 		}
 	}
 </script>
