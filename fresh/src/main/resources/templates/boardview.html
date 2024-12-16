@@ -8,8 +8,6 @@
 	<th:block th:insert="~{menu.html::metaImport}"></th:block>
 	<th:block th:insert="~{menu.html::headImport}"></th:block>
 	<title th:text="${detail.board_title}">タイトル</title>
-	<!-- Main Stylesheet -->
-	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 	<div class="container">
@@ -45,23 +43,25 @@
 			</h3>
 			<ul id="commentList" th:each="comment:${comments}" class="comment-item">
 				<li>
-					<div th:id="'com_content'+${comment.com_no}">
-						<span th:text="${comment.user_username} +' :'"></span>  
-						<span th:text="${comment.com_comment}"></span>
-					</div><br>
-					<form th:id="'comment'+${comment.com_no}" name="comment" th:action="@{/comUpdate}" method="post" style="display: none;">
-						<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
-						<input type="hidden" name="board_no" th:value="${detail.board_no}">
-						<input type="hidden" name="com_no" th:value="${comment.com_no}">
-						<textarea id="commentContent" name="com_comment" th:placeholder="${comment.com_comment}"></textarea>
-						<button type="submit" class="btn" style="display: inline-block; padding: 5px 10px;">修正</button>
-					</form>
-					<div class="com_btn">
-						<th:block th:if="${comment.user_no == user.user_no}">
-							<a href="javascript:void(0);" th:onclick="modifyCom([[${comment.com_no}]])" class="btn" style="display: inline-block; padding: 5px 10px;">修正</a>
-							<a th:href="@{#}" class="btn" style="display: inline-block; padding: 5px 10px;">削除</a>
-						</th:block>
-						<a th:href="@{/#}" class="btn" style="display: inline-block; padding: 5px 10px;">リコメント</a>
+					<div class="row">
+						<div th:id="'com_content'+${comment.com_no}" class="col-md-9">
+							<span th:text="${comment.user_username} +' :'"></span>  
+							<span th:text="${comment.com_comment}"></span>
+						</div>
+						<form th:id="'comment'+${comment.com_no}"  class="col-md-9 com_upt_form" name="comment" th:action="@{/comUpdate}" method="post" style="display: none;">
+							<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+							<input type="hidden" name="board_no" th:value="${detail.board_no}">
+							<input type="hidden" name="com_no" th:value="${comment.com_no}">
+							<textarea class="commentContent" id="commentContent" name="com_comment" th:text="${comment.com_comment}"></textarea>
+							<button type="submit" class="btn" style="display: inline-block; padding: 5px 10px;">修正</button>
+						</form>
+						<div class="com_btn col-md-3">
+							<th:block th:if="${comment.user_no == user.user_no}">
+								<a href="javascript:void(0);" th:onclick="modifyCom([[${comment.com_no}]])" class="btn">修正</a>
+								<a th:href="@{#}" class="btn">削除</a>
+							</th:block>
+							<a th:href="@{/#}" class="btn">リコメント</a>
+						</div>
 					</div>
 				</li>
 			</ul>
@@ -138,7 +138,7 @@
 			const comment = document.getElementById('comment' + no.toString());
 
 			com_content.style.display = 'none';
-			comment.style.display = 'block';
+			comment.style.display = 'flex';
 		}
 		
 	</script>

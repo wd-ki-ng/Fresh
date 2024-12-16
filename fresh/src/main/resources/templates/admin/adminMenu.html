@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+	<th:block th:fragment="adminScript">
+		<script>
+			function selectAll(allBtn){
+				const checkboxes = document.getElementsByName(allBtn.name);
+				
+				checkboxes.forEach((checkbox) => {
+					checkbox.checked = allBtn.checked;
+				})
+			}
+		</script>
+		<script th:inline="javascript">
+	        /*<![CDATA[*/
+	        // ThymeleafのURLを動的に生成して使えるように設定
+	        var memUrl = /*[[${'/admin/adminMem'}]]*/ '/admin/adminMem';  // Thymeleafの文法でURLを処理
+	
+	        // toMemPage 機能の定義
+	        function toMemPage(userNo) {
+	        	userNo = parseInt(userNo, 10);
+	            // 動的にform生成
+	            var memForm = document.createElement('form');
+	            memForm.method = 'get';
+	            memForm.action = memUrl;  // ThymeleafのURLを使用
+	
+	            // user_no バリューをhiddenに伝達
+	            var userNoInput = document.createElement('input');
+	            userNoInput.type = 'hidden';
+	            userNoInput.name = 'user_no';  // サーバーで使うパラメータの名前
+	            userNoInput.value = userNo;  // ボタンをクリックする場合、もらったuser_noのバリュー
+	            memForm.appendChild(userNoInput);
+	
+	            // formを bodyに追加して提出
+	            document.body.appendChild(memForm);
+	            memForm.submit();
+	        }
+	        /*]]>*/
+    	</script>
+		<script th:inline="javascript">
+	        /*<![CDATA[*/
+	       	// Thymeleaf URLを動的に生成して使えるように設定
+	        var postDelUrl = /*[[${'/admin/postDel'}]]*/ '/admin/postDel';  // Thymeleafの文法でURLを処理
+	        
+	        function postDelete(board_no){
+				if(confirm('本当に ' + board_no + '番ポストを削除しますか？')){
+					board_no = parseInt(board_no, 10);
+		            // 動的にformを生成
+		            var postDelForm = document.createElement('form');
+		            postDelForm.method = 'get';
+		            postDelForm.action = postDelUrl;  // ThymeleafのURLを使用
+		
+		            // user_noのバリューをhidden に伝達
+		            var boardNoInput = document.createElement('input');
+		            boardNoInput.type = 'hidden';
+		            boardNoInput.name = 'board_no';  // サーバーで使うパラメータの名前
+		            boardNoInput.value = board_no;  // ボタンをクリックする場合、もらった user_noのバリュー
+		            postDelForm.appendChild(boardNoInput);
+		
+		            // formを bodyに追加して提出
+		            document.body.appendChild(postDelForm);
+		            postDelForm.submit();
+				}
+			}
+	        /*]]>*/
+    	</script>
+		<script th:inline="javascript">
+	        /*<![CDATA[*/
+	       	// Thymeleafの URLを動的に生成して使えるように設定
+	        var comDelUrl = /*[[${'/admin/comDel'}]]*/ '/admin/comDel';  // Thymeleafの文法でURLを処理
+	        
+	        function commentDelete(com_no){
+				if(confirm('本当に ' + com_no + '番コメントを削除しますか？')){
+					com_no = parseInt(com_no, 10);
+		            // 動的にformを生成
+		            var comDelForm = document.createElement('form');
+		            comDelForm.method = 'get';
+		            comDelForm.action = comDelUrl;  // ThymeleafのURLを使用
+		
+		            // user_noのバリューをhiddenに伝達
+		            var comNoInput = document.createElement('input');
+		            comNoInput.type = 'hidden';
+		            comNoInput.name = 'com_no';  // サーバーで使うパラメータの名前
+		            comNoInput.value = com_no;  // ボタンをクリックする場合、もらったuser_noバリュー
+		            comDelForm.appendChild(comNoInput);
+		
+		            // formをbodyに追加して提出
+		            document.body.appendChild(comDelForm);
+		            comDelForm.submit();
+				}
+			}
+	        /*]]>*/
+    	</script>
+		<script>
+	        function postsRestore(name){
+	        	const chkedRstPosts = document.getElementsByName(name);
+				let postRstString = "";
+				
+				chkedRstPosts[0].parentNode.removeChild(chkedRstPosts[0]);
+
+				chkedRstPosts.forEach((checkbox) =>{
+					if (checkbox.checked){
+						postRstString += checkbox.value;
+						postRstString += ",";
+					}
+					
+				})
+				
+				postRstString = postRstString.slice(0, -1);
+				
+				if(confirm('本当に ' + postRstString + '番ポストを復旧しますか？')){
+		            var postRstForm = document.getElementById('postRestore');
+		
+		            var postRstNum = document.createElement('input');
+		            postRstNum.type = 'hidden';
+		            postRstNum.name = 'postNum';
+		            postRstNum.value = postRstString;
+		            postRstForm.appendChild(postRstNum);
+		            postRstForm.submit();
+				}
+			}
+	        
+	        function comsRestore(name){
+	        	const chkedRstComs = document.getElementsByName(name);
+				let comRstString = "";
+				
+				chkedRstComs[0].parentNode.removeChild(chkedRstComs[0]);
+
+				chkedRstComs.forEach((checkbox) =>{
+					if (checkbox.checked){
+						comRstString += checkbox.value;
+						comRstString += ",";
+					}
+				})
+				
+				comRstString = comRstString.slice(0, -1);
+				
+				if(confirm('本当に ' + comRstString + '番コメントを復旧しますか？')){
+		            var comRstForm = document.getElementById('comRestore');
+		
+		            var comRstNum = document.createElement('input');
+		            comRstNum.type = 'hidden';
+		            comRstNum.name = 'comNum';
+		            comRstNum.value = comRstString;
+		            comRstForm.appendChild(comRstNum);
+		            comRstForm.submit();
+				}
+			}
+	        function postsEliminate(name){
+	        	const chkedEliPosts = document.getElementsByName(name);
+				let postEliString = "";
+				
+				chkedEliPosts[0].parentNode.removeChild(chkedEliPosts[0]);
+
+				chkedEliPosts.forEach((checkbox) =>{
+					if (checkbox.checked){
+						postEliString += checkbox.value;
+						postEliString += ",";
+					}
+				})
+				
+				postEliString = postEliString.slice(0, -1);
+				
+				if(confirm('本当に ' + postEliString + '番ポストを永久に削除しますか？')){
+		            var postEliForm = document.getElementById('postEliminate');
+		
+		            var postEliNum = document.createElement('input');
+		            postEliNum.type = 'hidden';
+		            postEliNum.name = 'postNum';
+		            postEliNum.value = postEliString;
+		            postEliForm.appendChild(postEliNum);
+		            postEliForm.submit();
+				}
+			}
+	        
+	        function comEliminate(name){
+	        	const chkedEliComs = document.getElementsByName(name);
+				let comEliString = "";
+				
+				chkedEliComs[0].parentNode.removeChild(chkedEliComs[0]);
+
+				chkedEliComs.forEach((checkbox) =>{
+					if (checkbox.checked){
+						comEliString += checkbox.value;
+						comEliString += ",";
+					}
+				})
+				
+				comEliString = comEliString.slice(0, -1);
+				
+				if(confirm('本当に ' + comEliString + '番コメントを永久に削除しますか？')){
+		            var comEliForm = document.getElementById('comRestore');
+		
+		            var comEliNum = document.createElement('input');
+		            comEliNum.type = 'hidden';
+		            comEliNum.name = 'comNum';
+		            comEliNum.value = comEliString;
+		            comEliForm.appendChild(comEliNum);
+		            comEliForm.submit();
+				}
+			}
+    	</script>
+		<script th:inline="javascript">
+		    /*<![CDATA[*/
+		    let members = /*[[${members}]]*/ [];
+		    let posts = /*[[${posts}]]*/ [];
+		    let comments = /*[[${comments}]]*/ [];
+		    let notices = /*[[${notices}]]*/ [];
+		    let del_posts = /*[[${del_posts}]]*/ [];
+		    let del_coms = /*[[${del_coms}]]*/ [];
+		    let del_notis = /*[[${del_notis}]]*/ [];
+		    /*]]>*/
+		</script>
+		<script>
+		    let currentPage = 1;
+		    let itemsPerPage = 10; // 基本的に 10固づつ 見せる
+		    let searchQuery = ""; // 検索語の初期化
+		    let boardList = []; // フィルターリングされたポストのリスト
+		    
+		 	// ポスト 表示
+		    function renderPosts(idname) {
+		        const startIndex = (currentPage - 1) * itemsPerPage;
+		        const endIndex = startIndex + itemsPerPage;
+		        const startTrId = idname + startIndex;
+		        const endTrId = idname + startIndex;
+		        
+		        boardList = document.querySelector('table#' + idname).getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+		        
+		        for (let i = 0; i < boardList.length; i++){
+		        	if (i >= startIndex && i < endIndex){
+		        		boardList[i].style.display = 'table-row';
+		        	} else {
+		        		boardList[i].style.display = 'none';
+		        	}
+		        }
+				
+		        document.querySelector('table#' + idname + ' .page-info').innerText = '現在ページ: ' + currentPage + '/' + Math.ceil(boardList.length / itemsPerPage);
+		    }
+		
+		 	// ページ変更
+		    function changePage(direction, idname) {
+		        if (direction === 'prev' && currentPage > 1) {
+		            currentPage--; 
+		        } else if (direction === 'next'&& currentPage < Math.ceil(boardList.length / itemsPerPage)) {
+		            currentPage++;
+		        }
+		        
+		        renderPosts(idname);
+		    }
+		
+		 	// ポストの数変更
+		    function updateItemsPerPage() {
+		        itemsPerPage = parseInt(document.getElementById('itemsPerPage').value);
+		        renderPosts();
+		    }
+		
+		 	// 初期データをロード
+		    filteredPosts = members;
+		    renderPosts('members');
+		    
+			function clickMenu(menu){
+				const div_adm_mem = document.querySelector('div#adm_mem');
+				const div_adm_post = document.querySelector('div#adm_post');
+				const div_adm_com = document.querySelector('div#adm_com');
+				const div_adm_noti = document.querySelector('div#adm_noti');
+				const div_adm_trash = document.querySelector('div#adm_trash');
+				
+				const td_adm_mem = document.querySelector('td#adm_mem');
+				const td_adm_post = document.querySelector('td#adm_post');
+				const td_adm_com = document.querySelector('td#adm_com');
+				const td_adm_noti = document.querySelector('td#adm_noti');
+				const td_adm_trash = document.querySelector('td#adm_trash');
+				
+				const bodies = [div_adm_mem, div_adm_post, div_adm_com, div_adm_noti, div_adm_trash];
+				const menus = [td_adm_mem, td_adm_post, td_adm_com, td_adm_noti, td_adm_trash];
+				
+				for(let i = 0; i < bodies.length; i++){
+					if (i == menu){
+						currentPage = 1;
+						bodies[i].style.display = 'table';
+						menus[i].classList.add('active');
+						for (let j = 0; j < bodies[i].getElementsByTagName('table').length; j++){
+							renderPosts(bodies[i].getElementsByTagName('table')[j].id);
+						}
+					}
+					else{
+						bodies[i].style.display = 'none';
+						menus[i].classList.remove('active');
+					}
+				}
+			}
+			
+			function clickTrashBtn(btn){
+				const btn_del_posts = document.querySelector('button#del_posts');
+				const btn_del_com = document.querySelector('button#del_com');
+				const btn_del_noti = document.querySelector('button#del_noti');
+				
+				const tbl_del_posts = document.querySelector('table#del_posts');
+				const tbl_del_com = document.querySelector('table#del_com');
+				const tbl_del_noti = document.querySelector('table#del_noti');
+				
+				const btns = [btn_del_posts, btn_del_com, btn_del_noti];
+				const tables = [tbl_del_posts, tbl_del_com, tbl_del_noti];
+				
+				for(let i = 0; i < btns.length; i++){
+					if (i == btn){
+						btns[i].classList.add('active');
+						tables[i].style.display = 'table';
+					}
+					else{
+						btns[i].classList.remove('active');
+						tables[i].style.display = 'none';
+					}
+				}
+			}
+		</script>
+	</th:block>
+</body>
+</html>

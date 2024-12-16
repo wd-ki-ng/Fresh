@@ -182,21 +182,21 @@ div.Main_RightBody > div {
 	font-size: 12px;
 	padding: 3px 3px;
 }
-.side_login input[type="text"]{
+.side_login input{
 	width: 100%;
 	height: 100%;
 	border: 1px solid #E6E6E6;
 	border-radius: 3px;
-	font-size: 14px;
-}
-.side_login .btn_td {
-	display: flex;
+	font-size: 16px;
 }
 
 .side_login button[type="submit"] {
-	flex: 1;
-    height: 100%;
-    width: auto;
+	display: block;
+	border-radius: 5px;
+	height: 54px;
+    width: 100%;
     box-sizing: border-box;
+    border: 1px solid lightgray;
+    font-size: 16px;
 }
 /* <-------------------------------------本文(Main_Body)スタイル設定-------------------------------------> */

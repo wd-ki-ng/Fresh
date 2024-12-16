@@ -1,37 +1,52 @@
 @charset "UTF-8";
-
+/* 보드 관련 css 모음 */
+/* 전체 */
 body {
-    margin: 0;
-    padding: 0;
     background-color: #f4f4f4;
 }
 
-.container {
-    width: 100%;
-    margin: 0 auto;
-}
-
-header {
-    background-color: #333;
-    color: white;
-    padding: 10px 0;
-    text-align: center;
-}
-
-h1 {
-    margin: 0;
-}
-
 .btn {
-    padding: 10px 15px;
-    text-decoration: none;
-    border-radius: 5px;
+	border: 1px solid lightgray;
+	width: auto;
+	padding: 5px 12px;
+	font-size: 14px;
+	margin: 5px;
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: gray;
+	color: white;
 }
 
+.row {
+	justify-content: center;
+}
+
+/* board.html - 게시판 목록 페이지------------------------------------------------------------------ */
+/* 게시글 목록 전체 박스 */
+.boardlistRow {
+	background-color: white;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	padding: 20px;
+}
+
+/* 게시글 목록 테이블 */
+.board-list {
+	table-layout: fixed;
+	margin-top: 20px;
+}
+
+.board-list th, .board-list td {
+	padding: 12px;
+	text-align: center;
+	border-bottom: 1px solid #ddd;
+	overflow: hidden; /* 텍스트가 칸을 넘을 경우 지움 */
+	text-overflow: ellipsis; /* 텍스트가 칸을 넘을 경우 ... */
+	white-space: nowrap; /* 텍스트가 칸을 넘어도 개행시키지 않음 */
+}
+/* board.html - 게시판 목록 페이지------------------------------------------------------------------ */
+/* boardview.html - 게시글 상세보기 페이지------------------------------------------------------------------ */
 .post-detail {
     background-color: white;
     padding: 20px;
@@ -44,10 +59,19 @@ h1 {
     margin-bottom: 15px;
 }
 
+.post-actions {
+	display: flex;
+	justify-content: center;
+}
+
 .meta {
     font-size: 0.9em;
     color: #777;
     margin-bottom: 15px;
+}
+
+.com_upt_form {
+	display: flex;
 }
 
 .comments {
@@ -73,6 +97,12 @@ h1 {
     list-style-type: none;
 }
 
+.comment-item li a.btn {
+    display: inline-flex;
+    padding: 5px 10px;
+    align-items: center;
+}
+
 .comment-actions {
     margin-top: 10px;
 }
@@ -80,6 +110,15 @@ h1 {
 .comment-actions .btn {
     background-color: #28a745;
     margin-right: 5px;
+}
+
+.com_btn {
+	display: flex;
+	justify-content: flex-end;
+}
+
+textarea.commentContent{
+	width: 80%;
 }
 
 div.pagination{

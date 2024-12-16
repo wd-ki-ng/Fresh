@@ -91,15 +91,16 @@
 				</div>
 				<!-- 本文右側(ログインボックスor 会員情報ボックス) -->
 				<div class="col-md-3 Main_RightBody">
-						<!-- ログインボックス　- ログインしていない場合 -->
+					<!-- ログインボックス　- ログインしていない場合 -->
 					<th:block th:if="${user.ROLE eq 'ROLE_ANONYMOUS'}">
 						<div class="side_login">
 							<form method="post" name="side_login" action="/login">
+							<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
 								<table class="login_table">
 									<colgroup>
 										<col width="55%"/>
-										<col width="25%"/>
 										<col width="20%"/>
+										<col width="25%"/>
 									</colgroup>
 									<thead>
 										<tr>
@@ -109,8 +110,9 @@
 									<tbody>
 										<tr>
 											<td colspan="2"><input type="text" name="username" placeholder="ID`"></td>
-											<td rowspan="2" class="btn_td"><button type="submit">LogIn</button></td>
-											<td><input type="hidden" name="_csrf" th:value="${_csrf.token}"/></td>
+											<td rowspan="2" class="btn_td">
+												<button type="submit">LogIn</button>
+											</td>
 										</tr>
 										<tr>
 											<td colspan="2"><input type="password" name="password" placeholder="パスワード"></td>
