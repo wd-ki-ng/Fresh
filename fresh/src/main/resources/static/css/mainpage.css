@@ -1,7 +1,6 @@
 @charset "UTF-8";
-/* メインページに適用するスタイルシート */
-
-/* フォント設定 */
+/* 메인페이지에 적용될 스타일 설정 */
+/* 모든 페이지 공통 설정 */
 * {
 	font-family: "Hina Mincho", serif;
 	font-weight: 400;
@@ -11,6 +10,71 @@ a {
 	text-decoration-line: none;
 	color: black;
 }
+
+body {
+    background-color: #f4f4f4;
+}
+
+.btn {
+	border: 1px solid lightgray;
+	width: auto;
+	padding: 5px 12px;
+	font-size: 14px;
+}
+
+.btn:hover {
+    background-color: gray;
+	color: white;
+}
+
+.row {
+	justify-content: center;
+}
+
+/* 흰색의 둥근 박스를 적용할 모든 div */
+.roundWhiteBox {
+	background-color: white;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	margin-top: 20px;
+	border-radius: 8px;
+	padding: 20px;
+}
+
+/* 페이징 부분 */
+.pagination{
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+}
+
+.pagination-btn{
+	display: flex;
+	align-items: center;
+    justify-content: center;
+}
+
+.page-info {
+	margin: 0 10px;
+}
+
+/* 공통적인 테이블 설정 */
+.board-table {
+	width: 100%;
+}
+
+.board-table tr{
+	border-bottom: 1px solid #E6E6E6;
+}
+
+.board-table tbody tr:hover{
+	background-color: #F9F9F9;
+	cursor: pointer;
+}
+
+.board-table td{
+	padding: 10px;
+}
+
 /* <--------------------------------------メニューバー(NavBar)スタイル設定--------------------------------------> */
 /* 全体div設定 */
 .NavBar {
@@ -82,32 +146,17 @@ a {
 /* <--------------------------------------メニューバー(NavBar)スタイル設定--------------------------------------> */
 
 /* <-------------------------------------本文(Main_Body)スタイル設定-------------------------------------> */
-div.Main_Body {
-	margin: 20px 0;
-}
 /* 左の部分 - ポスト */
-div.Main_Body > div.Main_LeftBody {
-	padding: 20px;
-	background-color: white;
-	border-radius: 10px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
 div.leftbody_2col {
 	padding: 20px 15px;
 }
 /* 人気のポスト */
-.table_wrap {
-	margin-bottom: 20px;
-}
-.BestAll_table {
-	width: 100%;
-}
 .BestAll_table a{
 	width: 100%;
     display: inline-block;
 }
 .BestAll_table th {
-	padding: 10px 15px 10px 15px;
+	padding: 10px 15px;
 }
 .BestAll_table .table_label{
 	border-bottom: 3px solid lightgray;
@@ -120,27 +169,16 @@ div.leftbody_2col {
 	color: gray;
 	text-align: right;
 }
-.BestAll_table tr{
-	border-bottom: 1px solid #E6E6E6;
-}
 .BestAll_table td{
-	padding: 10px 10px 5px 10px;
 	font-size: 16px;
 }
-.BestAll_table .table_body tr:hover{
-	background-color: #F9F9F9;
-	cursor: pointer;
-}
 /* 2段で配置されるポスト */
-.leftbody_2col table{
-	width: 100%;
-}
 .leftbody_2col a{
 	width: 100%;
     display: inline-block;
 }
 .leftbody_2col th {
-	padding: 10px 15px 10px 15px;
+	padding: 10px 15px;
 }
 .leftbody_2col .table_label{
 	border-bottom: 3px solid lightgray;
@@ -153,26 +191,14 @@ div.leftbody_2col {
 	color: gray;
 	text-align: right;
 }
-.leftbody_2col tr{
-	border-bottom: 1px solid #E6E6E6;
-}
 .leftbody_2col td{
-	padding: 10px 10px 5px 10px;
 	font-size: 14px;
-}
-.leftbody_2col .table_body tr:hover{
-	background-color: #F9F9F9;
-	cursor: pointer;
 }
 /* 右の部分 - ログインされていると会員情報ウィンドウ、されていないとログインウィンドウ */
 div.Main_RightBody > div {
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	border-radius: 10px;
 	display: flex;
 	justify-content: space-evenly;
     flex-direction: row;
-    background-color: white;
-    padding: 20px 10px;
 }
 /* ログインウィンドウ  */
 .side_login th{

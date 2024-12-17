@@ -13,7 +13,7 @@
 		<th:block th:insert="~{menu.html::navBar}"></th:block>
 
 		<!-- 掲示板 エリア -->
-		<div class="row boardlistRow">
+		<div class="row roundWhiteBox">
 			<!-- ポストの数変更&検索ボックスエリア -->
 			<div class="row">
 				<div class="col-md-2">
@@ -39,7 +39,7 @@
 
 			<!-- ポストリスト -->
 			<div class="row">
-				<table class="board-list" id="boardList">
+				<table class="board-list board-table" id="boardList">
 					<colgroup>
 						<col width="10%"/>
 						<col width="40%"/>
@@ -74,14 +74,14 @@
 			<!-- ページ番号 ＆ ナビゲーション -->
 			<div class="row pagination">
 				<div class="pagination-btn col-md-9">
-					<button class="prev-btn" onclick="changePage('prev')">Prev</button>
+					<button class="btn" onclick="changePage('prev')">Prev</button>
 					<span class="page-info">現在ページ: 1 / 1</span>
 					<!-- ページ番号表示 -->
-					<button class="prev-btn" onclick="changePage('next')">Next</button>
+					<button class="btn" onclick="changePage('next')">Next</button>
 				</div>
 				<div class="write-button col-md-3">
 					<!-- 作成ボタン -->
-					<button th:onclick="'location.href=\''+@{/boardWrite}+'\''">ポスト作成</button>
+					<button class="btn" th:onclick="'location.href=\''+@{/boardWrite}+'\''">ポスト作成</button>
 				</div>
 			</div>
 			<!-- ページ移動する時、メッセージ出力 -->

@@ -7,7 +7,7 @@
 	<meta name="author" content="themefisher.com">
 	<th:block th:insert="~{menu.html::metaImport}"></th:block>
 	<th:block th:insert="~{menu.html::headImport}"></th:block>
-	<title th:text="${detail.board_title}">タイトル</title>
+	<title th:text="${detail.board_title}"></title>
 </head>
 <body>
 	<div class="container">
@@ -15,7 +15,7 @@
 		<th:block th:insert="~{menu.html::navBar}"></th:block>
 
 		<!-- ポストの詳細な内容 -->
-		<section class="post-detail">
+		<section class="roundWhiteBox post-detail">
 			<h1 th:text="${detail.board_title}"></h1>
 			<p class="meta">
 				ユーザー名:[[${detail.board_write}]] | 
@@ -23,21 +23,21 @@
 				ビュー: [[${detail.board_count}]] | 
 				♥: [[${detail.board_like}]]
 			</p>
-			<p id="postContent" th:text="${detail.board_content}"></p>
+			<p class="post-content" th:text="${detail.board_content}"></p>
 
 			<!-- ♥ ＆ ポスト 修正/削除 ボタン -->
 			<div class="post-actions">
 				<button id="likeButton" class="btn">♥</button>
 				<!-- ポストの作成者が現在 ログインしている人と同じ場合限定 -->
 				<th:block th:if="${detail.user_no == user.user_no}">
-					<a th:href="@{/boardUpdate(no=${detail.board_no})}" id="editButton" class="btn" style="display: inline-block;">修正</a>
-					<a th:href="@{/board}" id="deleteButton" class="btn" th:onclick="deleteBoard([[${detail.board_no}]])" style="display: inline-block;">削除</a>
+					<a th:href="@{/boardUpdate(no=${detail.board_no})}" id="editButton" class="btn">修正</a>
+					<a th:href="@{/board}" id="deleteButton" class="btn" th:onclick="deleteBoard([[${detail.board_no}]])">削除</a>
 				</th:block>
 			</div>
 		</section>
 
 		<!-- コメントエリア -->
-		<section class="comments">
+		<section class="roundWhiteBox comments">
 			<h3>
 				コメント (<span id="commentCount" th:text="${com_count}"></span>)
 			</h3>
@@ -48,12 +48,12 @@
 							<span th:text="${comment.user_username} +' :'"></span>  
 							<span th:text="${comment.com_comment}"></span>
 						</div>
-						<form th:id="'comment'+${comment.com_no}"  class="col-md-9 com_upt_form" name="comment" th:action="@{/comUpdate}" method="post" style="display: none;">
+						<form th:id="'comment'+${comment.com_no}" class="col-md-9 com_upt_form" name="comment" th:action="@{/comUpdate}" method="post" style="display: none;">
 							<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 							<input type="hidden" name="board_no" th:value="${detail.board_no}">
 							<input type="hidden" name="com_no" th:value="${comment.com_no}">
 							<textarea class="commentContent" id="commentContent" name="com_comment" th:text="${comment.com_comment}"></textarea>
-							<button type="submit" class="btn" style="display: inline-block; padding: 5px 10px;">修正</button>
+							<button type="submit" class="btn">修正</button>
 						</form>
 						<div class="com_btn col-md-3">
 							<th:block th:if="${comment.user_no == user.user_no}">
@@ -65,27 +65,25 @@
 					</div>
 				</li>
 			</ul>
+			
 			<!-- コメントページネーション -->
 			<div class="pagination" id="pagination"></div>
 
 			<!-- コメント作成ボックス -->
 			<div id="commentFormContainer">
-				<form id="commentForm" class="comment-form" name="comment" action="/comWrite" method="post">
+				<form id="commentForm" class="form-group" name="comment" action="/comWrite" method="post">
 					<input type="hidden" name="_csrf" th:value="${_csrf.token}" /> 
 					<input type="hidden" name="board_no" th:value="${detail.board_no}">
 					<textarea id="commentContent" name="com_comment" placeholder="コメントを入力して下さい。"></textarea>
 					<button type="submit" class="btn">コメント作成</button>
 				</form>
-				<p id="loginMessage" class="login-message" style="display: none;">コメントの作成はログインした後からできます。</p>
 			</div>
 					
 			<!-- ボタンの配置 -->
 			<div class="btn-container">
 				<a th:if ="${prevBoard != null}" th:href="@{/boardview(no=${prevBoard})}" class="btn">Prev</a> 
 				<a th:if="${prevBoard == null}" class="btn disabled">Prev</a>
-				
 				<a th:href="@{/board}" class="btn">リスト</a>
-				
 				<a th:if="${nextBoard != null}" th:href="@{/boardview(no=${nextBoard})}" class="btn">Next</a>
 				<a th:if="${nextBoard == null}" class="btn disabled">Next</a>
 				<a th:href="@{/boardWrite}" class="btn">ポスト作成</a>
@@ -95,7 +93,6 @@
 
 	<!-- Essential Scripts =====================================-->
 	<!-- Main jQuery -->
-
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </body>
@@ -133,13 +130,13 @@
 	}
 	
 
-		function modifyCom(no) {
-			const com_content = document.getElementById('com_content' + no.toString());
-			const comment = document.getElementById('comment' + no.toString());
-
-			com_content.style.display = 'none';
-			comment.style.display = 'flex';
-		}
+	function modifyCom(no) {
+		const com_content = document.getElementById('com_content' + no.toString());
+		const comment = document.getElementById('comment' + no.toString());
+		
+		com_content.style.display = 'none';
+		comment.style.display = 'flex';
+	}
 		
 	</script>
 </html>

@@ -15,12 +15,12 @@
 			<!-- 本文 -->
 			<div class="row Main_Body">
 				<!-- 本文- -->
-				<div class="col-md-10 Main_LeftBody">
+				<div class="col-md-10 Main_LeftBody roundWhiteBox">
 					<!-- 会員管理テーブル -->
 					<!-- 会員情報をクリックした場合、会員情報修正(左)、会員が作成したポスト(右)ページへ移動 -->
 					<!-- 会員番号, ID, 名前, メールアドレス -->
 					<div id="adm_mem">
-						<table class="adm_mem adm_body" id="members">
+						<table class="adm_mem adm_body board-table" id="members">
 							<colgroup>
 								<col width="15%"/>
 								<col width="25%"/>
@@ -61,7 +61,7 @@
 					<!-- ポストの管理テーブル -->
 					<!-- 最近作成されたポスト, クリックする場合詳細ページ(修正、削除可能)へ移動 -->
 					<div id="adm_post" style="display:none">
-						<table class="adm_post adm_body" id="posts">
+						<table class="adm_post adm_body board-table" id="posts">
 							<colgroup>
 								<col width="10%"/>
 								<col width="10%"/>
@@ -114,7 +114,7 @@
 					<!-- コメントの管理テーブル -->
 					<!-- 最近作成されたコメントの情報,クリックする場合詳細ページへ移動 -->
 					<div id="adm_com" style="display:none">
-						<table class="adm_com adm_body" id="comments">
+						<table class="adm_com adm_body board-table" id="comments">
 							<colgroup>
 								<col width="10%"/>
 								<col width="10%"/>
@@ -167,7 +167,7 @@
 					<!-- お知らせのテーブル -->
 					<!-- 上のお知らせの作成へ移動 -->
 					<div id="adm_noti" style="display:none">
-						<table class="adm_noti adm_body" id="notices">
+						<table class="adm_noti adm_body board-tables" id="notices">
 							<colgroup>
 								<col width="10%"/>
 								<col width="40%"/>
@@ -233,7 +233,7 @@
 						<form name="postEliminate" id="postEliminate" action="/admin/postEliminate" method="post">
 							<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 						</form>
-						<table class="adm_trash adm_body del_posts" id="del_posts">
+						<table class="adm_trash adm_body del_posts board-table" id="del_posts">
 							<colgroup>
 								<col width="7%"/>
 								<col width="10%"/>
@@ -295,7 +295,7 @@
 						<form name="comsEliminate" id="comsEliminate" action="/admin/comsEliminate" method="post">
 							<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 						</form>
-						<table class="adm_com adm_body del_com" id="del_com" style="display:none;">
+						<table class="adm_com adm_body del_com board-table" id="del_com" style="display:none;">
 								<colgroup>
 									<col width="7%"/>
 									<col width="10%"/>
@@ -351,7 +351,7 @@
 							</table>
 
 						<!-- 削除されたお知らせ -->
-						<table class="adm_noti adm_body del_noti" id="del_noti" style="display:none;">
+						<table class="adm_noti adm_body del_noti board-table" id="del_noti" style="display:none;">
 							<colgroup>
 								<col width="7%"/>
 								<col width="10%"/>
@@ -406,7 +406,7 @@
 				</div>
 				<!-- 本文‐右側(メニュー-会員管理, ポスト管理, コメント管理) -->
 				<div class="col-md-2 Main_RightBody">
-					<table class="adm_menu">
+					<table class="adm_menu board-table">
 						<thead>
 							<tr>
 								<th>管理者メニュー</th>

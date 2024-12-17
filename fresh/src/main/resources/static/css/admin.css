@@ -1,18 +1,6 @@
 @charset "UTF-8";
 
 /* --------------------------------------------------------admin.htmlスタイル設定-------------------------------------------------------- */
-a {
-	text-decoration: none;
-	color: black;
-	cursor: pointer;
-}
-
-body {
-	margin: 0;
-	padding: 0;
-	background-color: #f4f4f4;
-}
-
 .Main_LeftBody div {
 	width: 100%;
 }
