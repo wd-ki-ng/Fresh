@@ -8,7 +8,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.RequestMatchers;
-
 import jakarta.servlet.http.HttpServletRequest;
 
 @Configuration
@@ -17,7 +16,7 @@ public class SecurityConfig {
 	
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
+		return new BCryptPasswordEncoder();						//パスワードのハッシュ化のBeanインジェクション
 	}
 	
 	@Bean
@@ -25,24 +24,25 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers("/img/**", "/css/**", "/js/**", "/scss/**", "/plugins/**").permitAll()
-                .requestMatchers("/", "/main", "/login", "/join","/board", "/checkid", "/checkUserName", "/verify-email", "/send-email", "/findid", "/findpassword", "/findPw", "/search").permitAll()           // 공개 경로 허용
-                .requestMatchers("/admin/**").hasAnyRole("ADMIN")              // 管理者、専用
-                .requestMatchers("/mypage/**").hasAnyRole("USER")		       // ユーザー専用
+                .requestMatchers("/", "/main", "/login", "/join","/board", "/checkid", "/checkUserName", "/verify-email", 
+                		"/send-email", "/findid", "/findpassword", "/findPw", "/search").permitAll()           //全ユーザーの接近を許容
+                .requestMatchers("/admin/**").hasAnyRole("ADMIN")              // 管理者のみ許容
+                .requestMatchers("/mypage/**").hasAnyRole("USER")		       // ユーザーのみ許容
                 .anyRequest().authenticated()                                  // その他、認証必要
             );
 
-        // ログインできなくてエラーページが発生する場合、ログインページへ移動
+        //カスタムログイン画面の設定
         http.formLogin((auth) -> auth
-        		.loginPage("/login")
-        		.loginProcessingUrl("/login")// ログインを成功する場合、当URLにバリュー伝達     
-        		.failureUrl("/login?error=1")
-        		.defaultSuccessUrl("/",true)   		
+        		.loginPage("/login")					 // ログイン画面に遷移
+        		.loginProcessingUrl("/login")　　　　　　// ログインを成功する場合、当URLにバリュー伝達     
+        		.failureUrl("/login?error=1")			 // ログインに失敗した場合、遷移される画面
+        		.defaultSuccessUrl("/",true)   			 // ログインに成功した場合、遷移される画面
         		.permitAll()
         		
         		);
         
         
-        // セッションの重複ログインの許容の可否
+        // セッションの重複ログインの許容可否
         http .sessionManagement((auth) -> auth
                 .maximumSessions(1) //多重ログインの許容の個数
                 .maxSessionsPreventsLogin(true));
@@ -51,17 +51,17 @@ public class SecurityConfig {
         
 
         
-        // セッション固定保護、10
+        // セッション固定保護Level 10
         http.sessionManagement((auth) -> auth
                 .sessionFixation().changeSessionId());
         
-        // ログアウト
+        // ログアウトの遷移設定
         http.logout((auth) -> auth
         		.logoutUrl("/logout")
         		.logoutSuccessUrl("/")
         		.invalidateHttpSession(true));
        
-        //http.csrf((auth) -> auth.disable()); //開発中には使用禁止
+        http.csrf((auth) -> auth.disable()); //開発中には使用禁止
         
         return http.build();
     }

@@ -32,7 +32,7 @@ public class EmailController {
 	public ResponseEntity<Void> sendEmail(@RequestParam("email") String email, HttpSession session){
 		//メール送信＆認証番号をセーブ
 		String verificationCode = emailService.sendVerificationCode(email);
-		session.setAttribute("verificationCode", verificationCode);							//セッションに伝達された認証番号をセーブ
+		session.setAttribute("verificationCode", verificationCode);			//セッションに伝達された認証番号をセーブ
 		return ResponseEntity.ok().build();
 	}
 	
@@ -60,12 +60,10 @@ public class EmailController {
 		
 		if(userDTO.getUser_no() != null) {
 			String tempPw = generateTempPw();
-			
-			//response.put("tempPw", userDTO.setTemp_pw(tempPw));
-			
+
 			userDTO.setTemp_pw(tempPw);
-			userService.createTempPw(userDTO);								//エンコーディングされたパスワードをセーブする
-			emailService.sendTempPw(user.getUser_email(), tempPw); 			//仮のパスワードを送信(メール)
+			userService.createTempPw(userDTO);						//エンコーディングされたパスワードをセーブする
+			emailService.sendTempPw(user.getUser_email(), tempPw); 	//仮のパスワードを送信(メール)
 			
 			response.put("success", true);
 		} else {

@@ -13,73 +13,63 @@ import com.fresh.dto.BoardDTO;
 import com.fresh.dto.CustomCommentDTO;
 import com.fresh.dto.UserDTO;
 import com.fresh.service.AdminService;
-import com.fresh.service.UserService;
 import com.fresh.util.UserUtil;
 
 @Controller
 public class AdminContoller {
 
 	@Autowired
-	private UserService userService;
-	
-	@Autowired
 	private AdminService adminService;
 
 	@Autowired
 	private UserUtil userUtil;
-
+	
+	
+	//アドミン画面に遷移
 	@GetMapping("/admin/admin")
 	public String admin(Model model) {
 		UserDTO user = userUtil.getUserNameAndRole();
 		model.addAttribute("user", user);
 		if (!user.getROLE().equals("ROLE_ADMIN")) {
-			return "main";
+			return "main";						//権限がアドミンではない場合、メイン画面に遷移
 		}
 		
-		// 会員の情報をもらう
-		List<UserDTO> members = adminService.getMemList();
+		List<UserDTO> members = adminService.getMemList();				// 会員の情報を抽出して取り込む
 		model.addAttribute("members", members);
 		
-		// ポストの情報をもらう
-		List<BoardDTO> posts = adminService.getAllPosts();
+		List<BoardDTO> posts = adminService.getAllPosts();				// ポストの情報を抽出して取り込む
 		model.addAttribute("posts", posts);
 		
-		// コメントの情報をもらう
-		List<CustomCommentDTO> comments = adminService.getAllComments();
+		List<CustomCommentDTO> comments = adminService.getAllComments(); // コメントの情報を抽出して取り込む
 		model.addAttribute("comments", comments);
 		
-		// お知らせの情報をもらう
-		List<BoardDTO> notices = adminService.getAllNotices();
+		List<BoardDTO> notices = adminService.getAllNotices();			 // お知らせの情報を抽出して取り込む
 		model.addAttribute("notices", notices);
 		
-		// 削除したポストの情報をもらう
-		List<BoardDTO> del_posts = adminService.getDelPosts();
+		List<BoardDTO> del_posts = adminService.getDelPosts();			// 削除したポストの情報を抽出して取り込む
 		model.addAttribute("del_posts", del_posts);
 		
-		// 削除したコメントの情報をもらう
-		List<CustomCommentDTO> del_coms = adminService.getDelComs();
+		List<CustomCommentDTO> del_coms = adminService.getDelComs();	// 削除したコメントの情報を抽出して取り込む
 		model.addAttribute("del_coms", del_coms);
 		
-		// 削除したお知らせの情報をもらう
-		List<BoardDTO> del_notis = adminService.getDelNotis();
+		List<BoardDTO> del_notis = adminService.getDelNotis();			// 削除したお知らせの情報を抽出して取り込む
 		model.addAttribute("del_notis", del_notis);
 		
 		return "admin/admin";
 	}
 	
 	@GetMapping("/admin/adminMem")
-	public String adminMem(Model model, @RequestParam(value = "user_no") Long user_no) {
+	public String adminMem(Model model, @RequestParam("user_no") Long user_no) {
 		UserDTO user = userUtil.getUserNameAndRole();
 		model.addAttribute("user", user);
 		if (!user.getROLE().equals("ROLE_ADMIN")) {
 			return "main";
 		}
-		// 照会したいユーザーの全ての情報をもらう
-		UserDTO member = adminService.getOneMem(user_no);
+		
+		UserDTO member = adminService.getOneMem(user_no);				// ユーザーの全ての情報を抽出して取り込む
 		model.addAttribute("member", member);
 		
-		// ユーザーが作成した全てのポストの情報をもらう
-		List<BoardDTO> memPosts = adminService.getMemPosts(user_no);
+		List<BoardDTO> memPosts = adminService.getMemPosts(user_no);	// ユーザーが作成した全てのポストの情報を抽出して取り込む
 		model.addAttribute("memPosts", memPosts);
 		
 		return "admin/adminMem";
@@ -93,8 +83,7 @@ public class AdminContoller {
 			return "main";
 		}
 		
-		// 修正の反映 - update
-		adminService.setOneMem(member);
+		adminService.setOneMem(member);			// 修正の反映 - update
 		
 		return "redirect:/admin/adminMem?user_no="+member.getUser_no();
 	}
@@ -107,9 +96,7 @@ public class AdminContoller {
 			return "main";
 		}
 		
-		// ユーザーの退会の処理
-		adminService.delOneMem(user_no);
-		
+		adminService.delOneMem(user_no);		// ユーザーの退会の処理
 		return "redirect:/admin/admin";
 	}
 	
@@ -121,9 +108,7 @@ public class AdminContoller {
 			return "main";
 		}
 		
-		// ポストの削除の処理 - board_del을 0で
-		adminService.setOneBoard_del(board_no);
-		
+		adminService.setOneBoard_del(board_no);		// ポストの削除の処理 - board_delのバリューを0にする
 		return "redirect:/admin/admin";
 	}
 	
@@ -135,47 +120,42 @@ public class AdminContoller {
 			return "main";
 		}
 		
-		// コメントの削除の処理 - com_del을 0で/submitNotice
-		adminService.setOneCom_del(com_no);
-		
+		adminService.setOneCom_del(com_no);			// コメントの削除の処理 - com_delのバリューを0にする
 		return "redirect:/admin/admin";
 	}
 	
-	// お知らせの作成ページへ移動
+	// お知らせ作成の画面に遷移
 	@GetMapping("/admin/noticeWrite")
 	public String noticeWrite(Model model) {
-		// ログインの情報をもらってログインをしていない場合はログインページに移動
+		// ログイン情報を取り込んでログイン中ではない場合はログイン画面に遷移
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
 			return "redirect:/login";
 		}
 		
-		// ログインしている場合はお知らせの作成ページに移動
-		return "admin/noticeWrite";
+		
+		return "admin/noticeWrite";			// ログイン中の場合はお知らせ作成の画面に遷移
 	}
 	
-	// お知らせを作成して、提出
+	// お知らせを作成して追加
 	@PostMapping("/admin/submitNotice")
 	public String submitNotice(Model model, BoardDTO notice) {
-		// ログインの情報をもらってログインをしていない場合はログインページに移動
+		// ログイン情報をもらってログインをしていない場合はログインページに移動
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
 			return "redirect:/login";
 		}
 
-		// データベースに内容を入力
-		adminService.setNotice(notice, user.getUser_no(), user.getUser_username());
-		
-		// リストページへ
-		return "redirect:/admin/admin";
+		adminService.setNotice(notice, user.getUser_no(), user.getUser_username());			// データベースに内容を入力
+		return "redirect:/admin/admin";		// リストページへ
 	}
 	
-	// ゴミ箱の復旧 - ポスト、お知らせ
+	// ゴミ箱の復旧 - ポスト&お知らせ
 	@PostMapping("/admin/postRestore")
 	public String postRestore(Model model, @RequestParam(value = "postNum") String postNum) {
-		// ログインの情報をもらって来てログインをしていない場合はログインページに移動
+		// ログインの情報を取り込んでログイン中ではない場合はログイン画面に遷移
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
@@ -188,14 +168,13 @@ public class AdminContoller {
 			adminService.restorePost(no);
 		}
 		
-		// リストページへ
-		return "redirect:/admin/admin";
+		return "redirect:/admin/admin";		// リスト画面に遷移
 	}
 	
 	// ゴミ箱の復旧 - コメント
 	@PostMapping("/admin/comRestore")
 	public String comRestore(Model model, @RequestParam(value = "comNum") String comNum) {
-		// ログインの情報をもらって来てログインをしていない場合はログインページに移動
+		// ログインの情報を取り込んでログイン中ではない場合はログイン画面に遷移
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
@@ -208,14 +187,13 @@ public class AdminContoller {
 			adminService.restoreComment(num);
 		}
 		
-		// リストページへ
-		return "redirect:/admin/admin";
+		return "redirect:/admin/admin";			// リスト画面に遷移
 	}
 	
 	// ゴミ箱、永久削除 - ポスト, お知らせ
 	@PostMapping("/admin/postEliminate")
 	public String postEliminate(Model model, @RequestParam(value = "postNum") String postNum) {
-		// ログインの情報をもらって来てログインをしていない場合はログインページに移動
+		// ログインの情報を取り込んでログイン中ではない場合はログイン画面に遷移
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
@@ -228,14 +206,13 @@ public class AdminContoller {
 			adminService.eliminatePost(no);
 		}
 		
-		// リストページへ
-		return "redirect:/admin/admin";
+		return "redirect:/admin/admin";				// リスト画面に遷移
 	}
 	
 	// ゴミ箱、永久削除 - コメント
 	@PostMapping("/admin/comsEliminate")
 	public String comsEliminate(Model model, @RequestParam(value = "comNum") String comNum) {
-		// ログインの情報をもらって来てログインをしていない場合はログインページに移動
+		// ログインの情報を取り込んでログイン中ではない場合はログイン画面に遷移
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
@@ -248,13 +225,13 @@ public class AdminContoller {
 			adminService.eliminateComment(num);
 		}
 		
-		// リストページへ
+		// リスト画面に遷移
 		return "redirect:/admin/admin";
 	}
 	
 	@GetMapping("/admin/boardUpdate")
 	public String boardUpdate(Model model, @RequestParam(value = "no") Long no) {
-		// ログインの情報をもらって来てログインをしていない場合はログインページに移動
+		// ログインの情報を取り込んでログイン中ではない場合はログイン画面に遷移
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
@@ -262,22 +239,22 @@ public class AdminContoller {
 		}
 		BoardDTO boardUpdate = adminService.findById(no);
 		model.addAttribute("boardUpdate", boardUpdate);
-		// ポストの修正ページ
+		// ポストの修正画面に遷移
 		return "boardUpdate";
 	}
 
 	// 修正のボタンを押す場合、データベースにセーブ
 	@PostMapping("/admin/boardUpdate")
 	public String boardUpdate(BoardDTO board, Model model) {
-		// ログインの情報をもらって来てログインをしていない場合はログインページに移動
+		// ログインの情報を取り込んでログイン中ではない場合はログイン画面に遷移
 		UserDTO user = userUtil.getUserData();
 		model.addAttribute("user", userUtil.getUserNameAndRole());
 		if (user == null || user.getROLE().equals("ROLE_ANONYMOUS")) {
 			return "redirect:/login";
 		}
-		//Updateを要請
+		//データを更新
 		adminService.boardUpdate(board);
-		// FindByIDで修正された内容を照会
+		// FindByIDで修正された内容を抽出して取り込む
 		return "redirect:/boardview?no=" + board.getBoard_no();
 	}
 }
