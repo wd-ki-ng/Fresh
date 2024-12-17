@@ -22,6 +22,36 @@
 		where board_no = #{no}
 	</update>
 	
+	<!-- いいね関連機能 -->
+	<!-- いいねを押したのか確認 -->
+	<select id="isLikedBoard" parameterType="LikesDTO" resultType="int">
+		select count(*)
+		from likes
+		where user_no=#{user_no} and board_no=#{board_no}
+	</select>
+	<!-- likesテーブルに行入力 -->
+	<insert id="insertLike" parameterType="LikesDTO">
+		insert into likes(user_no, board_no, com_no, reply_no)
+		values (#{user_no}, #{board_no}, #{com_no}, #{reply_no})
+	</insert>
+	<!-- likesテーブルの行削除 -->
+	<delete id="deleteBoardLike" parameterType="LikesDTO">
+		delete from likes
+		where user_no=#{user_no} and board_no=#{board_no}
+	</delete>
+	<!-- boardテーブルアップデート -->
+	<update id="plusBoardLike" parameterType="LikesDTO">
+		update board
+			set board_like=board_like+1
+		where board_no=#{board_no}
+	</update>
+	<update id="minusBoardLike" parameterType="LikesDTO">
+		update board
+			set board_like=board_like-1
+		where board_no=#{board_no}
+	</update>
+	<!-- いいね関連機能 -->
+	
 	<insert id="write" parameterType="BoardDTO">
 		insert into board(user_no, board_title, board_content, board_date, board_write)
 		values (#{user_no},#{board_title}, #{board_content}, now(), #{board_write})
@@ -34,9 +64,18 @@
 		where board_no = #{no} and com_del = '1'
 	</select>
 	
+	<!-- <select id="com_list" parameterType="Long" resultType="CustomCommentDTO">
+		select comment.*, user.user_username, count(likes.*) as isLiked
+		from comment, user, likes
+		where comment.board_no = #{no} and comment.com_del = '1' and user.user_no=comment.user_no
+			and likes.com_no=comment.com_no and likes.user_no=user.user_no
+		order by comment.com_cdate
+		group by comment.com_no
+	</select> -->
+	
 	<select id="com_list" parameterType="Long" resultType="CustomCommentDTO">
 		select comment.*, user.user_username
-		from comment, user 
+		from comment, user
 		where comment.board_no = #{no} and comment.com_del = '1' and user.user_no=comment.user_no
 		order by comment.com_cdate
 	</select>

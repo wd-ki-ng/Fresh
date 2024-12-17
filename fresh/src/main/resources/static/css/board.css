@@ -70,6 +70,11 @@ body {
     margin-bottom: 15px;
 }
 
+.active-btn {
+	background-color: gray;
+	color: white;
+}
+
 .com_upt_form {
 	display: flex;
 }

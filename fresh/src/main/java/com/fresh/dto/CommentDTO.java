@@ -17,4 +17,5 @@ public class CommentDTO {
 	private Date com_mdate; // 修正日
 	private String com_comment; // コメントの内容
 	private int com_del; // 削除可否 ( 1:未削除, 0:削除 )
+	private Long com_like;
 }
