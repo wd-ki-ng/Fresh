@@ -1,36 +1,6 @@
 @charset "UTF-8";
 /* 보드 관련 css 모음 */
-/* 전체 */
-body {
-    background-color: #f4f4f4;
-}
-
-.btn {
-	border: 1px solid lightgray;
-	width: auto;
-	padding: 5px 12px;
-	font-size: 14px;
-	margin: 5px;
-}
-
-.btn:hover {
-    background-color: gray;
-	color: white;
-}
-
-.row {
-	justify-content: center;
-}
-
 /* board.html - 게시판 목록 페이지------------------------------------------------------------------ */
-/* 게시글 목록 전체 박스 */
-.boardlistRow {
-	background-color: white;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	border-radius: 8px;
-	padding: 20px;
-}
-
 /* 게시글 목록 테이블 */
 .board-list {
 	table-layout: fixed;
@@ -47,126 +17,73 @@ body {
 }
 /* board.html - 게시판 목록 페이지------------------------------------------------------------------ */
 /* boardview.html - 게시글 상세보기 페이지------------------------------------------------------------------ */
-.post-detail {
-    background-color: white;
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+.com_btn {
+	display: inline-flex;
+	justify-content: flex-end;
 }
 
-.post-detail h2 {
-    margin-bottom: 15px;
+.com_btn .btn {
+	margin-left: 5px;
 }
-
-.post-actions {
-	display: flex;
-	justify-content: center;
-}
-
+/* 게시글 정보 - 작성자, 작성일, 조회수, 좋아요수 */
 .meta {
     font-size: 0.9em;
     color: #777;
     margin-bottom: 15px;
 }
 
+/* 좋아요, 수정, 삭제 버튼들 */
+.post-actions {
+	display: flex;
+	justify-content: center;
+}
+
+.post-actions .btn {
+	margin-left: 5px;
+}
+
+/* 좋아요를 이미 눌렀을 경우 동적으로 추가되는 클래스 */
 .active-btn {
 	background-color: gray;
 	color: white;
 }
 
+/* 댓글 구역 */
 .com_upt_form {
 	display: flex;
 }
-
-.comments {
-    background-color: white;
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.comments h3 {
-    margin-top: 0;
+.com_upt_form .btn {
+	margin-left: 5px;
 }
 
 .comment-item {
+	padding: 0px;
+}
+
+.comment-item li{
     background-color: #f9f9f9;
     padding: 10px;
     margin: 10px 0;
     border-radius: 5px;
-}
-
-.comment-item li {
     list-style-type: none;
 }
 
 .comment-item li a.btn {
     display: inline-flex;
-    padding: 5px 10px;
     align-items: center;
+    height: 100%;
 }
 
 .comment-actions {
     margin-top: 10px;
 }
 
-.comment-actions .btn {
-    background-color: #28a745;
-    margin-right: 5px;
-}
-
-.com_btn {
-	display: flex;
-	justify-content: flex-end;
-}
-
 textarea.commentContent{
 	width: 80%;
 }
 
-div.pagination{
-	display: flex;
-	justify-content: space-between;
-	margin-top: 20px;
-	
-}
-.pagination .prev-btn  {
-	background-color: #333;
-	color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-}
-.pagination button:hover {
-	background-color: #0056b3;
-}
-
-.page-info {
-	align-items: center;
-	margin: 0 10px;
-	font-size: 16px;
-	color: #333;
-}
-
-.pagination-btn{
-	display: flex;
-	align-items: center;
-    justify-content: center;
-}
-
 .write-button button{
-	background-color: #333;
-	color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
 	float: right;
-}
-	
-.write-button :hover {
-	background-color: #555;
 }
 
 .comment-form {

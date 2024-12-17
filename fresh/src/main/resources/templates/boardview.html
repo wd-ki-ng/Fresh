@@ -15,7 +15,7 @@
 		<th:block th:insert="~{menu.html::navBar}"></th:block>
 
 		<!-- ポストの詳細な内容 -->
-		<section class="post-detail">
+		<section class="post-detail roundWhiteBox">
 			<h1 th:text="${detail.board_title}"></h1>
 			<p class="meta">
 				ユーザー名:[[${detail.board_write}]] | 
@@ -35,19 +35,19 @@
 				</form>
 				<!-- ポストの作成者が現在 ログインしている人と同じ場合限定 -->
 				<th:block th:if="${detail.user_no == user.user_no}">
-					<a th:href="@{/boardUpdate(no=${detail.board_no})}" id="editButton" class="btn" style="display: inline-block;">修正</a>
-					<a th:href="@{/board}" id="deleteButton" class="btn" th:onclick="deleteBoard([[${detail.board_no}]])" style="display: inline-block;">削除</a>
+					<a th:href="@{/boardUpdate(no=${detail.board_no})}" id="editButton" class="btn">修正</a>
+					<a th:href="@{/board}" id="deleteButton" class="btn" th:onclick="deleteBoard([[${detail.board_no}]])">削除</a>
 				</th:block>
 			</div>
 		</section>
 
 		<!-- コメントエリア -->
-		<section class="comments">
-			<h3>
+		<section class="comments roundWhiteBox">
+			<h5>
 				コメント (<span id="commentCount" th:text="${com_count}"></span>)
-			</h3>
-			<ul id="commentList" th:each="comment:${comments}" class="comment-item">
-				<li>
+			</h5>
+			<ul class="comment-item">
+				<li th:each="comment:${comments}">
 					<div class="row">
 						<div th:id="'com_content'+${comment.com_no}" class="col-md-9">
 							<span th:text="'♥' + ${comment.com_like}"></span>
@@ -59,7 +59,7 @@
 							<input type="hidden" name="board_no" th:value="${detail.board_no}">
 							<input type="hidden" name="com_no" th:value="${comment.com_no}">
 							<textarea class="commentContent" id="commentContent" name="com_comment" th:text="${comment.com_comment}"></textarea>
-							<button type="submit" class="btn" style="display: inline-block; padding: 5px 10px;">修正</button>
+							<button type="submit" class="btn">修正</button>
 						</form>
 						<div class="com_btn col-md-3">
 							<form th:action="@{/comLike}" method="get" name="comLikeForm">
@@ -89,7 +89,6 @@
 					<textarea id="commentContent" name="com_comment" placeholder="コメントを入力して下さい。"></textarea>
 					<button type="submit" class="btn">コメント作成</button>
 				</form>
-				<p id="loginMessage" class="login-message" style="display: none;">コメントの作成はログインした後からできます。</p>
 			</div>
 					
 			<!-- ボタンの配置 -->
