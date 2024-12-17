@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-
+	//トークンの認識不可能を解決する為
    @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
