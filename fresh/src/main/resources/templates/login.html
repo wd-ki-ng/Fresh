@@ -16,7 +16,7 @@
 			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 			crossorigin="anonymous">
-		<title>로그인</title>
+		<title>ログイン</title>
 		<style>
 		/*@import url("http://fonts.googleapis.com/earlyaccess/nanumgothic.css");*/
 		
@@ -83,16 +83,16 @@
 			<div class="card-body">
 				<form action="/login" name="loginForm" method="POST">
 					<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-					<input type="text" name="username" id="username" class="form-control"placeholder="아이디" required autofocus>
+					<input type="text" name="username" id="username" class="form-control"placeholder="ID" required autofocus>
 						<br> 
-						<input type="password" name="password" id="password" class="form-control"placeholder="비밀번호" required>
+						<input type="password" name="password" id="password" class="form-control"placeholder="パスワード" required>
 						<br>
-					<button id="login-btn" class="btn btn-lg btn-primary btn-block" type="submit">로 그 인</button>
+					<button id="login-btn" class="btn btn-lg btn-primary btn-block" type="submit">ログイン</button>
 				</form>
 			</div>
 			<div class="links">
-				<a th:href="@{/findid}">아이디 찾기</a> | <a th:href="@{/findpassword}">비밀번호 찾기</a> | <a
-					th:href="@{/join}">회원가입</a>
+				<a th:href="@{/findid}">IDを探す</a> | <a th:href="@{/findpassword}">パスワードを探す</a> | <a
+					th:href="@{/join}">会員登録</a>
 			</div>
 		</div>
 	</body>
