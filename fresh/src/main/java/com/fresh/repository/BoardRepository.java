@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.fresh.dto.BoardDTO;
 import com.fresh.dto.CommentDTO;
 import com.fresh.dto.CustomCommentDTO;
-import com.fresh.dto.LikesDTO;
+import com.fresh.dto.UserDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,36 +32,12 @@ public class BoardRepository {
 	// 次のポスト 
 	public long NextBoard(Long no) {
 		 Long nextBoard = sqlSession.selectOne("board.nextBoard", no);
-		 return nextBoard != null ? nextBoard : -1L; // 다음 게시글이 없으면 -1을 반환clickedLike
+		 return nextBoard != null ? nextBoard : -1L; // 다음 게시글이 없으면 -1을 반환
 	}
 	
 	public int setView(Long no) {
 		return sqlSession.update("board.updateView", no);
 	}
-	
-	// いいね関連機能-------------------------------------------------------------------------
-	
-	public int isLikedPost(LikesDTO likesDTO) {
-		return sqlSession.selectOne("board.isLikedBoard", likesDTO);
-	}
-	
-	public void clickedLike(LikesDTO likesDTO) {
-		sqlSession.insert("board.insertLike", likesDTO);
-	}
-	
-	public void plusBoardLike(LikesDTO likesDTO) {
-		sqlSession.update("board.plusBoardLike", likesDTO);
-	}
-	
-	public void minusBoardLike(LikesDTO likesDTO) {
-		sqlSession.update("board.minusBoardLike", likesDTO);
-	}
-	
-	public void canceledBoardLike(LikesDTO likesDTO) {
-		sqlSession.delete("board.deleteBoardLike", likesDTO);
-	}
-	
-	// いいね関連機能-------------------------------------------------------------------------
 	
 	public int setBoard(BoardDTO board) {
 		return sqlSession.insert("board.write", board);

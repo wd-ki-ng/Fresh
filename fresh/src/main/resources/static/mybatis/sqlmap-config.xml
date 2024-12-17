@@ -6,6 +6,5 @@
         <typeAlias type="com.fresh.dto.BoardDTO" alias="BoardDTO"></typeAlias>
         <typeAlias type="com.fresh.dto.CommentDTO" alias="CommentDTO"/>
         <typeAlias type="com.fresh.dto.CustomCommentDTO" alias="CustomCommentDTO"/>
-        <typeAlias type="com.fresh.dto.LikesDTO" alias="LikesDTO"/>
     </typeAliases>
 </configuration>

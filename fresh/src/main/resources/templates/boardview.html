@@ -27,12 +27,7 @@
 
 			<!-- ♥ ＆ ポスト 修正/削除 ボタン -->
 			<div class="post-actions">
-				<form th:action="@{/postLike}" method="get" name="boardLikeForm">
-					<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
-					<input type="hidden" name="no" th:value="${detail.board_no}" />
-					<input type="hidden" name="like" th:value="${isLikedPost}" />
-					<button type="submit" id="postLikeBtn" class="btn">♥</button>
-				</form>
+				<button id="likeButton" class="btn">♥</button>
 				<!-- ポストの作成者が現在 ログインしている人と同じ場合限定 -->
 				<th:block th:if="${detail.user_no == user.user_no}">
 					<a th:href="@{/boardUpdate(no=${detail.board_no})}" id="editButton" class="btn" style="display: inline-block;">修正</a>
@@ -50,8 +45,7 @@
 				<li>
 					<div class="row">
 						<div th:id="'com_content'+${comment.com_no}" class="col-md-9">
-							<span th:text="'♥' + ${comment.com_like}"></span>
-							<span th:text="${comment.user_username} +' :'"></span>
+							<span th:text="${comment.user_username} +' :'"></span>  
 							<span th:text="${comment.com_comment}"></span>
 						</div>
 						<form th:id="'comment'+${comment.com_no}"  class="col-md-9 com_upt_form" name="comment" th:action="@{/comUpdate}" method="post" style="display: none;">
@@ -62,13 +56,6 @@
 							<button type="submit" class="btn" style="display: inline-block; padding: 5px 10px;">修正</button>
 						</form>
 						<div class="com_btn col-md-3">
-							<form th:action="@{/comLike}" method="get" name="comLikeForm">
-								<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
-								<input type="hidden" name="board_no" th:value="${comment.board_no}" />
-								<input type="hidden" name="com_no" th:value="${comment.com_no}" />
-								<!-- <a id="likeButton" class="btn" th:onclick="likeCom([[${comment.com_no}]])">♥</a> -->
-								<a id="likeButton" class="btn" href="#">♥</a>
-							</form>
 							<th:block th:if="${comment.user_no == user.user_no}">
 								<a href="javascript:void(0);" th:onclick="modifyCom([[${comment.com_no}]])" class="btn">修正</a>
 								<a th:href="@{#}" class="btn">削除</a>
@@ -154,17 +141,5 @@
 			comment.style.display = 'flex';
 		}
 		
-	</script>
-	<script th:inline="javascript">
-    /*<![CDATA[*/
-    let isLikedPost = /*[[${isLikedPost}]]*/ 0;
-    /*]]>*/
-	</script>
-	<script>
-	/* もういいね押していたら、いいねボタンに'active-btn'クラスを加える */
-	if (isLikedPost > 0){
-		const postLikeBtn = document.getElementById("postLikeBtn");
-		postLikeBtn.classList.add('active-btn');
-	}
 	</script>
 </html>
