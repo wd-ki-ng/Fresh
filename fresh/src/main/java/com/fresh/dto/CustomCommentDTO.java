@@ -17,6 +17,8 @@ public class CustomCommentDTO {
 	private Date com_mdate; // 修正日
 	private String com_comment; // コメント内容
 	private int com_del; // 削除可否 ( 1:未削除, 0:削除 )
+	private Long com_like;
 	
+	private int isLiked;	// 今ログインしているユーザーがいいねを押したのかどうか確認
 	private String user_username;		//ユーザー名
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.fresh.dto.BoardDTO;
 import com.fresh.dto.CommentDTO;
 import com.fresh.dto.CustomCommentDTO;
+import com.fresh.dto.LikesDTO;
 import com.fresh.dto.UserDTO;
 import com.fresh.repository.BoardRepository;
 
@@ -38,6 +39,22 @@ public class BoardService {
 	// ビューを増やす
 	public int setView(Long no) {
 		return boardRepository.setView(no);
+	}
+	
+	public int isLikedPost(LikesDTO likesDTO) {
+		return boardRepository.isLikedPost(likesDTO);
+	}
+	
+	public void clickedLike(Long user_no, Long board_no, Long com_no, Long reply_no) {
+		LikesDTO likesDTO = new LikesDTO(user_no, board_no, com_no, reply_no);
+		boardRepository.clickedLike(likesDTO);
+		boardRepository.plusBoardLike(likesDTO);
+	}
+	
+	public void canceledLike(Long user_no, Long board_no, Long com_no, Long reply_no) {
+		LikesDTO likesDTO = new LikesDTO(user_no, board_no, com_no, reply_no);
+		boardRepository.canceledBoardLike(likesDTO);
+		boardRepository.minusBoardLike(likesDTO);
 	}
 	
 	// ポスト作成
