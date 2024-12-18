@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
 		<title>Fresh Main page</title>
@@ -250,7 +250,7 @@
 				</div>
 			</div>
 		</div>
-		<script>
+		<script type="text/javascript">
 		function memTableToggle(){
 			const updateTable = document.getElementById('updateTable');
 			const nomalTable = document.getElementById('nomalTable');
@@ -263,9 +263,7 @@
 				nomalTable.style.display = 'none';
 			}
 		}
-		</script>
-		<script th:inline="javascript">
-	        /*<![CDATA[*/
+
 	        // ThymeleafのURLを動的に生成して使えるように設定
 	        var urlTemplate = /*[[${'/admin/memDel'}]]*/ '/admin/memDel';  //Thymeleafの文法でURLを処理
 	
@@ -292,7 +290,7 @@
 		            form.submit();
 	        	}
 	        }
-	        /*]]>*/
+
     	</script>
 	</body>
 </html>
