@@ -11,6 +11,21 @@
 	margin-left: 5px;
 }
 
+.board-top select {
+	border: 1px solid lightgray;
+	font-size: 14px;
+	border-radius: 5px;
+	padding: 2px 5px;
+}
+
+.board-top input[type="text"] {
+	width: 50%;
+	border: 1px solid lightgray;
+	font-size: 14px;
+	border-radius: 5px;
+	padding: 3px 5px;
+}
+
 /* 게시글 목록 테이블 */
 .board-list {
 	table-layout: fixed;
