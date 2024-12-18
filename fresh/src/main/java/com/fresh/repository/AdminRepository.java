@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.fresh.dto.BoardDTO;
+import com.fresh.dto.CommentDTO;
 import com.fresh.dto.CustomCommentDTO;
 import com.fresh.dto.UserDTO;
 
@@ -52,7 +53,7 @@ public class AdminRepository {
 		sqlSession.update("admin.postDel", board_no);
 	}
 	
-	public List<CustomCommentDTO> getAllComments() {
+	public List<CommentDTO> getAllComments() {
 		return sqlSession.selectList("admin.com_list");
 	}
 	
@@ -88,7 +89,7 @@ public class AdminRepository {
 		sqlSession.delete("admin.eliminateCom", com_no);
 	}
 
-	public List<CustomCommentDTO> getDelComs() {
+	public List<CommentDTO> getDelComs() {
 		return sqlSession.selectList("admin.del_com");
 	}
 

@@ -55,7 +55,7 @@ public class BoardController {
 		int com_count = boardService.getCommentCount(no);
 
 		// 該当ポストのコメントが存在する場合、コメントのリストをもらう
-		List<CustomCommentDTO> comments = boardService.getComments(no);
+		List<CommentDTO> comments = boardService.getComments(no);
 		model.addAttribute("comments", comments);
 		model.addAttribute("com_count", com_count);
 		// ポストの情報をもらった場合

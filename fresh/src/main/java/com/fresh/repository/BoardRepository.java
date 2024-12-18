@@ -85,7 +85,7 @@ public class BoardRepository {
 		return sqlSession.selectOne("board.com_cnt", no);
 	}
 	
-	public List<CustomCommentDTO> getComments(Long no) {
+	public List<CommentDTO> getComments(Long no) {
 		return sqlSession.selectList("board.com_list", no);
 	}
 	

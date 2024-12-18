@@ -49,7 +49,6 @@
 				<li th:each="comment:${comments}">
 					<div class="row">
 						<div th:id="'com_content'+${comment.com_no}" class="col-md-8">
-							<span th:text="'♥' + ${comment.com_like}"></span>
 							<span th:text="${comment.user_username} +' :'"></span>
 							<span th:text="${comment.com_comment}"></span>
 						</div>
@@ -65,8 +64,6 @@
 								<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 								<input type="hidden" name="board_no" th:value="${comment.board_no}" />
 								<input type="hidden" name="com_no" th:value="${comment.com_no}" />
-								<!-- <a id="likeButton" class="btn" th:onclick="likeCom([[${comment.com_no}]])">♥</a> -->
-								<a id="likeButton" class="btn" href="#">♥</a>
 							</form>
 							<th:block th:if="${comment.user_no == user.user_no}">
 								<a href="javascript:void(0);" th:onclick="modifyCom([[${comment.com_no}]])" class="btn">修正</a>

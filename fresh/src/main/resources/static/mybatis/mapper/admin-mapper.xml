@@ -63,7 +63,7 @@
 		where board_no=#{board_no}
 	</update>
 	
-	<select id="com_list" resultType="CustomCommentDTO">
+	<select id="com_list" resultType="CommentDTO">
 		select comment.*, user.user_username
 		from comment, user 
 		where user.user_no=comment.user_no and comment.com_del='1'
@@ -120,7 +120,7 @@
 		where com_no=#{com_no}
 	</delete>
 	
-	<select id="del_com" resultType="CustomCommentDTO">
+	<select id="del_com" resultType="CommentDTO">
 		select comment.*, user.user_username
 		from comment, user 
 		where user.user_no=comment.user_no and comment.com_del='0'

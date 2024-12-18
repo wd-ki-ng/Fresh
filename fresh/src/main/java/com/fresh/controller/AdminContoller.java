@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fresh.dto.BoardDTO;
+import com.fresh.dto.CommentDTO;
 import com.fresh.dto.CustomCommentDTO;
 import com.fresh.dto.UserDTO;
 import com.fresh.service.AdminService;
@@ -40,7 +41,7 @@ public class AdminContoller {
 		List<BoardDTO> posts = adminService.getAllPosts();				// ポストの情報を抽出して取り込む
 		model.addAttribute("posts", posts);
 		
-		List<CustomCommentDTO> comments = adminService.getAllComments(); // コメントの情報を抽出して取り込む
+		List<CommentDTO> comments = adminService.getAllComments(); // コメントの情報を抽出して取り込む
 		model.addAttribute("comments", comments);
 		
 		List<BoardDTO> notices = adminService.getAllNotices();			 // お知らせの情報を抽出して取り込む
@@ -49,7 +50,7 @@ public class AdminContoller {
 		List<BoardDTO> del_posts = adminService.getDelPosts();			// 削除したポストの情報を抽出して取り込む
 		model.addAttribute("del_posts", del_posts);
 		
-		List<CustomCommentDTO> del_coms = adminService.getDelComs();	// 削除したコメントの情報を抽出して取り込む
+		List<CommentDTO> del_coms = adminService.getDelComs();	// 削除したコメントの情報を抽出して取り込む
 		model.addAttribute("del_coms", del_coms);
 		
 		List<BoardDTO> del_notis = adminService.getDelNotis();			// 削除したお知らせの情報を抽出して取り込む

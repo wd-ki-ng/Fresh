@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.fresh.dto.BoardDTO;
+import com.fresh.dto.CommentDTO;
 import com.fresh.dto.CustomCommentDTO;
 import com.fresh.dto.UserDTO;
 import com.fresh.repository.AdminRepository;
@@ -55,7 +56,7 @@ public class AdminService {
 		adminRepository.setOneBoard_del(board_no);
 	}
 	
-	public List<CustomCommentDTO> getAllComments() {
+	public List<CommentDTO> getAllComments() {
 		return adminRepository.getAllComments();
 	}
 	
@@ -86,7 +87,7 @@ public class AdminService {
 		adminRepository.restorePost(board_no);
 	}
 
-	public List<CustomCommentDTO> getDelComs() {
+	public List<CommentDTO> getDelComs() {
 		return adminRepository.getDelComs();
 	}
 	

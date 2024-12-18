@@ -64,7 +64,7 @@
 		where board_no = #{no} and com_del = '1'
 	</select>
 	
-	<select id="com_list" parameterType="Long" resultType="CustomCommentDTO">
+	<select id="com_list" parameterType="Long" resultType="CommentDTO">
 		select comment.*, user.user_username
 		from comment, user
 		where comment.board_no = #{no} and comment.com_del = '1' and user.user_no=comment.user_no

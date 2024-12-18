@@ -90,7 +90,7 @@ public class BoardService {
 	}
 	
 	// コメントの情報をもらう
-	public List<CustomCommentDTO> getComments(Long no) {
+	public List<CommentDTO> getComments(Long no) {
 		return boardRepository.getComments(no);
 	}
 	
