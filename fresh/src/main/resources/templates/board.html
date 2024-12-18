@@ -88,13 +88,11 @@
 			<div class="page-info" id="message"></div>
 		</div>
 	</div>
-	<script th:inline="javascript">
-    /*<![CDATA[*/
+	<script type="text/javascript">
+	const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
     let posts = /*[[${BoardList}]]*/ [];  // Thymeleafから 伝達された BoardList データを JSONに変換
-    /*]]>*/
-	</script>
 
-	<script>
     let currentPage = 1;
     let itemsPerPage = 10; // 基本的に 10固づつ 見せる
     let searchQuery = ""; // 検索語の初期化
