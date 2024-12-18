@@ -26,12 +26,12 @@ import jakarta.servlet.http.HttpServletResponse;
 public class UserContoller {
 
 	@Autowired
-	private UserService userService; // ユーザー情報サービス
+	private UserService userService; 	// ユーザー情報サービス
 
 	@Autowired
-	private UserUtil userUtil; // ユーザー情報ユーティリティ
+	private UserUtil userUtil; 			// ユーザー情報ユーティリティ
 
-	@GetMapping("/login")
+	@GetMapping("/login")				//ログイン画面に遷移
 	public String login(Model model) {
 		UserDTO user = userUtil.getUserNameAndRole();
 		model.addAttribute("user", user);
@@ -42,12 +42,12 @@ public class UserContoller {
 		}
 	}
 
-	@PostMapping("/login")
+	@PostMapping("/login")				//ログイン処理
 	public String login(UserDTO user) {
 		return "redirect:/";
 	}
 
-	@GetMapping("/logout")
+	@GetMapping("/logout")				//ログアウト処理
 	public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication != null) {
@@ -56,23 +56,23 @@ public class UserContoller {
 		return "redirect:/";
 	}
 
-	@GetMapping("/join")
+	@GetMapping("/join")				//会員登録画面に遷移
 	public String join(Model model) {
 		return "join";
 	}
 
-	@PostMapping("/join")
+	@PostMapping("/join")				//会員登録処理
 	public String joinProcess(UserDTO userDTO) {
 		userService.joinProcess(userDTO);
 		return "redirect:/login";
 	}
 
-	@GetMapping("/findid")
+	@GetMapping("/findid")				//IDを探す画面に遷移
 	public String findId(Model model) {
 		return "findid";
 	}
 
-	@GetMapping("/findpassword")
+	@GetMapping("/findpassword")		//パスワードを探す画面に遷移
 	public String findPw(Model model) {
 		return "findpassword";
 	}
@@ -103,7 +103,7 @@ public class UserContoller {
 		}
 	}
 
-	// IDを探すの要請を処理
+	// IDを探すの処理
 	@PostMapping("/findid")
 	@ResponseBody
 	public Map<String, Object> findId(@RequestParam("name") String name, @RequestParam("email") String email) {
@@ -113,10 +113,9 @@ public class UserContoller {
 		user.setUser_name(name);
 		user.setUser_email(email);
 
-		// サービスでIDを探す
 		String userId = userService.findIdByNameAndEmail(user);
 
-		// IDが存在する場合は成功、応答がない場合は失敗
+		// IDの存否を確認
 		if (userId != null) {
 			response.put("success", true);
 			response.put("id", userId);

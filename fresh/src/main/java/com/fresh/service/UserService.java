@@ -13,6 +13,7 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	//パスワードをハッシュ化
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
@@ -23,12 +24,13 @@ public class UserService {
 		return userRepository.list();
 	}
 	
+	//会員登録をする時、入力された情報をデータベースに追加し
+	//パスワードはハッシュ化させてデータベースに追加
 	public void joinProcess(UserDTO user) {
-		
 		user.setUser_pw(bCryptPasswordEncoder.encode(user.getUser_pw()));
 		userRepository.joinProcess(user);
 	}
-
+	
 	public UserDTO findByUserId(String user_id) {
 		return userRepository.findByUserId(user_id);
 	}

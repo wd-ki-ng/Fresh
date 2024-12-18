@@ -18,7 +18,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+		//ユーザーのアカウント情報をデータベースから抽出し、取り込む
 		UserDTO user = userRepository.findByUserId(username);
 		
 		if (user != null) {

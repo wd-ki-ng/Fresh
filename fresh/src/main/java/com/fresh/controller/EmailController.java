@@ -28,9 +28,8 @@ public class EmailController {
 	
 
 	
-	@PostMapping("/send-email")
+	@PostMapping("/send-email")						//メール送信＆データベースに認証番号を追加
 	public ResponseEntity<Void> sendEmail(@RequestParam("email") String email, HttpSession session){
-		//メール送信＆認証番号をセーブ
 		String verificationCode = emailService.sendVerificationCode(email);
 		session.setAttribute("verificationCode", verificationCode);			//セッションに伝達された認証番号をセーブ
 		return ResponseEntity.ok().build();
@@ -62,7 +61,7 @@ public class EmailController {
 			String tempPw = generateTempPw();
 
 			userDTO.setTemp_pw(tempPw);
-			userService.createTempPw(userDTO);						//エンコーディングされたパスワードをセーブする
+			userService.createTempPw(userDTO);						//エンコーディングされたパスワードをデータベースに追加する
 			emailService.sendTempPw(user.getUser_email(), tempPw); 	//仮のパスワードを送信(メール)
 			
 			response.put("success", true);
@@ -73,8 +72,8 @@ public class EmailController {
 		return response;
 	}
 	
-	//仮のパスワードの生成ロジック
+	//12文字の仮のパスワードを生成
 	private String generateTempPw() {
-		return UUID.randomUUID().toString().substring(0,12); 		//12文字の仮のパスワードを生成
+		return UUID.randomUUID().toString().substring(0,12); 		
 	}
 }
