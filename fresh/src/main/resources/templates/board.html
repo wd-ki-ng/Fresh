@@ -16,8 +16,8 @@
 		<!-- 掲示板 エリア -->
 		<div class="row roundWhiteBox">
 			<!-- ポストの数変更&検索ボックスエリア -->
-			<div class="row">
-				<div class="col-md-2">
+			<div class="row board-top">
+				<div class="col-md-2 itemsPerPage">
 					<label for="itemsPerPage">ポスト数: </label>
 					<select id="itemsPerPage" onchange="updateItemsPerPage()">
 						<option value="10">10固</option>
@@ -25,15 +25,15 @@
 						<option value="30">30固</option>
 					</select>
 				</div>
-				<div class="offset-md-6 col-md-4">
+				<div class="offset-md-5 col-md-5">
 					<form>
 						<select name="type" class="type-box">
 							<option value="">検索タイプ</option>
 							<option value="title">タイトル</option>
 							<option value="write">ユーザー名</option>
 						</select> 
-						<span><input type="text" name="keyword" placeholder="検索語入力"></span>
-						<button type="button" onclick="searchPosts();">検索</button>
+						<input type="text" name="keyword" placeholder="検索語入力">
+						<button type="button" class="btn" onclick="searchPosts();">検索</button>
 					</form>
 				</div>
 			</div>
@@ -67,13 +67,13 @@
 			
 			<!-- ページ番号 ＆ ナビゲーション -->
 			<div class="row pagination">
-				<div class="pagination-btn col-md-9">
+				<div class="pagination-btn col-md-10">
 					<button class="btn" onclick="changePage('prev')">Prev</button>
 					<span class="page-info">現在ページ: 1 / 1</span>
 					<!-- ページ番号表示 -->
 					<button class="btn" onclick="changePage('next')">Next</button>
 				</div>
-				<div class="write-button col-md-3">
+				<div class="write-button col-md-2">
 					<!-- 作成ボタン -->
 					<button class="btn" th:onclick="'location.href=\''+@{/boardWrite}+'\''">ポスト作成</button>
 				</div>

@@ -1,6 +1,16 @@
 @charset "UTF-8";
 /* 보드 관련 css 모음 */
 /* board.html - 게시판 목록 페이지------------------------------------------------------------------ */
+.board-top form{
+	display: flex;
+	justify-content: flex-end;
+    align-items: center;
+}
+
+.board-top form *{
+	margin-left: 5px;
+}
+
 /* 게시글 목록 테이블 */
 .board-list {
 	table-layout: fixed;
@@ -94,23 +104,11 @@ textarea.commentContent{
 .comment-form textarea {
     width: 100%;
     padding: 10px;
-    margin: 10px 0;
     border-radius: 5px;
     border: 1px solid #ddd;
 }
-
-.comment-form button {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    border: none;
-    margin-top: 10px;
-}
-
-.login-message {
-    color: red;
-    font-size: 1.2em;
+.comment-form .row{
+	align-items: center;
 }
 
 /* バトンを同じ行に配置 */
@@ -121,14 +119,64 @@ textarea.commentContent{
     margin-top: 20px;
 }
 
-.btn-container .btn {
-    background-color: #007BFF;
-    color: white;
-    padding: 10px 15px;
-    text-decoration: none;
-    border-radius: 5px;
+/* boardWrite css--------------------------------------------------------------------------------- */
+@media (min-width: 576px) {
+    .board-container {
+        max-width: 460px;
+    }
+}
+@media (min-width: 768px) {
+    .board-container {
+        max-width: 540px;
+    }
+}
+@media (min-width: 992px) {
+    .board-container {
+        max-width: 720px;
+    }
+}
+@media (min-width: 1200px) {
+    .board-container {
+        max-width: 960px;
+    }
+}
+@media (min-width: 1400px) {
+    .board-container {
+        max-width: 1120px;
+    }
 }
 
-.btn-container .btn:hover {
-    background-color: #0056b3;
+.board-form {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
 }
+
+.board-form * {
+	margin-top: 10px;
+}
+
+.board-form label {
+	font-size: 14px;
+}
+
+.board-form input[type="text"], .board-form textarea {
+	width: 100%;
+	padding: 5px;
+	border: 1px solid lightgray;
+	border-radius: 5px;
+}
+
+.board-form textarea {
+	height: 300px;
+}
+
+.board-form button {
+	padding: 10px 15px;
+}
+
+.board-form-btn {
+	justify-content: center;
+}
+/* boardWrite css--------------------------------------------------------------------------------- */

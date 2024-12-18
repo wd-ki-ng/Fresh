@@ -11,9 +11,10 @@
 </head>
 <body>
 	<div class="container">
-		<!-- 上段のバー - ロゴ, 掲示板メニュー, 検索ボックス, マイページ, ログイン -->
+	<!-- 上段のバー - ロゴ, 掲示板メニュー, 検索ボックス, マイページ, ログイン -->
 		<th:block th:insert="~{menu.html::navBar}"></th:block>
-
+	</div>
+	<div class="container">
 		<!-- ポストの詳細な内容 -->
 		<section class="post-detail roundWhiteBox">
 			<h1 th:text="${detail.board_title}"></h1>
@@ -49,19 +50,19 @@
 			<ul class="comment-item">
 				<li th:each="comment:${comments}">
 					<div class="row">
-						<div th:id="'com_content'+${comment.com_no}" class="col-md-9">
+						<div th:id="'com_content'+${comment.com_no}" class="col-md-8">
 							<span th:text="'♥' + ${comment.com_like}"></span>
 							<span th:text="${comment.user_username} +' :'"></span>
 							<span th:text="${comment.com_comment}"></span>
 						</div>
-						<form th:id="'comment'+${comment.com_no}"  class="col-md-9 com_upt_form" name="comment" th:action="@{/comUpdate}" method="post" style="display: none;">
+						<form th:id="'comment'+${comment.com_no}"  class="col-md-8 com_upt_form" name="comment" th:action="@{/comUpdate}" method="post" style="display: none;">
 							<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 							<input type="hidden" name="board_no" th:value="${detail.board_no}">
 							<input type="hidden" name="com_no" th:value="${comment.com_no}">
 							<textarea class="commentContent" id="commentContent" name="com_comment" th:text="${comment.com_comment}"></textarea>
 							<button type="submit" class="btn">修正</button>
 						</form>
-						<div class="com_btn col-md-3">
+						<div class="com_btn col-md-4">
 							<form th:action="@{/comLike}" method="get" name="comLikeForm">
 								<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 								<input type="hidden" name="board_no" th:value="${comment.board_no}" />
@@ -82,14 +83,19 @@
 			<div class="pagination" id="pagination"></div>
 
 			<!-- コメント作成ボックス -->
-			<div id="commentFormContainer">
-				<form id="commentForm" class="comment-form" name="comment" action="/comWrite" method="post">
+			<form id="commentForm" class="comment-form" name="comment" action="/comWrite" method="post">
+				<div class="row">
 					<input type="hidden" name="_csrf" th:value="${_csrf.token}" /> 
 					<input type="hidden" name="board_no" th:value="${detail.board_no}">
-					<textarea id="commentContent" name="com_comment" placeholder="コメントを入力して下さい。"></textarea>
-					<button type="submit" class="btn">コメント作成</button>
-				</form>
-			</div>
+					<div class="col-md-11">
+						<textarea id="commentContent" name="com_comment" placeholder="コメントを入力して下さい。"></textarea>
+					</div>
+					<div class="col-md-1">
+						<button type="submit" class="btn">コメント作成</button>
+					</div>
+				
+				</div>
+			</form>
 					
 			<!-- ボタンの配置 -->
 			<div class="btn-container">
