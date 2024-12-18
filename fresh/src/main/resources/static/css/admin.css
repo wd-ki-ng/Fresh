@@ -95,8 +95,10 @@ adm_body thead button, .adm_body tfoot button:hover {
 .btn-group button:hover {
 	background-color: #E3E3E3;
 }
-
-.active {
+.btn-group .menu_active {
+	background-color: #E3E3E3;
+}
+.menu_active {
 	background-color: #E3E3E3;
 }
 

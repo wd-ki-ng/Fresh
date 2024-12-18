@@ -280,14 +280,14 @@
 					if (i == menu){
 						currentPage = 1;
 						bodies[i].style.display = 'table';
-						menus[i].classList.add('active');
+						menus[i].classList.add('menu_active');
 						for (let j = 0; j < bodies[i].getElementsByTagName('table').length; j++){
 							renderPosts(bodies[i].getElementsByTagName('table')[j].id);
 						}
 					}
 					else{
 						bodies[i].style.display = 'none';
-						menus[i].classList.remove('active');
+						menus[i].classList.remove('menu_active');
 					}
 				}
 			}
@@ -306,12 +306,12 @@
 				
 				for(let i = 0; i < btns.length; i++){
 					if (i == btn){
-						btns[i].classList.add('active');
 						tables[i].style.display = 'table';
+						btns[i].classList.add('menu_active');
 					}
 					else{
-						btns[i].classList.remove('active');
 						tables[i].style.display = 'none';
+						btns[i].classList.remove('menu_active');
 					}
 				}
 			}

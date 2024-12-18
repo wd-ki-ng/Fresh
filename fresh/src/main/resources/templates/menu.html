@@ -43,40 +43,45 @@
 		<meta name="_csrf" th:content="${_csrf.token}">
 	</th:block>
 
-   <th:block th:fragment="navBar">
+	<th:block th:fragment="navBar">
+	<nav class="navbar navbar-expand-sm" aria-label="Third navbar example">
 		<!-- 上段のバー - ロゴ, 掲示板メニュー, 検索ボックス, マイページ, ログイン -->
-		<div class="row NavBar" th:fragment="NavBar">
-			<div class="col-md-1 logo" th:onclick="|location.href='@{/}'|"></div>
-			<div class="col-md-5">
-				<ul class="board_menu">
-					<li>メニュー1</li>
-					<li>メニュー2</li>
-					<li>メニュー3</li>
-					<li>メニュー4</li>
+		<div class="container-fluid">
+			<a class="navbar-brand" th:href="@{/}"><img src="/css/icon/logo.png"></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="board_menu" aria-controls="board_menu" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="board_menu">
+				<ul class="navbar-nav me-4 mb-md-0 board_menu">
+					<li class="nav-item fs-6"><a class="nav-link active bold-text" aria-current="page" href="#">メニュー1</a></li>
+					<li class="nav-item fs-6"><a class="nav-link active bold-text" aria-current="page" href="#">メニュー2</a></li>
+					<li class="nav-item fs-6"><a class="nav-link active bold-text" aria-current="page" href="#">メニュー3</a></li>
+					<li class="nav-item fs-6"><a class="nav-link active bold-text" aria-current="page" href="#">メニュー4</a></li>
 				</ul>
+				<div class="me-5">
+					<form name="SearchBar" method="get" action="/search">
+						<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+						<input class="form-control me-4 searchbar" name="keyword" type="search" placeholder="検索するポストのキーワードを入力して下さい。"/>
+					</form>
+				</div>
+				<div class="navbar-nav me-4 mb-md-0">
+					<th:block th:if="${user.ROLE eq 'ROLE_ANONYMOUS'}">
+						<div class="nav-item fs-4"><a class="nav-link active bold-text" aria-current="page"  href="/login">MyPage</a></div>
+		            	<div class="nav-item fs-4"><a class="nav-link active bold-text" aria-current="page"  href="/login}">LogIn</a></div>
+		            </th:block>
+					<th:block th:if="${user.ROLE eq 'ROLE_USER'}">
+		                <div class="nav-item fs-4"><a class="nav-link active bold-text" aria-current="page"  href="/mypage/mypage">MyPage</a></div>
+		                <div class="nav-item fs-4"><a class="nav-link active bold-text" aria-current="page"  href="/logout">LogOut</a></div>
+		            </th:block>
+					<th:block th:if="${user.ROLE ne 'ROLE_ANONYMOUS' && user.ROLE ne 'ROLE_USER'}">
+		                <div class="nav-item fs-4"><a class="nav-link active bold-text"  aria-current="page"  href="/admin/admin">Admin</a></div>
+		                <div class="nav-item fs-4"><a class="nav-link active bold-text" aria-current="page"  href="/logout">LogOut</a></div>
+		            </th:block>
+	            </div>
 			</div>
-			<div class="col-md-4">
-				<form name="SearchBar" method="get" action="/search">
-					<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
-					<div class="searchbar">
-						<input class="searchbar" name="keyword" type="text" placeholder="検索するポストのキーワードを入力して下さい。">
-						<button class="search_icon" type="submit"></button>
-					</div>
-				</form>
-			</div>
-				<th:block th:if="${user.ROLE eq 'ROLE_ANONYMOUS'}">
-					<div class="col-md-1"><a th:href="@{/login}">MyPage</a></div>
-	            	<div class="col-md-1"><a th:href="@{/login}">LogIn</a></div>
-	            </th:block>
-				<th:block th:if="${user.ROLE eq 'ROLE_USER'}">
-	                <div class="col-md-1"><a th:href="@{/mypage/mypage}">MyPage</a></div>
-	                <div class="col-md-1"><a th:href="@{/logout}">LogOut</a></div>
-	            </th:block>
-				<th:block th:if="${user.ROLE ne 'ROLE_ANONYMOUS' && user.ROLE ne 'ROLE_USER'}">
-	                <div class="col-md-1"><a th:href="@{/admin/admin}">Admin</a></div>
-	                <div class="col-md-1"><a th:href="@{/logout}">LogOut</a></div>
-	            </th:block>
 		</div>
+	</nav>
 	</th:block>
 </body>
 </html>
+  
