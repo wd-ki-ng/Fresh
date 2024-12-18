@@ -40,7 +40,7 @@ public class SecurityConfig {
         http.formLogin((auth) -> auth
         		.loginPage("/login")					 // ログイン画面に遷移
         		.loginProcessingUrl("/login")			// ログインを成功する場合、当URLにバリュー伝達
-        		.defaultSuccessUrl("/")					// ログインに成功した場合、遷移される画面
+        		.defaultSuccessUrl("/",true)					// ログインに成功した場合、遷移される画面
         		.failureUrl("/login?error=1")			 // ログインに失敗した場合、遷移される画面
         		.permitAll()
         		);
@@ -56,7 +56,7 @@ public class SecurityConfig {
         		.logoutSuccessUrl("/")
         		.invalidateHttpSession(true));
         
-        //http.csrf((auth) -> auth.disable()); //開発中には使用禁止
+        http.csrf((auth) -> auth.disable()); //開発中には使用禁止
         
         return http.build();		
     }
