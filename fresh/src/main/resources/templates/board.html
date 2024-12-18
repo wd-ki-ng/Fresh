@@ -5,6 +5,7 @@
 <!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
 <th:block th:insert="~{menu.html::metaImport}"></th:block>
 <title>掲示板</title>
+<th:block th:insert="~{menu.html::scriptImport}"></th:block>
 <th:block th:insert="~{menu.html::headImport}"></th:block>
 </head>
 <body>
@@ -59,14 +60,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="board:${BoardList}">
-							<td><span th:text="${board.board_no}"></span></td>
-							<td><span th:text="${board.board_title}"></span></td>
-							<td><span th:text="${board.board_write}"></span></td>
-							<td><span th:text="${board.board_date}"></span></td>
-							<td><span th:text="${board.board_count}"></span></td>
-							<td><span th:text="${board.board_like}"></span></td>
-						</tr>
+						
 					</tbody>
 				</table>
 			</div>
@@ -88,7 +82,7 @@
 			<div class="page-info" id="message"></div>
 		</div>
 	</div>
-	<script type="text/javascript">
+	<script th:inline="javascript">
 	const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
     const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
     let posts = /*[[${BoardList}]]*/ [];  // Thymeleafから 伝達された BoardList データを JSONに変換
@@ -98,9 +92,10 @@
     let searchQuery = ""; // 検索語の初期化
     let filteredPosts = []; // フィルターリングされたポストのリスト
     
-    // let posts = /*[[${BoardList}]]*/ [];
-   
-
+   function bclick(bno){
+    	location.href="/boardview?no="+bno;
+    }
+    
  	// ポスト 表示
     function renderPosts() {
         const startIndex = (currentPage - 1) * itemsPerPage;
@@ -112,6 +107,11 @@
 
         postsToDisplay.forEach(post => {
             const row = document.createElement('tr');
+            	row.id = post.board_no;
+ 				row.onclick = function (){
+ 					bclick(row.id);
+ 				};
+            	
             
             
             //作成日のフォーマットを'yyyy-MM-dd'に 変更
@@ -119,17 +119,19 @@
             const formattedDateString = formattedDate.getFullYear() + '-' +
                 String(formattedDate.getMonth() + 1).padStart(2, '0') + '-' +
                 String(formattedDate.getDate()).padStart(2, '0');
+           
             
-            row.innerHTML = `
+              row.innerHTML = `
                 <td>${post.board_no}</td>
-                <td><a href="/boardview?no=${post.board_no}">${post.board_title}</a></td>
+                <td>${post.board_title}</a></td>
                 <td>${post.board_write}</td>
                 <td>${formattedDateString}</td>
                 <td>${post.board_count}</td>
                 <td>${post.board_like}</td>
             `;
             boardList.appendChild(row);
-        });
+            
+        }); 
 
         document.querySelector('.page-info').innerText = `現在ページ: ${currentPage} / ${Math.ceil(filteredPosts.length / itemsPerPage)}`;
     }
