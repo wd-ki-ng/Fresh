@@ -67,7 +67,7 @@
 							</form>
 							<th:block th:if="${comment.user_no == user.user_no}">
 								<a href="javascript:void(0);" th:onclick="modifyCom([[${comment.com_no}]])" class="btn">修正</a>
-								<a th:href="@{#}" class="btn">削除</a>
+								<a th:href="@{/comDelete(com_no=${comment.com_no})}" class="btn">削除</a>
 							</th:block>
 							<a th:href="@{/#}" class="btn">リコメント</a>
 						</div>

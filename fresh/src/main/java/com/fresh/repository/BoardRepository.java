@@ -79,6 +79,14 @@ public class BoardRepository {
 	public int comUpdate(CommentDTO com) {
 		return sqlSession.update("board.comUpdate", com);
 	}
+	
+	public void comDelete(Long com_no) {
+		sqlSession.update("board.comDelete", com_no);
+	}
+	
+	public long getBoard_no(Long com_no) {
+		return sqlSession.selectOne("board.getBoard_no", com_no);
+	}
 	//----------------------------------------------
 	
 	public int getCommentCount(Long no) {

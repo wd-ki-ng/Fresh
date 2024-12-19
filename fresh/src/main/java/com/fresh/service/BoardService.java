@@ -78,6 +78,13 @@ public class BoardService {
 	    return boardRepository.comUpdate(com);
 	}
 	
+	public void comDelete(Long com_no) {
+		boardRepository.comDelete(com_no);
+	}
+	
+	public long getBoard_no(Long com_no) {
+		return boardRepository.getBoard_no(com_no);
+	}
 
 	public int boardDel(Long no) {
 		return boardRepository.boardDel(no);

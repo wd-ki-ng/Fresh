@@ -161,6 +161,18 @@ public class BoardController {
 			return "redirect:/boardview?no="+com.getBoard_no();
 		}		
 		
+	@GetMapping("/comDelete")
+	public String comDelete(Model model, @RequestParam(value = "com_no") Long com_no) {
+		UserDTO user = userUtil.getUserNameAndRole();
+		model.addAttribute("user", user);
+		if (!user.getROLE().equals("ROLE_ADMIN")) {
+			return "main";
+		}
+		
+		boardService.comDelete(com_no);			// コメントの削除の処理 - com_delのバリューを0にする
+		return "redirect:/boardview?no="+boardService.getBoard_no(com_no);
+	}
+	
 	@PostMapping("/deleteBoard")
 	@ResponseBody
 	public String deleteBoard(@RequestParam("no") Long no, Model model) {
