@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<th:block th:insert="~{menu.html::metaImport}"></th:block>
 	<th:block th:insert="~{menu.html::headImport}"></th:block>
+	<th:block th:insert="~{menu.html::scriptImport}"></th:block>
 	<title th:text="${detail.board_title}">タイトル</title>
 
 </head>
@@ -69,7 +70,6 @@
 								<a href="javascript:void(0);" th:onclick="modifyCom([[${comment.com_no}]])" class="btn">修正</a>
 								<a th:href="@{/comDelete(com_no=${comment.com_no})}" class="btn">削除</a>
 							</th:block>
-							<a th:href="@{/#}" class="btn">リコメント</a>
 						</div>
 					</div>
 				</li>

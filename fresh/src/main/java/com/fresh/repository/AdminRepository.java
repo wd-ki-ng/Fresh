@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.fresh.dto.BoardDTO;
 import com.fresh.dto.CommentDTO;
-import com.fresh.dto.CustomCommentDTO;
 import com.fresh.dto.UserDTO;
 
 @Repository

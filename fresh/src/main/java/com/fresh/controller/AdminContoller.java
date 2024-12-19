@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fresh.dto.BoardDTO;
 import com.fresh.dto.CommentDTO;
-import com.fresh.dto.CustomCommentDTO;
 import com.fresh.dto.UserDTO;
 import com.fresh.service.AdminService;
 import com.fresh.util.UserUtil;

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fresh.dto.BoardDTO;
 import com.fresh.dto.CommentDTO;
-import com.fresh.dto.CustomCommentDTO;
 import com.fresh.dto.LikesDTO;
 import com.fresh.dto.UserDTO;
 import com.fresh.service.BoardService;
@@ -165,12 +164,14 @@ public class BoardController {
 	public String comDelete(Model model, @RequestParam(value = "com_no") Long com_no) {
 		UserDTO user = userUtil.getUserNameAndRole();
 		model.addAttribute("user", user);
-		if (!user.getROLE().equals("ROLE_ADMIN")) {
+		if (user !=null || !user.getROLE().equals("ROLE_ANONYMOUS")) {
+			boardService.comDelete(com_no);			// コメントの削除の処理 - com_delのバリューを0にする
+			return "redirect:/boardview?no="+boardService.getBoard_no(com_no);
+		} else {
 			return "main";
 		}
 		
-		boardService.comDelete(com_no);			// コメントの削除の処理 - com_delのバリューを0にする
-		return "redirect:/boardview?no="+boardService.getBoard_no(com_no);
+		
 	}
 	
 	@PostMapping("/deleteBoard")

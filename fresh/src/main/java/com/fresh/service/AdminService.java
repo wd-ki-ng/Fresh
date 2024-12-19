@@ -3,15 +3,12 @@ package com.fresh.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.fresh.dto.BoardDTO;
 import com.fresh.dto.CommentDTO;
-import com.fresh.dto.CustomCommentDTO;
 import com.fresh.dto.UserDTO;
 import com.fresh.repository.AdminRepository;
-import com.fresh.repository.UserRepository;
 
 @Service
 public class AdminService {
