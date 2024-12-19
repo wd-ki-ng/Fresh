@@ -125,6 +125,11 @@ public class BoardService {
 		return boardRepository.getBoardList();
 	}
 	
+	// お知らせリスト
+	public List<BoardDTO> getNoticeList() {
+		return boardRepository.getNoticeList();
+	}
+	
 	// 入力したキーワードに会うポストのリストをもらう
 	public List<BoardDTO> getSearchBoard(String keyword) {
 		keyword = "%" + keyword + "%";

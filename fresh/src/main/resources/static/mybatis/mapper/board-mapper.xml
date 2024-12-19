@@ -108,6 +108,13 @@
 		order by board_no desc
 	</select>
 	
+	<select id="noticeList" resultType="BoardDTO">
+		select *
+		from board
+		where category=0 and board_del='1'
+		order by board_no desc
+	</select>
+	
 	<update id="boardUpdate" parameterType="BoardDTO">
 		update board
         set board_title= #{board_title}, board_content= #{board_content}

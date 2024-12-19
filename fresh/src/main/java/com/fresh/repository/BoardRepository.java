@@ -115,6 +115,10 @@ public class BoardRepository {
 	public List<BoardDTO> getBoardList() {
 		return sqlSession.selectList("board.boardList");
 	}
+	
+	public List<BoardDTO> getNoticeList() {
+		return sqlSession.selectList("board.noticeList");
+	}
 
 	public int boardDel(Long no) {
 		return sqlSession.update("board.boardDel",no);

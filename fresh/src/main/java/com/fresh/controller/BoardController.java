@@ -218,6 +218,19 @@ public class BoardController {
 		return "board";
 	}
 	
+	@GetMapping("/notice")
+	public String notice(Model model) {
+		// 現在、ユーザーの情報をもらう.ログインしていない場合、役割が"ROLE_ANONYMOUS"や userのバリューがnullになる
+		UserDTO user = userUtil.getUserData();
+		model.addAttribute("user", userUtil.getUserNameAndRole());
+
+		// ポストをもらってmodelに追加
+		List<BoardDTO> BoardList = boardService.getNoticeList();
+		model.addAttribute("BoardList", BoardList);
+
+		return "board";
+	}
+	
 	// ポストのいいねボタン
 	@GetMapping("/postLike")
 	public String postLike(Model model, @RequestParam(value = "no") Long no, @RequestParam(value = "like") int like) {
