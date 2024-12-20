@@ -21,8 +21,8 @@ public class SecurityConfig {
 		
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers("/css/**", "/plugins/**").permitAll()
-                .requestMatchers("/", "/main", "/login", "/join","/board", 
-                		"/send-email", "/findid", "/findpassword", "/findPw", "/search").permitAll()		//全ユーザーの接近を許容
+                .requestMatchers("/", "/main", "/login", "/join","/board", "/checkUserName", "/verify-email",
+                		"/send-email", "/findid", "/findpassword", "/findPw", "/search", "/checkid").permitAll()		//全ユーザーの接近を許容
                 .requestMatchers("/admin/**").hasAnyRole("ADMIN")				// 管理者のみ許容
                 .requestMatchers("/mypage/**").hasAnyRole("ADMIN","USER")				// ユーザーのみ許容
                 .anyRequest().authenticated()									// その他、認証必要
