@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -79,6 +80,7 @@ public class UserContoller {
 
 	// 会員登録 - IDの重複確認
 	@PostMapping("/checkid")
+	@ResponseBody
 	public ResponseEntity<Boolean> checkId(@RequestParam("userId") String userId) {
 
 		String user = userService.checkUserId(userId);
