@@ -32,8 +32,8 @@
 							<option value="title">タイトル</option>
 							<option value="write">ユーザー名</option>
 						</select> 
-						<input type="text" name="keyword" placeholder="検索語入力">
-						<button type="button" class="btn" onclick="searchPosts();">検索</button>
+						<input type="text" name="keyword2" placeholder="検索語入力">
+						<button type="button" class="btn" onclick="searchPosts()">検索</button>
 					</form>
 				</div>
 			</div>
@@ -60,7 +60,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						
+					
 					</tbody>
 				</table>
 			</div>
@@ -148,9 +148,9 @@
 
  	// 検索機能
     function searchPosts() {
-        searchQuery = document.querySelector('[name="keyword"]').value; //検索語
+        searchQuery = document.querySelector('[name="keyword2"]').value; //検索語
+        console.log(searchQuery);
         const searchType = document.querySelector('[name="type"]').value; // 検索タイプ
-
         filteredPosts = posts.filter(post => {
             if (searchType === "title") {
                 return post.board_title.includes(searchQuery);
